@@ -1,0 +1,13 @@
+spring:
+
+  mvc:
+    view:
+      prefix: /templates/
+      suffix: .html
+  resources:
+    static-locations: classpath:/
+
+mybatis:
+  ##xml文件的路径配置
+  mapper-locations: classpath:static/mapper/*.xml
+  type-aliases-package: com.kwbbin.bean
