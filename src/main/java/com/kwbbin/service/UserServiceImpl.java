@@ -16,5 +16,12 @@ public class UserServiceImpl implements IUserService {
 
     public User selectUserById(int id){
         return dao.selectUserById(id);
-    };
+    }
+
+    @Override
+    public User selectUserByOpenId(long id) {
+        return dao.selectUserByOpenId(id);
+    }
+
+    ;
 }

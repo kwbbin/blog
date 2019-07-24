@@ -1,0 +1,38 @@
+article（文章）
+	id		主键id
+	labels		标签
+	article_origin	文章类型（转载，原创，翻译）
+	article_type	博客分类（数据库，前端，后端）外键
+	article_way	发布形式（私密，公开）
+	is_draft		是否为草稿
+	content		内容
+	title		标题
+	posted_time	发布时间
+	good 		点赞
+
+article_type  {博客分类（数据库，前端，后端）}
+	type_id 		分类id
+	type_name	分类名称
+	。。
+
+
+article_origin
+	原创
+	转载
+	翻译
+
+
+user（用户）
+	id		主键id
+	name		姓名
+	email		邮箱
+	password      	密码
+	register_time  	注册时间
+	openType		第三方登录类型
+	openId		第三方登录Id
+	openBio		第三方简介
+	accessToken	
+	expiredTime	第三方过期时间
+	nickname		昵称
+	avatar		头像
+

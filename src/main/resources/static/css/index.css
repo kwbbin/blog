@@ -1,0 +1,27 @@
+img.ContentImg{
+    width:100%;
+    height: 200px;
+}
+
+p.content-font-size{
+    font-size: 16px;
+}
+
+.clearfix:before,.clearfix:after{
+    content: "";
+    display: table;
+    clear: both;
+}
+
+div.content-padding{
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+nav.footer-margin{
+    margin: 0px;
+}
+p.footer-center{
+    text-align: center;
+    line-height: 30px;
+}

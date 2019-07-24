@@ -8,13 +8,17 @@
     <select id="selectUserById" resultType="user">
         select * from user where id=#{id}
     </select>
+    <select id="selectUserByOpenId" resultType="user">
+        select * from user where openId=#{openId}
+    </select>
 
 <!--    <update id="updateStudent" parameterType="student">-->
 <!--        update student set `name`=#{name},`sex`=#{sex} where id=#{id}-->
 <!--    </update>-->
 
     <insert id="insertUser" parameterType="user">
-        insert into user(id,name,email,password,register_time) values(#{id},#{name},#{email},#{password},#{register_time})
+        insert into user(id,name,email,password,register_time,openType,openId,accessToken,expiredTime,nickname,avatar)
+            values(#{id},#{name},#{email},#{password},#{register_time},#{openType},#{openId},#{accessToken},#{expiredTime},#{nickname},#{avatar})
         <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
             SELECT LAST_INSERT_ID()
         </selectKey>
