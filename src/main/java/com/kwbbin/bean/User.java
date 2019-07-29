@@ -35,5 +35,8 @@ public class User {
 
     private String accessToken;
 
-
+    public User(String nickname, String password) {
+        this.Password = password;
+        this.nickname = nickname;
+    }
 }

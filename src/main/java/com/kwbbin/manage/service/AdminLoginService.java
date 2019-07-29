@@ -14,4 +14,6 @@ public class AdminLoginService {
     public Admin selectByNameAndPassword(Admin admin){
         return dao.selectByNameAndPassword(admin);
     }
+
+
 }

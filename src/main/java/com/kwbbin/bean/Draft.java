@@ -3,13 +3,14 @@ package com.kwbbin.bean;
 import lombok.*;
 
 import java.util.Date;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
 @Getter
 @ToString
-public class Article {
-    private Long id;
+public class Draft {
+    private Integer id;
 
     private String labels;
 
@@ -19,8 +20,6 @@ public class Article {
 
     private Integer articleWay;
 
-    private Integer state;
-
     private String title;
 
     private Date postedTime;
@@ -28,5 +27,6 @@ public class Article {
     private Integer good;
 
     private String content;
+
 
 }

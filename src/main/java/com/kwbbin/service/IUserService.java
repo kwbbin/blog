@@ -7,4 +7,6 @@ public interface IUserService {
     public void insertUser(User user);
     public User selectUserById(int id);
     public User selectUserByOpenId(long id);
+
+    public User selectByNickNameAndPassword(User user);
 }

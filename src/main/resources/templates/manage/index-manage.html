@@ -14,7 +14,7 @@
                 width: "90%",
                 height: 740,
                 // lib 包的位置，一定不能出错。
-                path: 'static/editor-md/lib/',
+                path: '/static/editor-md/lib/',
                 // theme: "dark",  // 主题  默认白色
                 // previewTheme: "dark",
                 // editorTheme: "pastel-on-dark",
@@ -75,7 +75,7 @@
                  data: str
              }
              $.ajax({
-                 url: "manage/save",
+                 url: "/manage/save",
                  type: "POST",
                  dataType: "json",
                  data: data,

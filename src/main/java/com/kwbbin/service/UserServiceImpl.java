@@ -23,5 +23,10 @@ public class UserServiceImpl implements IUserService {
         return dao.selectUserByOpenId(id);
     }
 
+    @Override
+    public User selectByNickNameAndPassword(User user) {
+        return dao.selectByNickNameAndPassword(user);
+    }
+
     ;
 }

@@ -5,17 +5,11 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ArticleMapper {
-    int deleteByPrimaryKey(Long id);
+    int deleteById(Long id);
 
     int insert(Article record);
 
-    int insertSelective(Article record);
+    Article selectById(Long id);
 
-    Article selectByPrimaryKey(Long id);
-
-    int updateByPrimaryKeySelective(Article record);
-
-    int updateByPrimaryKeyWithBLOBs(Article record);
-
-    int updateByPrimaryKey(Article record);
+    int updateById(Article record);
 }
