@@ -47,11 +47,12 @@ public class UserCookieReadInterceptor implements HandlerInterceptor {
                 }
 
                 //假如取出的数据不为空（存在用户名和密码）
-                if(userNumber!=""||password!=""){
-                    User ad=new User(userNumber,password);
-
+                if(userNumber!=""&&password!=""&&userNumber!=null&&password!=null){
+                    User ad=new User();
+                    ad.setName(userNumber);
+                    ad.setPassword(password);
                     //从数据库取出数据
-                    user=service.selectByNickNameAndPassword(ad);
+                    user=service.selectByNameAndPassword(ad);
                     if(user!=null){
 
                         //把数据库取出的user存到session中

@@ -7,8 +7,25 @@ spring:
   resources:
     static-locations: classpath:/
 
+
+  thymeleaf:
+        cache: false
+
 mybatis:
   ##xml文件的路径配置
   mapper-locations: classpath:static/mapper/**/*.xml
   type-aliases-package: com.kwbbin.bean
 
+
+
+pagehelper:
+
+  helperDialect: mariadb
+
+  reasonable: true
+
+  supportMethodsArguments: true
+
+  pageSizeZero: true
+
+  params: count=countSql

@@ -8,5 +8,5 @@ public interface IUserService {
     public User selectUserById(int id);
     public User selectUserByOpenId(long id);
 
-    public User selectByNickNameAndPassword(User user);
+    public User selectByNameAndPassword(User user);
 }

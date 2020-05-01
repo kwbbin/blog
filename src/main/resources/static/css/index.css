@@ -25,3 +25,98 @@ p.footer-center{
     text-align: center;
     line-height: 30px;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+p.pContent{
+    font-size: 13px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+}
+
+.hTitle{
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+    padding-bottom: 10px;
+    font-size: medium;
+}
+.good{
+    font-size: 15px;
+    position: relative;
+    top: -1px;
+    padding-left: 3px;
+}
+
+/*侧边栏ul*/
+.my-ul {
+    line-height: 30px;
+    padding-left: 15px;
+}
+.my-ul li{
+    list-style-type : square;
+    font-size: 10px;
+    padding-left: 10px;
+}
+
+.my-ul li a{
+    color: #00afff;
+    font-size: 13px;
+}
+/*侧边栏ul*/
+
+.footA{
+    cursor: pointer;
+    padding-right: 20px;
+    color: #999;
+}
+
+.font-small{
+    font-size: 14px;
+    font-weight: lighter
+}
+
+
+
+.content-box{
+    margin-top: 300px;
+    -moz-box-shadow:2px 2px 5px #ABABAB; -webkit-box-shadow:2px 2px 5px #ABABAB; box-shadow:2px 2px 5px #ABABAB;
+    z-index: -99;
+}
+
+body{
+    /*background: #8db5e9;*/
+}
+.jumbotron{
+    background: #fff;
+}
+
+.show{
+    height: 350px;
+    width: 100%;
+
+    position: absolute;
+    top:0px;
+    z-index: -9999;
+    background: url("static/img/sky.jpg");
+}
+.show p{
+    text-align: center;
+    line-height: 350px;
+    font-size: 20px;
+}

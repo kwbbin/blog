@@ -1,42 +1,123 @@
 package com.kwbbin.bean;
 
-
-import lombok.*;
-
-
-@AllArgsConstructor
-@NoArgsConstructor
-@Setter
-@Getter
-@ToString
 public class User {
-    //主键
-    private int id;
-    //姓名
+    private Integer id;
+
     private String name;
-    //邮箱
+
     private String email;
-    //第三方登录类别
-    private String openType;
-    //第三方登录id
-    private long openId;
-    //密码
-    private String Password;
-    //加入时间
-    private String register_time;
-    //昵称
+
+    private String password;
+
+    private Long registerTime;
+
+    private String opentype;
+
+    private String openid;
+
+    private String accesstoken;
+
+    private Long expiredtime;
+
     private String nickname;
-    //头像
+
     private String avatar;
-    //简介
-    private String openBio;
-    //过期时间
-    private long expiredTime;
 
-    private String accessToken;
+    private String openbio;
 
-    public User(String nickname, String password) {
-        this.Password = password;
-        this.nickname = nickname;
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name == null ? null : name.trim();
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email == null ? null : email.trim();
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password == null ? null : password.trim();
+    }
+
+    public Long getRegisterTime() {
+        return registerTime;
+    }
+
+    public void setRegisterTime(Long registerTime) {
+        this.registerTime = registerTime;
+    }
+
+    public String getOpentype() {
+        return opentype;
+    }
+
+    public void setOpentype(String opentype) {
+        this.opentype = opentype == null ? null : opentype.trim();
+    }
+
+    public String getOpenid() {
+        return openid;
+    }
+
+    public void setOpenid(String openid) {
+        this.openid = openid == null ? null : openid.trim();
+    }
+
+    public String getAccesstoken() {
+        return accesstoken;
+    }
+
+    public void setAccesstoken(String accesstoken) {
+        this.accesstoken = accesstoken == null ? null : accesstoken.trim();
+    }
+
+    public Long getExpiredtime() {
+        return expiredtime;
+    }
+
+    public void setExpiredtime(Long expiredtime) {
+        this.expiredtime = expiredtime;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname == null ? null : nickname.trim();
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar == null ? null : avatar.trim();
+    }
+
+    public String getOpenbio() {
+        return openbio;
+    }
+
+    public void setOpenbio(String openbio) {
+        this.openbio = openbio == null ? null : openbio.trim();
     }
 }

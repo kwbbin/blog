@@ -27,10 +27,7 @@ public class LoginController {
     @Autowired
     private RestTemplate restTemplate;
 
-    @RequestMapping(value = {"","/"})
-    public String DefultView(HttpServletRequest request){
-        return "index";
-    }
+
 
     @RequestMapping("/github/login")
     public String githubLogin(){
@@ -65,11 +62,11 @@ public class LoginController {
 
         if(service.selectUserByOpenId(githubID)==null){
             user=new User();
-            user.setOpenId(githubID);
-            user.setOpenType("github");
+            user.setOpenid(githubID+"");
+            user.setOpentype("github");
             user.setNickname(LoginName);
             user.setAvatar(avatar_url);
-            user.setOpenBio(bio);
+            user.setOpenbio(bio);
             service.insertUser(user);
         }else{
             user=service.selectUserByOpenId(githubID);
@@ -86,7 +83,10 @@ public class LoginController {
         //判断session是否存在user
         User user=(User)request.getSession().getAttribute("user");
         if(user==null){
-            user=service.selectByNickNameAndPassword(new User(userName,password));
+            User u = new User();
+            u.setName(userName);
+            u.setPassword(password);
+            user=service.selectByNameAndPassword(u);
         }
 
         if(user!=null){

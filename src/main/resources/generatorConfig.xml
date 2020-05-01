@@ -6,7 +6,7 @@
 <generatorConfiguration>
     <!-- 配置mysql 驱动jar包路径.用了绝对路径 -->
     <classPathEntry
-            location="E:\apache-maven-3.0.4\MAVEN_REPOSITORY\mysql\mysql-connector-java\5.1.37\mysql-connector-java-5.1.37.jar" />
+            location="E:\apache-maven-3.0.4\MAVEN_REPOSITORY\org\mariadb\jdbc\mariadb-java-client\2.5.2\mariadb-java-client-2.5.2.jar" />
 
     <context id="scm_mysql_tables" targetRuntime="MyBatis3">
         <!-- 防止生成的代码中有很多注释，加入下面的配置控制 -->
@@ -16,8 +16,8 @@
         </commentGenerator>
 
         <!-- 数据库连接 -->
-        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://localhost:3306/blog_test?characterEncoding=UTF-8"
+        <jdbcConnection driverClass="org.mariadb.jdbc.Driver"
+                        connectionURL="jdbc:mariadb://localhost:3307/blog"
                         userId="root"
                         password="19971207">
         </jdbcConnection>
@@ -58,18 +58,22 @@
         enableSelectByExample:Select多条语句中加入where条件查询，默认为true开启
         selectByExampleQueryId:Select单个对象语句中加入where条件查询，默认为true开启
         -->
-<!--        <table tableName="article" domainObjectName="Article"-->
-<!--               enableCountByExample="false" enableUpdateByExample="false"-->
-<!--               enableDeleteByExample="false" enableSelectByExample="false"-->
-<!--               selectByExampleQueryId="false" />-->
-<!--        <table tableName="article_type" domainObjectName="ArticleType"-->
-<!--               enableCountByExample="false" enableUpdateByExample="false"-->
-<!--               enableDeleteByExample="false" enableSelectByExample="false"-->
-<!--               selectByExampleQueryId="false" />-->
-        <table tableName="draft" domainObjectName="Draft"
-               enableCountByExample="false" enableUpdateByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false"
-               selectByExampleQueryId="false" />
+<!--        <table tableName="article" domainObjectName="Article" >-->
+<!--            <generatedKey column="id" sqlStatement="JDBC" identity="true"></generatedKey>-->
+<!--        </table>-->
+        <table tableName="draft" domainObjectName="Draft" >
+            <generatedKey column="id" sqlStatement="JDBC" identity="true"></generatedKey>
+        </table>
+<!--                <table tableName="tags" domainObjectName="Tags" />-->
+<!--        <table tableName="article_type" domainObjectName="ArticleType" />-->
+<!--        <table tableName="draft" domainObjectName="Draft"  />-->
+<!--        <table tableName="admin" domainObjectName="Admin" />-->
+        <!--                <table tableName="tags_article" domainObjectName="TagsArticle" />-->
+<!--                        <table tableName="draft_tags" domainObjectName="DraftTags" />-->
+
+<!--        <table tableName="user" domainObjectName="User" />-->
+<!--        <table tableName="reply" domainObjectName="Reply"  />-->
+<!--        <table tableName="message" domainObjectName="Message"  />-->
 
     </context>
 </generatorConfiguration>

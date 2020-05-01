@@ -42,8 +42,10 @@ public class AdminCookieReadInterceptor implements HandlerInterceptor {
                         password=cookie.getValue();
                     }
                 }
-                if(userNumber!=""||password!=""){
-                    Admin ad=new Admin(userNumber,password);
+                if(userNumber!=""&&password!=""&&userNumber!=null&&password!=null){
+                    Admin ad=new Admin();
+                    ad.setName(userNumber);
+                    ad.setPassword(password);
                     admin=service.selectByNameAndPassword(ad);
                     if(admin!=null){
                         request.getSession().setAttribute("admin", admin);

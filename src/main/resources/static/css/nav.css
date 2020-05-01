@@ -1,0 +1,47 @@
+@font-face {
+    font-family: "myFont1";
+    src: url("../font/Gerimist-8Ma5M-2.otf");
+}
+@font-face {
+    font-family: "myFont2";
+    src: url("../font/a-Arbei-Berry-3.ttf");
+}
+@font-face {
+    font-family: "myFont3";
+    src: url("../font/Gnaw-FREE-3.ttf");
+}
+
+.logoBox{
+    padding-left: 20px;
+    margin-right: 40px;
+    display: inline-block;
+    width: 100px;
+    height:45px;
+}
+
+.logoBox .logo{
+    font-family: myFont1;
+    display: inline-block;
+    height: 45px;
+    top: 0px;
+    line-height: 45px;
+    font-size: 25px;
+}
+
+.navbar{
+    z-index: 9999;
+    background: #fff;
+    -moz-box-shadow:2px 2px 5px #ABABAB;
+    -webkit-box-shadow:2px 2px 5px #ABABAB;
+    box-shadow:2px 2px 5px #ABABAB;
+}
+
+
+
+/*#footer{*/
+/*    text-align: center;*/
+/*    width: 100%;*/
+/*    position: absolute;*/
+/*    bottom: -18px;*/
+/*}*/
+

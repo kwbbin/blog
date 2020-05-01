@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kwbbin.dao.ReplyMapper" >
+  <resultMap id="BaseResultMap" type="com.kwbbin.bean.Reply" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="responseTime" property="responsetime" jdbcType="TIMESTAMP" />
+    <result column="userId" property="userid" jdbcType="INTEGER" />
+    <result column="good" property="good" jdbcType="INTEGER" />
+    <result column="articleId" property="articleid" jdbcType="BIGINT" />
+    <result column="replyTo" property="replyto" jdbcType="BIGINT" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.kwbbin.bean.Reply" extends="BaseResultMap" >
+    <result column="content" property="content" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, responseTime, userId, good, articleId, replyTo
+  </sql>
+  <sql id="Blob_Column_List" >
+    content
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.kwbbin.bean.ReplyExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from reply
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.kwbbin.bean.ReplyExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from reply
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from reply
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from reply
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.kwbbin.bean.ReplyExample" >
+    delete from reply
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.kwbbin.bean.Reply" >
+    insert into reply (id, responseTime, userId, 
+      good, articleId, replyTo, 
+      content)
+    values (#{id,jdbcType=BIGINT}, #{responsetime,jdbcType=TIMESTAMP}, #{userid,jdbcType=INTEGER}, 
+      #{good,jdbcType=INTEGER}, #{articleid,jdbcType=BIGINT}, #{replyto,jdbcType=BIGINT}, 
+      #{content,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.kwbbin.bean.Reply" >
+    insert into reply
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="responsetime != null" >
+        responseTime,
+      </if>
+      <if test="userid != null" >
+        userId,
+      </if>
+      <if test="good != null" >
+        good,
+      </if>
+      <if test="articleid != null" >
+        articleId,
+      </if>
+      <if test="replyto != null" >
+        replyTo,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="responsetime != null" >
+        #{responsetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="good != null" >
+        #{good,jdbcType=INTEGER},
+      </if>
+      <if test="articleid != null" >
+        #{articleid,jdbcType=BIGINT},
+      </if>
+      <if test="replyto != null" >
+        #{replyto,jdbcType=BIGINT},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.kwbbin.bean.ReplyExample" resultType="java.lang.Integer" >
+    select count(*) from reply
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update reply
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.responsetime != null" >
+        responseTime = #{record.responsetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.userid != null" >
+        userId = #{record.userid,jdbcType=INTEGER},
+      </if>
+      <if test="record.good != null" >
+        good = #{record.good,jdbcType=INTEGER},
+      </if>
+      <if test="record.articleid != null" >
+        articleId = #{record.articleid,jdbcType=BIGINT},
+      </if>
+      <if test="record.replyto != null" >
+        replyTo = #{record.replyto,jdbcType=BIGINT},
+      </if>
+      <if test="record.content != null" >
+        content = #{record.content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update reply
+    set id = #{record.id,jdbcType=BIGINT},
+      responseTime = #{record.responsetime,jdbcType=TIMESTAMP},
+      userId = #{record.userid,jdbcType=INTEGER},
+      good = #{record.good,jdbcType=INTEGER},
+      articleId = #{record.articleid,jdbcType=BIGINT},
+      replyTo = #{record.replyto,jdbcType=BIGINT},
+      content = #{record.content,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update reply
+    set id = #{record.id,jdbcType=BIGINT},
+      responseTime = #{record.responsetime,jdbcType=TIMESTAMP},
+      userId = #{record.userid,jdbcType=INTEGER},
+      good = #{record.good,jdbcType=INTEGER},
+      articleId = #{record.articleid,jdbcType=BIGINT},
+      replyTo = #{record.replyto,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kwbbin.bean.Reply" >
+    update reply
+    <set >
+      <if test="responsetime != null" >
+        responseTime = #{responsetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userid != null" >
+        userId = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="good != null" >
+        good = #{good,jdbcType=INTEGER},
+      </if>
+      <if test="articleid != null" >
+        articleId = #{articleid,jdbcType=BIGINT},
+      </if>
+      <if test="replyto != null" >
+        replyTo = #{replyto,jdbcType=BIGINT},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.kwbbin.bean.Reply" >
+    update reply
+    set responseTime = #{responsetime,jdbcType=TIMESTAMP},
+      userId = #{userid,jdbcType=INTEGER},
+      good = #{good,jdbcType=INTEGER},
+      articleId = #{articleid,jdbcType=BIGINT},
+      replyTo = #{replyto,jdbcType=BIGINT},
+      content = #{content,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kwbbin.bean.Reply" >
+    update reply
+    set responseTime = #{responsetime,jdbcType=TIMESTAMP},
+      userId = #{userid,jdbcType=INTEGER},
+      good = #{good,jdbcType=INTEGER},
+      articleId = #{articleid,jdbcType=BIGINT},
+      replyTo = #{replyto,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

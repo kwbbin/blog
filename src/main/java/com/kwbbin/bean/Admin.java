@@ -1,12 +1,5 @@
 package com.kwbbin.bean;
 
-import lombok.*;
-
-@AllArgsConstructor
-@NoArgsConstructor
-@Setter
-@Getter
-@ToString
 public class Admin {
     private Integer id;
 
@@ -18,8 +11,43 @@ public class Admin {
 
     private String nickName;
 
-    public Admin(String nickName, String password) {
-        this.nickName = nickName;
-        this.password = password;
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name == null ? null : name.trim();
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password == null ? null : password.trim();
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone == null ? null : phone.trim();
+    }
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName == null ? null : nickName.trim();
     }
 }

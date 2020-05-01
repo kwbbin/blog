@@ -20,7 +20,7 @@ public class ManageLoginController {
     public String defaultView(HttpServletRequest request){
         Admin admin=(Admin)request.getSession().getAttribute("admin");
         if(admin!=null){
-            return "manage/main";
+            return "/manage/main_box";
         }
         return "/manage/index";
     }
@@ -29,7 +29,10 @@ public class ManageLoginController {
     public String manageLogin(String userName, String userPwd, HttpServletResponse response, HttpServletRequest request){
         Admin admin=(Admin)request.getSession().getAttribute("admin");
         if(admin==null){
-            admin=service.selectByNameAndPassword(new Admin(userName,userPwd));
+            Admin ad = new Admin();
+            ad.setName(userName);
+            ad.setPassword(userPwd);
+            admin=service.selectByNameAndPassword(ad);
         }
 
         if(admin!=null){
@@ -57,7 +60,7 @@ public class ManageLoginController {
                 response.addCookie(cookie2);
             }
 
-            return "manage/main";
+            return "/manage/main_box";
         }
 
         return "/manage/index";

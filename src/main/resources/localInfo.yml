@@ -1,2 +1,4 @@
 
-localInfoPath: http://localhost:8080
+localInfoPath: http://localhost:8083
+
+imageUrl: C:/blog/images

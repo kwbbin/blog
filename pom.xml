@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.kwbbin</groupId>
-    <artifactId>thymeleaf-mybatis-durid</artifactId>
+    <artifactId>blog</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>thymeleaf-mybatis-durid</name>
-    <description>Demo project for Spring Boot</description>
+    <name>blog</name>
+    <description>myblog</description>
 
     <properties>
         <java.version>1.8</java.version>
@@ -38,6 +38,12 @@
             <artifactId>mysql-connector-java</artifactId>
             <scope>runtime</scope>
             <version>5.1.35</version>
+        </dependency>
+        <!-- 数据库驱动 -->
+        <dependency>
+            <groupId>org.mariadb.jdbc</groupId>
+            <artifactId>mariadb-java-client</artifactId>
+            <version>2.5.2</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -77,6 +83,24 @@
             <artifactId>fastjson</artifactId>
             <version>1.2.47</version>
         </dependency>
+
+<!--        分页-->
+
+        <!-- https://mvnrepository.com/artifact/com.github.pagehelper/pagehelper-spring-boot-starter -->
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper-spring-boot-starter</artifactId>
+            <version>1.2.13</version>
+        </dependency>
+
+
+        <!--devtools热部署-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <optional>true</optional>
+            <scope>true</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -95,6 +119,7 @@
                     <overwrite>true</overwrite>
                 </configuration>
             </plugin>
+
         </plugins>
     </build>
 

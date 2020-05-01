@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>kwbbin的博客</title>
+    <script src="/static/js/JQuery/jquery-1.11.1.js"></script>
+    <link href="/static/js/bootstrap/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="/stylesheet" type="text/css" href="/static/js/layUI/layui.css">
+    <link href="/static/css/nav.css" rel="stylesheet">
+    <link href="/static/css/article-detail.css">
+    <script src="/static/js/layUI/layui.all.js" type="text/javascript"></script>
+    <script src="/static/js/bootstrap/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+
+
+    <link rel="stylesheet" href="/static/editor-md/css/editormd.css">
+    <script src="/static/js/JQuery/jquery-1.11.1.js"></script>
+    <script src="/static/editor-md/lib/marked.min.js"></script>
+    <script src="/static/editor-md/lib/prettify.min.js"></script>
+    <script src="/static/editor-md/lib/raphael.min.js"></script>
+    <script src="/static/editor-md/lib/underscore.min.js"></script>
+    <script src="/static/editor-md/lib/sequence-diagram.min.js"></script>
+    <script src="/static/editor-md/lib/flowchart.min.js"></script>
+    <script src="/static/editor-md/lib/jquery.flowchart.min.js"></script>
+    <script src="/static/editor-md/editormd.amd.min.js"></script>
+
+    <style>
+
+        #main-left {
+            background: #fff;
+            min-height: 400px;
+            border-radius: 3px;
+            padding: 20px;
+            padding-bottom: 50px;
+        }
+
+        .title{
+            font-size: 16px;
+            line-height: 40px;
+            border-bottom: 1px solid #eee;
+            color: #484848;
+            font-weight: normal;
+            position: relative;
+            margin-bottom: 10px;
+        }
+
+        .title:after {
+            content: "";
+            position: absolute;
+            width: 60px;
+            height: 2px;
+            content: "";
+            background: #000;
+            left: 0;
+            bottom: 0;
+            /*-moz-transition: all .5s ease;*/
+            -webkit-transition: all .5s ease;
+            transition: all .5s ease;
+        }
+
+        .title:hover::after {
+            width: 80px;
+        }
+
+        .jumbotron{
+            padding-top: 0;
+            background: rgba(255,255,255,0.0);
+        }
+        .content-box{
+            background: rgba(255,255,255,0.0);
+        }
+
+        /* 中等屏幕（桌面显示器，大于等于 992px） */
+        @media (min-width: 992px) {
+            .content-box{
+                padding: 0 60px;
+            }
+
+        }
+
+        #main-left .con_tilte {
+            font-size: 22px;
+            margin-top: 20px;
+            font-family: Georgia, Palatino, serif;
+            color: #111111;
+        }
+
+        #main-left .bloginfo{
+            margin-top: 20px;
+            color: rgb(153, 153, 153);
+            line-height: 34px;
+            overflow: hidden;
+        }
+
+        #main-left .avatar {
+            position: relative;
+            float: left;
+            width: 30px;
+            height: 30px;
+            display: block;
+            border-radius: 100%;
+            padding: 2px;
+            margin-right: 10px;
+            background: linear-gradient(to right top, rgba(0, 153, 255, 0.9), rgba(42, 228, 197, 0.7));
+        }
+
+        #main-left .avatar img {
+            position: relative;
+            top:-7px;
+            width: 100%;
+            border-radius: 50%;
+        }
+
+        #main-left .avatar::after {
+            content: "";
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            right: 0px;
+            bottom: 0px;
+            background: url("/static/img/v.png") 0% 0% / 12px no-repeat;
+        }
+
+        .btn{
+            width:160px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            border-radius: 3px;
+            background: #337ab7;
+            padding: 0;
+            color: #fff;
+            box-shadow: 1px 2px 6px 0px rgba(0,0,0,.2);
+            outline: none;
+        }
+
+    </style>
+</head>
+<body >
+<div th:insert="nav :: nav"></div>
+
+
+<div class="jumbotron clearfix content-padding content-box" >
+    <div class="jumbotron col-md-9" >
+        <div class="main-left" id="main-left">
+            <div class="main-left-head">
+                <h2 class="title">文章详情</h2>
+            </div>
+            <div>
+                <h1 class="con_tilte">springMVC-07-文件上传</h1>
+                <p class="bloginfo">
+                    <i class="avatar">
+                        <img src="https://www.huangxin.work/resource/images/photo.jpeg">
+                    </i>
+                    <span>2019-02-14 18:20:03</span>
+                    <span>【个人日记】</span>
+                    <span>
+                        <span id="view">143</span>
+                        人已围观
+                    </span>
+                </p>
+            </div>
+            <div id="doc-content" >
+                <!-- 显示数据 -->
+                <textarea>
+穷一点可以，但人穷志不能穷！
+不要成为了人穷志短的人，
+要勇闯世界，做不了顶天立地的人，
+最起码要做个有用的人，
+做个对得起自己的人。
+一个人
+丑一点可以，但人丑心不能丑！
+仁慈善良不在乎一个人的外表，
+只在乎人的内心！
+一个人
+瘦小一点可以，但人小心不能小！
+
+![](http://localhost:8083/blog/file/1588244696369_950.jpg)
+
+    <style>
+        body{
+            background: #E9EAED;
+            min-height: 400px;
+        }
+    </style></textarea>
+            </div>
+            <div style="padding-left: 20px;">
+                <p><span>Tags:&nbsp;&nbsp;</span><a href="#">前端</a></p>
+            </div>
+            <div style="margin-top: 20px;text-align: center;">
+                <button type="button" class="btn">很赞呀☺</button>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 jumbotron">
+        <div class="panel panel-default">
+            <div class="panel-heading">最近更新</div>
+            <div class="panel-body">
+                <ul>
+                    <li>sdfsfsdfsdfdsf</li>
+                    <li>sdfsfsdfsdfdsf</li>
+                    <li>sdfsfsdfsdfdsf</li>
+                    <li>sdfsfsdfsdfdsf</li>
+                    <li>sdfsfsdfsdfdsf</li>
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="footer :: footer"></div>
+<style>
+    body{
+        background: #E9EAED;
+        min-height: 400px;
+    }
+
+    .jumbotron p{
+        font-size: 15px;
+    }
+</style>
+<script>
+    var testEditor;
+    $(function () {
+        testEditor = editormd.markdownToHTML("doc-content", {//注意：这里是上面DIV的id
+            htmlDecode: "style,script,iframe",
+            emoji: true,
+            taskList: true,
+            tex: true, // 默认不解析
+            flowChart: true, // 默认不解析
+            sequenceDiagram: true, // 默认不解析
+            codeFold: true
+        });
+    });
+</script>
+<!--页面背景特效-->
+<script src="/static/js/background.js" count="200" zindex="-2" opacity="0.8" color="102,145,223" type="text/javascript"></script>
+</body>
+</html>
