@@ -27,15 +27,41 @@
                 <div class="layui-input-block">
                     <input type="text" id="sortTitle" name="title" required  lay-verify="required" placeholder="请输入分类名称" autocomplete="off" class="layui-input">
                 </div>
-                <button style="margin-top: 30px" class="layui-btn" lay-submit lay-filter="submit">添加</button>
             </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">访问路径</label>
+                <div class="layui-input-block">
+                    <input type="text" id="path" name="path" required  lay-verify="required" placeholder="请输入修改后的访问路径" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">描述</label>
+                <div class="layui-input-block">
+                    <input type="text" id="desc" name="desc" required  lay-verify="required" placeholder="请输入修改后的描述" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div style="font-size: 14px;text-align: left;padding-left: 38px;">
+                <label >状态&nbsp;&nbsp;</label>
+                <label ><input type="radio" name="code" value="0">显示&nbsp;&nbsp;</label>
+                <label ><input type="radio" name="code" value="1">不显示</label>
+            </div>
+            <button style="margin-top: 30px" class="layui-btn" lay-submit lay-filter="submit">添加</button>
         </form>
     </div>
 </div>
 
-<style>
-    
-</style>
+<script>
+    layui.use('form', function(){
+        var form = layui.form;
+        form.render();
+
+        //监听提交
+        form.on('submit(submit)', function(data){
+            window.parent.timeOut("添加成功！");
+        });
+
+    });
+</script>
 
 </body>
 </html>

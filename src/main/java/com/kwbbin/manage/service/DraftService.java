@@ -9,4 +9,5 @@ import java.util.List;
 public interface DraftService {
     List<DraftVo> selectAllDraft();
     Draft selectDraftById(Long id);
+    void deleteDraftById(Long id);
 }

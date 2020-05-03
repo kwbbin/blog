@@ -25,7 +25,7 @@
             <ul class="layui-tab-title">
                 <li class="layui-this">标签查询</li>
                 <li>添加标签</li>
-                <li>查看标签的文章</li>
+<!--                <li>查看标签的文章</li>-->
 <!--                <li>商品管理</li>-->
 <!--                <li>订单管理</li>-->
             </ul>
@@ -49,14 +49,20 @@
                             <td th:text="${tag.tagName}"></td>
                             <td>
                                 <button type="button" class="layui-btn" th:onclick="alertIdFun([[${tag.id}]],[[${tag.tagName}]])">编辑</button>
-                                <button type="button" class="layui-btn layui-btn-danger">删除</button>
+                                <button type="button" class="layui-btn layui-btn-danger" th:onclick="deleteFun([[${tag.id}]])">删除</button>
                             </td>
                         </tr>
                         </tbody>
                     </table>
                 </div>
-                <div class="layui-tab-item">内容2</div>
-                <div class="layui-tab-item">内容3</div>
+                <div class="layui-tab-item" style="width:900px;padding-top: 50px;">
+                    <label class="layui-form-label" style="width: 170px">请输入要添加标签的名称</label>
+                    <div class="layui-input-block" style="display: inline-block ;width: 400px;margin-right: 30px;">
+                        <input type="text" name="tagsName" style="position: relative;left: -70px;" required  id="tagsNameAdd" lay-verify="required" placeholder="请输入名称" autocomplete="off" class="layui-input">
+                    </div>
+                    <button type="button" class="layui-btn " th:onclick="addFun()">添加</button>
+                </div>
+<!--                <div class="layui-tab-item">内容3</div>-->
             </div>
         </div>
     </div>
@@ -87,6 +93,55 @@
         //…
     });
 
+    layui.use('form', function(){
+        var form = layui.form;
+        form.render();
+
+        //监听提交
+        form.on('submit(submit)', function(data){
+            window.parent.timeOut("修改成功！");
+        });
+
+    });
+
+    function addFun(){
+        var obj = $("#tagsNameAdd")[0].value
+        var str = [
+            {name:'tagsName',value:obj}
+        ]
+        createForm("/manage/addTags",str)
+        window.parent.timeOut("添加成功！");
+    }
+
+
+
+    function deleteFun(obj){
+        var str = [
+            {name:'tagsId',value:obj}
+        ]
+        createForm("/manage/deleteTags",str)
+        window.parent.timeOut("删除成功！");
+    }
+
+    function createForm(url,array) {
+        //参数示例
+        // [
+        //     {name:sfsf,value:''},
+        //     {name:sfsf,value:''}
+        // ]
+        var form = $('<form></form>');
+        form.attr('action', url);
+        form.attr("method",'post');
+        form.attr("style",'display:none');
+        var l = array.length;
+        if(l>0){
+            for(var i = 0;i<l;i++){
+                form.append($('<input type="text" name="'+array[i].name+'" value="'+array[i].value+'" />'))
+            }
+        }
+        $("body").append(form);
+        form.submit();
+    }
 
     function alertIdFun(id,name){
         $("#inputBox").css("display","block");

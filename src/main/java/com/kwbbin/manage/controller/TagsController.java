@@ -23,4 +23,16 @@ public class TagsController {
         tagsService.updateTages(tags);
         return "redirect:/manage/tags";
     }
+
+    @RequestMapping("/deleteTags")
+    public String deleteTags(Integer tagsId){
+        tagsService.deleteTages(tagsId);
+        return "redirect:/manage/tags";
+    }
+
+    @RequestMapping("/addTags")
+    public String deleteTags(String tagsName){
+        tagsService.addTages(tagsName);
+        return "redirect:/manage/tags";
+    }
 }

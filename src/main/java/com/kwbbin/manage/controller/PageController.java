@@ -37,8 +37,14 @@ public class PageController {
 
     @RequestMapping("/searchAllArticle")
     public String selectAllArticleHtml(Model model){
-        model.addAttribute("articleList",service.selectAllArticle());
+        model.addAttribute("articleList",service.selectAllArticle(1,6));
         return "/manage/search-article";
+    }
+
+    @RequestMapping("/guessLike")
+    public String guessLikeHtml(Model model){
+        model.addAttribute("articleList",service.getAllGuessLike());
+        return "/manage/guess-like";
     }
 
     @RequestMapping("/statistics")
@@ -69,6 +75,12 @@ public class PageController {
         model.addAttribute("articleType",service.selectAll());
         model.addAttribute("tags",tagsService.getAllTags());
         return "/manage/add-article";
+    }
+
+    @RequestMapping("/searchArticleByCondition")
+    public String searchArticleByConditionHtml(Model model){
+        model.addAttribute("articleList",null);
+        return "/manage/article-search-condition";
     }
 
 

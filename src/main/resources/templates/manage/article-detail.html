@@ -183,6 +183,7 @@
         form.on('submit(saveDraft)', function(data){
             $("#state")[0].value=-3;
 
+            window.parent.timeOut("保存成功！");
         });
 
     });

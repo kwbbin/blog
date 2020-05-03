@@ -10,4 +10,5 @@ public class ArticleVo extends Article {
     String articleOriginStr;
     String articleWayStr;
     String articleTypeStr;
+    Long dateLong;
 }

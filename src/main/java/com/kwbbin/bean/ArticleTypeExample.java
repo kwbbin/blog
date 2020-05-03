@@ -303,6 +303,146 @@ public class ArticleTypeExample {
             addCriterion("code not between", value1, value2, "code");
             return (Criteria) this;
         }
+
+        public Criteria andPathIsNull() {
+            addCriterion("path is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPathIsNotNull() {
+            addCriterion("path is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPathEqualTo(String value) {
+            addCriterion("path =", value, "path");
+            return (Criteria) this;
+        }
+
+        public Criteria andPathNotEqualTo(String value) {
+            addCriterion("path <>", value, "path");
+            return (Criteria) this;
+        }
+
+        public Criteria andPathGreaterThan(String value) {
+            addCriterion("path >", value, "path");
+            return (Criteria) this;
+        }
+
+        public Criteria andPathGreaterThanOrEqualTo(String value) {
+            addCriterion("path >=", value, "path");
+            return (Criteria) this;
+        }
+
+        public Criteria andPathLessThan(String value) {
+            addCriterion("path <", value, "path");
+            return (Criteria) this;
+        }
+
+        public Criteria andPathLessThanOrEqualTo(String value) {
+            addCriterion("path <=", value, "path");
+            return (Criteria) this;
+        }
+
+        public Criteria andPathLike(String value) {
+            addCriterion("path like", value, "path");
+            return (Criteria) this;
+        }
+
+        public Criteria andPathNotLike(String value) {
+            addCriterion("path not like", value, "path");
+            return (Criteria) this;
+        }
+
+        public Criteria andPathIn(List<String> values) {
+            addCriterion("path in", values, "path");
+            return (Criteria) this;
+        }
+
+        public Criteria andPathNotIn(List<String> values) {
+            addCriterion("path not in", values, "path");
+            return (Criteria) this;
+        }
+
+        public Criteria andPathBetween(String value1, String value2) {
+            addCriterion("path between", value1, value2, "path");
+            return (Criteria) this;
+        }
+
+        public Criteria andPathNotBetween(String value1, String value2) {
+            addCriterion("path not between", value1, value2, "path");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeDescIsNull() {
+            addCriterion("type_desc is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeDescIsNotNull() {
+            addCriterion("type_desc is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeDescEqualTo(String value) {
+            addCriterion("type_desc =", value, "typeDesc");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeDescNotEqualTo(String value) {
+            addCriterion("type_desc <>", value, "typeDesc");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeDescGreaterThan(String value) {
+            addCriterion("type_desc >", value, "typeDesc");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeDescGreaterThanOrEqualTo(String value) {
+            addCriterion("type_desc >=", value, "typeDesc");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeDescLessThan(String value) {
+            addCriterion("type_desc <", value, "typeDesc");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeDescLessThanOrEqualTo(String value) {
+            addCriterion("type_desc <=", value, "typeDesc");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeDescLike(String value) {
+            addCriterion("type_desc like", value, "typeDesc");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeDescNotLike(String value) {
+            addCriterion("type_desc not like", value, "typeDesc");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeDescIn(List<String> values) {
+            addCriterion("type_desc in", values, "typeDesc");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeDescNotIn(List<String> values) {
+            addCriterion("type_desc not in", values, "typeDesc");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeDescBetween(String value1, String value2) {
+            addCriterion("type_desc between", value1, value2, "typeDesc");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeDescNotBetween(String value1, String value2) {
+            addCriterion("type_desc not between", value1, value2, "typeDesc");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

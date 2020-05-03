@@ -8,4 +8,5 @@ public interface ArticleTypeService {
     List<ArticleType> getArticleTypeList ();
     void updateArticleType(ArticleType articleType);
     void insertArticleType(ArticleType articleType);
+    Integer deleteArticleType(Integer id);
 }

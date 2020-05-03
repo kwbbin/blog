@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="zh-CN"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>kwbbin博客管理系统</title>
+    <link rel="stylesheet" type="text/css" href="/static/js/layUI/layui.css">
+    <script src="/static/js/layUI/layui.all.js" type="text/javascript"></script>
+    <script src="/static/js/JQuery/jquery-1.11.1.js" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="/static/js/bootstrap/bootstrap-3.3.7/css/bootstrap.min.css">
+    <script src="/static/js/bootstrap/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+
+
+</head>
+
+<body class="user-select" style="padding:10px 10px;">
+<div class="layui-card">
+    <div class="layui-card-header layui-elem-quote layui-quote-nm" >查找文章</div>
+    <div class="layui-card-body">
+        <div>
+            <div style="width: 250px;margin-bottom: 10px;display: inline-block;margin-right: 20px;">
+                <label>输入关键字</label>
+                <div >
+                    <input type="text" class="layui-input" name="condition" id="condition"  placeholder="请输入关键字" autocomplete="off">
+                </div>
+            </div>
+            <div style="width: 250px;display: inline-block;">
+                <label>请选择查询范围</label>
+                <div>
+                    <select name="Range"  id="Range" style="height: 37px;width: 250px;border: 1px solid #D2D2D2;">
+                        <option value=""></option>
+                        <option value="0">查找标题</option>
+                        <option value="1">查找内容</option>
+<!--                        <option>3</option>-->
+                    </select>
+                </div>
+
+            </div>
+            <button class="layui-btn" onclick="findFun()">查找</button>
+        </div>
+
+        <hr>
+        <div>
+            <table class="layui-table">
+                <colgroup>
+                    <col >
+                    <col >
+                    <col width="300">
+                    <!--                <col>-->
+                    <col>
+                    <col>
+                    <col>
+                    <col>
+                    <col width="200">
+                </colgroup>
+                <thead>
+                <tr>
+                    <th>文章id</th>
+                    <th>标题</th>
+                    <th>内容</th>
+                    <!--                <th>标签</th>-->
+                    <th>类型</th>
+                    <th>分类</th>
+                    <th>公开度</th>
+                    <th>时间</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody th:each="art : ${articleList}" >
+                <tr>
+                    <td th:text="${art.id}"></td>
+                    <td th:text="${art.title}"></td>
+                    <td th:text="${art.content}"></td>
+                    <td th:text="${art.articleOriginStr}" ></td>
+                    <td th:text="${art.articleTypeStr}" ></td>
+                    <td th:text="${art.articleWayStr}"></td>
+                    <td th:text="${ #dates.format(art.postedTime,'yyyy-MM-dd HH:mm:ss')}"></td>
+                    <td>
+                        <button class="layui-btn"   th:onclick="editFun([[${art.id}]])" >编辑</button>
+                        <button class="layui-btn layui-btn-primary"  th:onclick="deleteFun([[${art.id}]])"  >删除</button>
+                    </td>
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<style>
+
+</style>
+
+
+<script>
+
+    function editFun(id){
+        var parm = [
+            {name:'id',value:id},
+            {name:'deleteState',value:'0'}
+        ]
+        createForm("/manage/getArticleById",parm)
+    }
+
+    function deleteFun(id){
+        if(confirm('确定要删除吗？')){
+
+            window.parent.timeOut("删除成功！");
+
+        }else{
+            return false;
+        }
+        var parm = [
+            {name:'id',value:id},
+            {name:'deleteState',value:'-1'}
+        ]
+
+        createForm("/manage/getArticleById",parm)
+    }
+
+    function findFun(){
+        var range = $('#Range')[0].value;
+        var condition = $("#condition")[0].value;
+        var parm = [
+            {name:'str',value:condition},
+            {name:'range',value:range}
+        ]
+        createForm("/manage/findArticle",parm)
+    }
+
+    //调用父页面的方法
+    // window.parent.fun1();
+    //查找父页面元素
+    // $('#div', window.parent.document).html();
+    //调用父页面中定义的变量
+    // parent.name;
+
+    function createForm(url,array) {
+        //参数示例
+        // [
+        //     {name:sfsf,value:''},
+        //     {name:sfsf,value:''}
+        // ]
+        var form = $('<form></form>');
+        form.attr('action', url);
+        form.attr("method",'post');
+        form.attr("style",'display:none');
+        var l = array.length;
+        if(l>0){
+            for(var i = 0;i<l;i++){
+                form.append($('<input type="text" name="'+array[i].name+'" value="'+array[i].value+'" />'))
+            }
+        }
+        $("body").append(form);
+        form.submit();
+    }
+</script>
+</body>
+</html>

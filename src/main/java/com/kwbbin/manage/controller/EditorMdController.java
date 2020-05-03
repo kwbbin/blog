@@ -204,6 +204,7 @@ public class EditorMdController {
             article.setPostedTime(time);
             article.setState(Byte.parseByte(state));
             article.setVisits(0);
+            article.setGuessYouLike(1);
             articleMapper.insert(article);
 
 

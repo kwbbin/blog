@@ -1,7 +1,10 @@
 package com.kwbbin.bean;
 
+import lombok.ToString;
+
 import java.util.Date;
 
+@ToString
 public class Article {
     private Long id;
 
@@ -24,6 +27,8 @@ public class Article {
     private String imageurl;
 
     private Integer visits;
+
+    private Integer guessYouLike;
 
     private String content;
 
@@ -113,6 +118,14 @@ public class Article {
 
     public void setVisits(Integer visits) {
         this.visits = visits;
+    }
+
+    public Integer getGuessYouLike() {
+        return guessYouLike;
+    }
+
+    public void setGuessYouLike(Integer guessYouLike) {
+        this.guessYouLike = guessYouLike;
     }
 
     public String getContent() {

@@ -7,8 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>kwbbin博客管理系统</title>
     <link rel="stylesheet" type="text/css" href="/static/js/layUI/layui.css">
+    <link rel="stylesheet" type="text/css" href="/static/js/bootstrap/bootstrap-3.3.7/css/bootstrap.min.css">
     <script src="/static/js/layUI/layui.all.js" type="text/javascript"></script>
     <script src="/static/js/JQuery/jquery-1.11.1.js" type="text/javascript"></script>
+    <script src="/static/js/bootstrap/bootstrap-3.3.7/js/bootstrap.min.js"></script>
 
 
 </head>
@@ -42,12 +44,11 @@
                 <th>操作</th>
             </tr>
             </thead>
-            <tbody th:each="art : ${articleList}" >
+            <tbody th:each="art : ${articleList.list}" >
             <tr>
                 <td th:text="${art.id}"></td>
                 <td th:text="${art.title}"></td>
                 <td th:text="${art.content}"></td>
-<!--                <td th:text="${art.labels}"></td>-->
                 <td th:text="${art.articleOriginStr}" ></td>
                 <td th:text="${art.articleTypeStr}" ></td>
                 <td th:text="${art.articleWayStr}"></td>
@@ -61,6 +62,45 @@
 
             </tbody>
         </table>
+
+<!--        分页-->
+        <div style="text-align: center">
+            <nav aria-label="Page navigation">
+                <ul class="pagination">
+                    <li th:class="${articleList.hasPreviousPage}? '' : 'disabled notClick'">
+                        <a  th:href="'/manage/getAllArticleVoPage?pageNum='+${articleList.prePage}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <li th:if="(${articleList.pageNum}- 3) ge  ${articleList.navigateFirstPage}" >
+                        <a th:href="'/manage/getAllArticleVoPage?pageNum='+(${articleList.pageNum} -3)" th:text="${articleList.pageNum} -3" href="#"></a>
+                    </li>
+                    <li th:if="(${articleList.pageNum}- 2) ge ${articleList.navigateFirstPage}" >
+                        <a th:href="'/manage/getAllArticleVoPage?pageNum='+(${articleList.pageNum} -2)" th:text="${articleList.pageNum} -2" href="#"></a>
+                    </li>
+                    <li th:if="(${articleList.pageNum}- 1) ge ${articleList.navigateFirstPage}" >
+                        <a th:href="'/manage/getAllArticleVoPage?pageNum='+(${articleList.pageNum} -1)" th:text="${articleList.pageNum} -1" href="#"></a>
+                    </li>
+                    <li class="active"><a href="#" th:text="${articleList.pageNum}"></a></li>
+                    <li th:if="(${articleList.pageNum}+ 1) le ${articleList.navigateLastPage}" >
+                        <a th:href="'/manage/getAllArticleVoPage?pageNum='+(${articleList.pageNum} +1)" th:text="${articleList.pageNum} +1" href="#"></a>
+                    </li>
+                    <li th:if="(${articleList.pageNum}+ 2) le ${articleList.navigateLastPage}" >
+                        <a th:href="'/manage/getAllArticleVoPage?pageNum='+(${articleList.pageNum} +2)" th:text="${articleList.pageNum} +2" href="#"></a>
+                    </li>
+                    <li th:if="(${articleList.pageNum}+ 3) le ${articleList.navigateLastPage}" >
+                        <a th:href="'/manage/getAllArticleVoPage?pageNum='+(${articleList.pageNum} +3)" th:text="${articleList.pageNum} +3" href="#"></a>
+                    </li>
+
+                    <li  th:class="${articleList.hasNextPage}? '' : 'disabled notClick'">
+                        <a th:href="'/manage/getAllArticleVoPage?pageNum='+${articleList.nextPage}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
     </div>
 </div>
 
@@ -68,6 +108,11 @@
 
 </style>
 <script>
+
+
+    $(".notClick").bind("click",function(){
+            return false;
+        })
 
     function submitFun(id,str){
         if(str=='-1'){
@@ -87,12 +132,15 @@
             input1=$('<input type="text" name="deleteState" value="0" />');
         }else{
             input1=$('<input type="text" name="deleteState" value="-1" />');
+            window.parent.timeOut("删除成功！");
         }
         form.append(input);
         form.append(input1);
         $("body").append(form);
         form.submit();
     }
+
+
 
 </script>
 </body>

@@ -54,7 +54,15 @@ public class DraftController {
         modelAndView.addObject("articleTypeVo",listATVo);
         modelAndView.addObject("draftId",id);
         modelAndView.addObject("tags",tagsService.getAllDraftTagsVo(id));
+
         return  modelAndView;
+    }
+
+    @RequestMapping("/deleteDraft")
+    public ModelAndView deleteDraft(Long id,ModelAndView modelAndView){
+        draftService.deleteDraftById(id);
+        modelAndView.setViewName("redirect:/manage/draft");
+        return modelAndView;
     }
 
 }

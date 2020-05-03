@@ -1,5 +1,6 @@
 package com.kwbbin.util;
 
+import com.github.pagehelper.PageInfo;
 import com.kwbbin.Vo.ArticleVo;
 import com.kwbbin.bean.Article;
 import com.kwbbin.bean.ArticleType;
@@ -35,4 +36,24 @@ public class ArticleUtil {
         return articleVo;
     }
 
+
+    public static void PageInfoTranslate(PageInfo p1,PageInfo p2){
+        p2.setTotal(p1.getTotal());
+        p2.setPageNum(p1.getPageNum());
+        p2.setPageSize(p1.getPageSize());
+        p2.setStartRow(p1.getStartRow());
+        p2.setSize(p1.getSize());
+        p2.setEndRow(p1.getEndRow());
+        p2.setPages(p1.getPages());
+        p2.setPrePage(p1.getPrePage());
+        p2.setNextPage(p1.getNextPage());
+        p2.setIsFirstPage(p1.isIsFirstPage());
+        p2.setIsLastPage(p1.isIsLastPage());
+        p2.setHasNextPage(p1.isHasNextPage());
+        p2.setHasPreviousPage(p1.isHasPreviousPage());
+        p2.setNavigatePages(p1.getNavigatePages());
+        p2.setNavigatepageNums(p1.getNavigatepageNums());
+        p2.setNavigateFirstPage(p1.getNavigateFirstPage());
+        p2.setNavigateLastPage(p1.getNavigateLastPage());
+    }
 }

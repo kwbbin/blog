@@ -22,4 +22,8 @@ public interface TagsService {
     List<TagsVo> getAllTagsVo(Long ArticleId);
 
     List<TagsVo> getAllDraftTagsVo(Long draftId);
+
+    void deleteTages(Integer id);
+
+    void addTages(String tagsName);
 }

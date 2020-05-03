@@ -96,4 +96,16 @@ public class TagsServiceImpl implements  TagsService {
         }
         return list3;
     }
+
+    @Override
+    public void deleteTages(Integer id) {
+        tagsMapper.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public void addTages(String tagsName) {
+        Tags tags = new Tags();
+        tags.setTagName(tagsName);
+        tagsMapper.insert(tags);
+    }
 }

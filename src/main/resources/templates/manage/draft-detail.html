@@ -181,6 +181,7 @@
         form.on('submit(saveDraft)', function(data){
             $("#state")[0].value=-2;
 
+            window.parent.timeOut("修改成功！");
         });
 
         //监听提交
@@ -202,6 +203,8 @@
                 alert("请选择一个以上的标签");
                 return false;
             }
+
+            window.parent.timeOut("成功发表！");
 
         });
 

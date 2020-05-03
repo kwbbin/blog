@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>kwbbin的博客</title>
     <script src="static/js/JQuery/jquery-1.11.1.js"></script>
+    <script src="/static/js/common.js"></script>
     <link href="static/js/bootstrap/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/static/css/index.css">
     <link rel="stylesheet" type="text/css" href="/static/js/layUI/layui.css">
@@ -21,7 +22,10 @@
 </div>
 
 <div class="jumbotron clearfix content-padding content-box" >
-    <div class="jumbotron col-md-9" >
+    <div class="jumbotron col-md-9 content-box-secon" >
+        <div class="main-left-head">
+            <h2 class="title">热门推荐</h2>
+        </div>
         <div class="row">
             <div class="col-sm-6 col-md-4" th:each="art : ${hotArticle.list}">
                 <div class="thumbnail">
@@ -38,26 +42,138 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="col-md-3 jumbotron">
-        <div class="panel panel-default">
-            <div class="panel-heading">最近更新</div>
-            <div class="panel-body">
-                <ul class="my-ul">
-                    <li th:each="nart : ${newArticle.list}">
-                        <a href="#" th:text="${nart.title}" ></a>
-                    </li>
-                </ul>
-<!--                <ul class="list-group">-->
-<!--                    <li  class="list-group-item"  style="font-size: 13px;color: #00afff;" th:each="nart : ${newArticle.list}" >-->
-<!--                        <a href="#" th:text="${nart.title}" style="color: #00afff;"></a>-->
-<!--                    </li>-->
-<!--                </ul>-->
+
+        <div class="row" style="padding:0 15px;">
+            <div class="main-left-head">
+                <h2 class="title">猜你喜欢</h2>
+            </div>
+            <div class="clearfix"  >
+
+                <div class="my-media clearfix" th:each="gl : ${guessLike}">
+                    <div class="my-media-img">
+                        <a href="#">
+                            <img class="media-object" th:attr="src=${gl.imageurl}" alt="...">
+                        </a>
+                    </div>
+                    <div class="my-media-right " >
+                        <h4 class="my-media-head" ><span th:text="${gl.title}"></span><span class="media-head-label"><i class="layui-icon layui-icon-note"></i><span th:text="${gl.articleTypeStr}"></span></span></h4>
+                        <div th:text="${gl.content}"></div>
+                        <p>
+                            <span class="footA"><i  class="font-small glyphicon glyphicon-thumbs-up"></i><span class="good" th:text="${gl.good}"></span></span>
+                            <span class="footA"><i class="font-small glyphicon glyphicon-time"></i><span class="good" th:text="${#dates.format(gl.postedTime,'yyyy-MM-dd')}" ></span></span>
+                            <span class="footA"><i class="font-small glyphicon glyphicon-eye-open"></i><span class="good" th:text="${gl.visits}"></span></span>
+                        </p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+    <div class="col-md-3 jumbotron section-right">
+            <div>
+                <div class="main-left-head">
+                    <h2 class="title">最近更新</h2>
+                </div>
+                <div class="main-content">
+                    <ul class="my-ul">
+                        <li th:each="nart : ${newArticle.list}">
+                            <a href="#" th:text="${nart.title}" ></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="tuijian" style="margin-top: 40px;">
+                <div class="main-left-head">
+                    <h2 class="title">随机推荐</h2>
+                </div>
+                <div class="tuijian-box" >
+                    <section class="topnews imgscale">
+                        <a href="5-1.htm" ><img th:attr="src=${radomArticle[0].imageurl}"><span th:text="${radomArticle[0].title}"></span></a>
+                    </section>
+                    <ul>
+                        <li>
+                            <a href="#">
+                                <i><img  th:attr="src=${radomArticle[1].imageurl}"></i>
+                                <p th:text="${radomArticle[1].title}"></p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i><img  th:attr="src=${radomArticle[2].imageurl}"></i>
+                                <p  th:text="${radomArticle[2].title}"></p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i><img  th:attr="src=${radomArticle[3].imageurl}"></i>
+                                <p th:text="${radomArticle[3].title}"></p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i><img  th:attr="src=${radomArticle[4].imageurl}"></i>
+                                <p th:text="${radomArticle[4].title}"></p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i><img  th:attr="src=${radomArticle[5].imageurl}"></i>
+                                <p th:text="${radomArticle[5].title}"></p>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+            <div style="margin-top: 40px;margin-bottom: 40px;">
+                <div class="main-left-head">
+                    <h2 class="title">标签云</h2>
+                </div>
+                <div class="main-content">
+                    <ul class="right-label">
+                        <li th:each="tag : ${tagsList}">
+                            <a href="#" th:text="${tag.tagName}" ></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div>
+                <div class="main-left-head">
+                    <h2 class="title">友情链接</h2>
+                </div>
+                <div class="main-content">
+                    <ul class="frendLink">
+                        <li >
+                            <a href="#"  >师傅师傅说</a>
+                        </li>
+                        <li >
+                            <a href="#"  >师傅师傅sfsfsfsfsfsdfsdfsdf说</a>
+                        </li>
+                        <li >
+                            <a href="#"  >师傅师傅说</a>
+                        </li>
+                        <li >
+                            <a href="#"  >师傅师傅说</a>
+                        </li>
+                        <li >
+                            <a href="#"  >师傅师傅说</a>
+                        </li>
+                        <li >
+                            <a href="#"  >师傅师傅说</a>
+                        </li>
+                        <li >
+                            <a href="#"  >师傅师傅说</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+    </div>
 </div>
 <div th:replace="footer :: footer"></div>
+<script>
+
+</script>
 <!--下雪-->
 <script type="text/javascript" src="static/js/snow.js"></script>
 <!--页面背景特效-->

@@ -794,6 +794,66 @@ public class ArticleExample {
             addCriterion("visits not between", value1, value2, "visits");
             return (Criteria) this;
         }
+
+        public Criteria andGuessYouLikeIsNull() {
+            addCriterion("guess_you_like is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andGuessYouLikeIsNotNull() {
+            addCriterion("guess_you_like is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andGuessYouLikeEqualTo(Integer value) {
+            addCriterion("guess_you_like =", value, "guessYouLike");
+            return (Criteria) this;
+        }
+
+        public Criteria andGuessYouLikeNotEqualTo(Integer value) {
+            addCriterion("guess_you_like <>", value, "guessYouLike");
+            return (Criteria) this;
+        }
+
+        public Criteria andGuessYouLikeGreaterThan(Integer value) {
+            addCriterion("guess_you_like >", value, "guessYouLike");
+            return (Criteria) this;
+        }
+
+        public Criteria andGuessYouLikeGreaterThanOrEqualTo(Integer value) {
+            addCriterion("guess_you_like >=", value, "guessYouLike");
+            return (Criteria) this;
+        }
+
+        public Criteria andGuessYouLikeLessThan(Integer value) {
+            addCriterion("guess_you_like <", value, "guessYouLike");
+            return (Criteria) this;
+        }
+
+        public Criteria andGuessYouLikeLessThanOrEqualTo(Integer value) {
+            addCriterion("guess_you_like <=", value, "guessYouLike");
+            return (Criteria) this;
+        }
+
+        public Criteria andGuessYouLikeIn(List<Integer> values) {
+            addCriterion("guess_you_like in", values, "guessYouLike");
+            return (Criteria) this;
+        }
+
+        public Criteria andGuessYouLikeNotIn(List<Integer> values) {
+            addCriterion("guess_you_like not in", values, "guessYouLike");
+            return (Criteria) this;
+        }
+
+        public Criteria andGuessYouLikeBetween(Integer value1, Integer value2) {
+            addCriterion("guess_you_like between", value1, value2, "guessYouLike");
+            return (Criteria) this;
+        }
+
+        public Criteria andGuessYouLikeNotBetween(Integer value1, Integer value2) {
+            addCriterion("guess_you_like not between", value1, value2, "guessYouLike");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

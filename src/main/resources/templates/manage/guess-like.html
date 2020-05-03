@@ -19,20 +19,36 @@
 
 <body class="user-select" style="padding:10px 10px;">
 <div class="layui-card">
-    <div class="layui-card-header layui-elem-quote layui-quote-nm" >我的草稿</div>
+    <div class="layui-card-header layui-elem-quote layui-quote-nm" >猜你喜欢管理</div>
     <div class="layui-card-body">
+        <h3 style="padding-bottom: 20px;">添加文章到列表：</h3>
+        <div class="layui-form-item">
+            <label class="layui-form-label">文章id</label>
+            <div class="layui-input-inline">
+                <input type="text" name="articleId"  id="articleId" placeholder="请输入添加文章的id" autocomplete="off" class="layui-input">
+            </div>
+            <button class="layui-btn" th:onclick="addFun()" >添加</button>
+<!--            <div class="layui-form-mid layui-word-aux">辅助文字</div>-->
+        </div>
+        <hr>
         <table class="layui-table">
             <colgroup>
                 <col >
                 <col >
                 <col width="300">
+                <!--                <col>-->
                 <col>
+                <col>
+                <col>
+                <col>
+                <col width="200">
             </colgroup>
             <thead>
             <tr>
                 <th>文章id</th>
                 <th>标题</th>
                 <th>内容</th>
+                <!--                <th>标签</th>-->
                 <th>类型</th>
                 <th>分类</th>
                 <th>公开度</th>
@@ -40,7 +56,7 @@
                 <th>操作</th>
             </tr>
             </thead>
-            <tbody th:each="art : ${draftList}" >
+            <tbody th:each="art : ${articleList}" >
             <tr>
                 <td th:text="${art.id}"></td>
                 <td th:text="${art.title}"></td>
@@ -49,13 +65,9 @@
                 <td th:text="${art.articleTypeStr}" ></td>
                 <td th:text="${art.articleWayStr}"></td>
                 <td th:text="${ #dates.format(art.postedTime,'yyyy-MM-dd HH:mm:ss')}"></td>
-<!--                <form class="layui-form"  action="/manage/getDraftById">-->
-<!--                    <input name="id" id="state" type="text" style="display: none;" th:attr="value=${art.id}"/>-->
-                    <td>
-                        <button class="layui-btn"   th:onclick="'submitFun('+${art.id}+')'">继续编辑</button>
-                        <button class="layui-btn"   th:onclick="'deleteFun('+${art.id}+')'">删除</button>
-                    </td>
-<!--                </form>-->
+                <td>
+                    <button class="layui-btn" th:onclick="deleteFun([[${art.id}]])" >从该列表移除</button>
+                </td>
             </tr>
 
             </tbody>
@@ -63,46 +75,49 @@
     </div>
 </div>
 
-<style>
-
-</style>
 <script>
-    function submitFun(str) {
-        layui.use('form', function(){
-            var form = layui.form;
-            form.render();
+    function addFun(){
+        var id = $("#articleId")[0].value;
 
-            //监听提交
-            form.on('submit(submit)', function(data){
-                //获取表单区域所有值
-            });
+        var parm = [
+            {name:'id',value:id}
+        ]
 
-        });
+        createForm("/manage/addGuessLike",parm);
+        window.parent.timeOut("添加成功！");
     }
 
-    function submitFun(str) {
+    function deleteFun(id){
+        var parm = [
+            {name:'id',value:id}
+        ]
+
+        createForm("/manage/cancelGuessLike",parm);
+        window.parent.timeOut("移除成功！");
+    }
+
+
+    function createForm(url,array) {
+        //参数示例
+        // [
+        //     {name:sfsf,value:''},
+        //     {name:sfsf,value:''}
+        // ]
         var form = $('<form></form>');
-        form.attr('action', "/manage/getDraftById");
+        form.attr('action', url);
         form.attr("method",'post');
         form.attr("style",'display:none');
-        form.append($('<input type="text" name="id" value="'+str+'" />'));
+        var l = array.length;
+        if(l>0){
+            for(var i = 0;i<l;i++){
+                form.append($('<input type="text" name="'+array[i].name+'" value="'+array[i].value+'" />'))
+            }
+        }
         $("body").append(form);
         form.submit();
     }
-
-    function deleteFun(str) {
-        var form = $('<form></form>');
-        form.attr('action', "/manage/deleteDraft");
-        form.attr("method",'post');
-        form.attr("style",'display:none');
-        form.append($('<input type="text" name="id" value="'+str+'" />'));
-        $("body").append(form);
-        form.submit();
-        window.parent.timeOut("删除发表！");
-    }
-
-
 
 </script>
+
 </body>
 </html>

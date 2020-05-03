@@ -7,6 +7,10 @@ public class ArticleType {
 
     private String code;
 
+    private String path;
+
+    private String typeDesc;
+
     public Integer getId() {
         return id;
     }
@@ -29,5 +33,21 @@ public class ArticleType {
 
     public void setCode(String code) {
         this.code = code == null ? null : code.trim();
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path == null ? null : path.trim();
+    }
+
+    public String getTypeDesc() {
+        return typeDesc;
+    }
+
+    public void setTypeDesc(String typeDesc) {
+        this.typeDesc = typeDesc == null ? null : typeDesc.trim();
     }
 }

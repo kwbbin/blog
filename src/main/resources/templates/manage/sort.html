@@ -26,6 +26,9 @@
                     <tr>
                         <th>分类id</th>
                         <th>分类名称</th>
+                        <th>请求路径</th>
+                        <th>描述</th>
+                        <th>状态</th>
                         <th>操作</th>
                     </tr>
                     </thead>
@@ -33,7 +36,13 @@
                         <tr>
                             <td th:text="${at.id}"></td>
                             <td th:text="${at.name}"></td>
-                            <td ><button class="layui-btn"   th:onclick="alertIdFun([[${at.id}]],[[${at.name}]])">编辑</button></td>
+                            <td th:text="${at.path}"></td>
+                            <td th:text="${at.typeDesc}"></td>
+                            <td th:text="0 eq ${at.code} ? '显示' : '不显示'"></td>
+                            <td >
+                                <button class="layui-btn"   th:onclick="alertIdFun([[${at.id}]],[[${at.name}]],[[${at.path}]],[[${at.code}]],[[${at.typeDesc}]])">编辑</button>
+                                <button class="layui-btn"   th:onclick="deleteFun([[${at.id}]])">删除</button>
+                            </td>
                         </tr>
 
                     </tbody>
@@ -48,8 +57,25 @@
                                     <input type="text" id="sortTitle" name="title" required  lay-verify="required" placeholder="请输入修改后的分类名称" autocomplete="off" class="layui-input">
                                     <input name="sortId" id="sortId" type="text" style="display: none;" />
                                 </div>
-                                <button style="margin-top: 30px" class="layui-btn" lay-submit lay-filter="submit">修改</button>
                             </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">访问路径</label>
+                                <div class="layui-input-block">
+                                    <input type="text" id="path" name="path" required  lay-verify="required" placeholder="请输入修改后的访问路径" autocomplete="off" class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">描述</label>
+                                <div class="layui-input-block">
+                                    <input type="text" id="desc" name="desc" required  lay-verify="required" placeholder="请输入修改后的描述" autocomplete="off" class="layui-input">
+                                </div>
+                            </div>
+                            <div style="font-size: 14px;text-align: left;padding-left: 38px;">
+                                <label >状态&nbsp;&nbsp;</label>
+                                <label ><input type="radio" name="code" value="0">显示&nbsp;&nbsp;</label>
+                                <label ><input type="radio" name="code" value="1">不显示</label>
+                            </div>
+                            <button style="margin-top: 30px" class="layui-btn" lay-submit lay-filter="submit">修改</button>
                         </form>
                     </div>
                 </div>
@@ -57,12 +83,60 @@
     </div>
 </div>
 <script>
-    function alertIdFun(id,name){
+    function alertIdFun(id,name,path,mycode,desc){
         $("#inputBox").css("display","block");
         $("#sortId").attr("value",id);
         $("#sortTitle").attr("value",name);
+        $("#path").attr("value",path);
+        $("#desc").attr("value",desc);
+
+        var code = $('input[name="code"]');
+        for(var i = 0;i<code.length;i++){
+            if(code[i].value==mycode){
+                code[i].checked = true;
+            }
+        }
 
     }
+
+    function deleteFun(obj){
+        var parm = [
+            {name:'id',value:obj}
+        ]
+        createForm("/manage/deleteArticleType",parm);
+        window.parent.timeOut("已操作！");
+    }
+
+    function createForm(url,array) {
+        //参数示例
+        // [
+        //     {name:sfsf,value:''},
+        //     {name:sfsf,value:''}
+        // ]
+        var form = $('<form></form>');
+        form.attr('action', url);
+        form.attr("method",'post');
+        form.attr("style",'display:none');
+        var l = array.length;
+        if(l>0){
+            for(var i = 0;i<l;i++){
+                form.append($('<input type="text" name="'+array[i].name+'" value="'+array[i].value+'" />'))
+            }
+        }
+        $("body").append(form);
+        form.submit();
+    }
+
+    layui.use('form', function(){
+        var form = layui.form;
+        form.render();
+
+        //监听提交
+        form.on('submit(submit)', function(data){
+            window.parent.timeOut("修改成功！");
+        });
+
+    });
 
 </script>
 <style>

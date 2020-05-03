@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="stylesheet" href="/static/js/layUI/layui.css"  media="all">
     <script src="/static/js/JQuery/jquery-1.11.1.js"></script>
+    <script src="/static/js/layUI/layui.all.js" type="text/javascript"></script>
     <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
 </head>
 <body class="layui-layout-body">
@@ -53,7 +54,8 @@
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:;" onclick="jumpTo('/manage/AddArticle')">添加文章</a></dd>
                         <dd><a href="javascript:;" onclick="jumpTo('/manage/draft')">我的草稿</a></dd>
-                        <dd><a href="javascript:;" onclick="jumpTo('/manage/searchAllArticle')">查询文章</a></dd>
+                        <dd><a href="javascript:;" onclick="jumpTo('/manage/searchAllArticle')">查看所有文章</a></dd>
+                        <dd><a href="javascript:;" onclick="jumpTo('/manage/searchArticleByCondition')">按条件查找文章</a></dd>
 <!--                        <dd><a href="">超链接</a></dd>-->
                     </dl>
                 </li>
@@ -67,7 +69,7 @@
                 <li class="layui-nav-item">
                     <a href="javascript:;" onclick="jumpTo('/manage/tags')">标签管理</a>
                 </li>
-                <li class="layui-nav-item"><a href="">云市场</a></li>
+                <li class="layui-nav-item"><a href="javascript:;" onclick="jumpTo('/manage/guessLike')">“猜你喜欢”管理</a></li>
             </ul>
         </div>
     </div>
@@ -78,11 +80,33 @@
 
     </div>
 
+    <div class="alertMessage"></div>
+
 <!--    <div class="layui-footer">-->
 <!--        &lt;!&ndash; 底部固定区域 &ndash;&gt;-->
 <!--        © layui.com - 底部固定区域-->
 <!--    </div>-->
 </div>
+<style>
+    .alertMessage{
+        display: block;
+        min-width: 250px;
+        border-radius: 3px;
+        line-height: 60px;
+        text-align: center;
+        height: 60px;
+        background: #01aaed;
+        position: absolute;
+        color: #fff;
+        font-size: 16px;
+        z-index: 99999;
+        left: calc(50% - 175px);;
+        top: -70px;
+        /*-moz-transition: all .5s ease;*/
+        -webkit-transition: all 1s ease;
+        transition: all 1s ease;
+    }
+</style>
 <script src="/static/js/layUI/layui.all.js" charset="utf-8"></script>
 <script>
     //JavaScript代码区域
@@ -90,6 +114,16 @@
         var element = layui.element;
 
     });
+
+    function timeOut(str) {
+        $('.alertMessage')[0].innerHTML=str;
+        $('.alertMessage')[0].style="top:20px";
+        setTimeout(function(){
+            $('.alertMessage')[0].style="top:-70px";
+        },3500);
+
+    }
+
 </script>
 <script>
     var _hmt = _hmt || [];

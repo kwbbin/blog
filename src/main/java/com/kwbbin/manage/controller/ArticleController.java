@@ -1,5 +1,6 @@
 package com.kwbbin.manage.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.kwbbin.Vo.ArticleVo;
 import com.kwbbin.bean.Article;
 import com.kwbbin.bean.ArticleTypeExample;
@@ -8,6 +9,7 @@ import com.kwbbin.manage.service.ArticleService;
 import com.kwbbin.manage.service.TagsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -27,10 +29,20 @@ public class ArticleController {
     @Autowired
     TagsService tagsService;
 
+    Integer pageSize = 6;
+
     @RequestMapping("/getAllArticleVo")
     @ResponseBody
     public List<ArticleVo> selectAllArticle(){
         return articleService.selectAllArticle();
+    }
+
+    @GetMapping("/getAllArticleVoPage")
+    public ModelAndView selectAllArticlePage(Integer pageNum){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("/manage/search-article");
+        modelAndView.addObject("articleList",articleService.selectAllArticle(pageNum,pageSize));
+        return modelAndView;
     }
 
     @RequestMapping("/getArticleById")
@@ -54,4 +66,37 @@ public class ArticleController {
     public void updateArticleById(Article article){
 
     }
+
+    @RequestMapping("/findArticle")
+    public ModelAndView searchArticleByCondition(String str,Integer range){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("articleList",articleService.searchArticleByCondition(str,range));
+        modelAndView.setViewName("/manage/article-search-condition");
+        return modelAndView;
+    }
+
+
+    @RequestMapping("/addGuessLike")
+    public ModelAndView addArticleToGuessLike(String id){
+        ModelAndView modelAndView = new ModelAndView();
+        Integer i = articleService.addArticleToGuessLike(id);
+        if(i==-1){
+            modelAndView.addObject("msg","填写格式错误或者该ID不存在");
+            modelAndView.setViewName("/manage/error");
+        }else{
+            modelAndView.setViewName("redirect:/manage/guessLike");
+        }
+
+        return modelAndView;
+    }
+
+
+    @RequestMapping("/cancelGuessLike")
+    public ModelAndView cancelArticleToGuessLike(Long id){
+        ModelAndView mv = new ModelAndView();
+        articleService.cancelArticleToGuessLike(id);
+        mv.setViewName("redirect:/manage/guessLike");
+        return mv;
+    }
+
 }

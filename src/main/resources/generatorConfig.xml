@@ -61,11 +61,11 @@
 <!--        <table tableName="article" domainObjectName="Article" >-->
 <!--            <generatedKey column="id" sqlStatement="JDBC" identity="true"></generatedKey>-->
 <!--        </table>-->
-        <table tableName="draft" domainObjectName="Draft" >
-            <generatedKey column="id" sqlStatement="JDBC" identity="true"></generatedKey>
-        </table>
+<!--        <table tableName="draft" domainObjectName="Draft" >-->
+<!--            <generatedKey column="id" sqlStatement="JDBC" identity="true"></generatedKey>-->
+<!--        </table>-->
 <!--                <table tableName="tags" domainObjectName="Tags" />-->
-<!--        <table tableName="article_type" domainObjectName="ArticleType" />-->
+        <table tableName="article_type" domainObjectName="ArticleType" />
 <!--        <table tableName="draft" domainObjectName="Draft"  />-->
 <!--        <table tableName="admin" domainObjectName="Admin" />-->
         <!--                <table tableName="tags_article" domainObjectName="TagsArticle" />-->

@@ -2,12 +2,10 @@ package com.kwbbin.manage.service;
 
 import com.kwbbin.Vo.ArticleVo;
 import com.kwbbin.Vo.DraftVo;
-import com.kwbbin.bean.Article;
-import com.kwbbin.bean.ArticleType;
-import com.kwbbin.bean.Draft;
-import com.kwbbin.bean.DraftExample;
+import com.kwbbin.bean.*;
 import com.kwbbin.dao.ArticleTypeMapper;
 import com.kwbbin.dao.DraftMapper;
+import com.kwbbin.dao.DraftTagsMapper;
 import com.kwbbin.util.ArticleUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +22,9 @@ public class DraftServiceImpl implements  DraftService {
 
     @Autowired
     ArticleTypeMapper articleTypeMapper;
+
+    @Autowired
+    DraftTagsMapper draftTagsMapper ;
 
     @Override
     public List<DraftVo> selectAllDraft() {
@@ -47,5 +48,13 @@ public class DraftServiceImpl implements  DraftService {
     @Override
     public Draft selectDraftById(Long id) {
         return draftMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public void deleteDraftById(Long id) {
+        DraftTagsExample draftTagsExample = new DraftTagsExample();
+        draftTagsExample.createCriteria().andDraftIdEqualTo(id);
+        draftTagsMapper.deleteByExample(draftTagsExample);
+        draftMapper.deleteByPrimaryKey(id);
     }
 }
