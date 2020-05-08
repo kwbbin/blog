@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>kwbbin的博客</title>
+    <script src="/static/js/JQuery/jquery-1.11.1.js"></script>
+    <script src="/static/js/common.js"></script>
+    <link href="/static/js/bootstrap/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/css/nav.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/article-detail.css">
+    <script src="/static/js/bootstrap/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/static/font/font_blog/iconfont.css">
+    <link rel="stylesheet" type="text/css" href="/static/js/zpage/page.css">
+    <script src="/static/js/zpage/jquery.z-pager.js" type="text/javascript"></script>
+
+    <style>
+
+
+    </style>
+</head>
+<body >
+<div th:insert="nav :: nav"></div>
+
+
+<div class="jumbotron clearfix content-padding content-box" >
+    <div class="jumbotron col-md-9" >
+        <div class="main-left" id="main-left">
+            <div class="main-left-head">
+                <h2 class="title">评论</h2>
+            </div>
+            <div class="comment-box" >
+                <div class="write-box">
+                    <textarea id="commentArea" placeholder="留个言吧"></textarea>
+
+                </div>
+                <div class="write-bottom">
+                    <img src="/static/img/emoji.png" onclick="emojiFun();">
+                    <span><input type="text" id="user-name"  placeholder="你的昵称"><button style="cursor: pointer" onclick="submitMessage()">发布</button></span>
+                    <div class="emoji-box" id="emoji-box">
+                        <!-- 选项卡菜单-->
+                        <ul id="myTab" class="nav nav-tabs" role="tablist">
+                            <li class="active"><a href="#bulletin" role="tab" data-toggle="tab"><img width="30" height="30" src="/static/img/emoji.png"></a></li>
+                            <li><a href="#rule" role="tab" data-toggle="tab"><img  width="25" height="25" src="/static/img/emoji1.jpg"></a></li>
+                            <li><a href="#forum" role="tab" data-toggle="tab"><img width="25" height="25"  src="/static/img/emoji2.gif"></a></li>
+                            <li><a href="#security" role="tab"  data-toggle="tab"><img width="25" height="25"  src="/static/img/emoji3.gif"></a></li>
+                        </ul>
+                        <!-- 选项卡面板 -->
+                        <div id="myTabContent" class="tab-content">
+                            <div class="tab-pane active" id="bulletin">
+                                <ul>
+                                    <li><img name="emoji2_1" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji2/emoji2_1.png'"></li>
+                                    <li><img name="emoji2_2" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji2/emoji2_2.png'"></li>
+                                    <li><img name="emoji2_3" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji2/emoji2_3.png'"></li>
+                                    <li><img name="emoji2_4" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji2/emoji2_4.png'"></li>
+                                    <li><img name="emoji2_5" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji2/emoji2_5.png'"></li>
+                                    <li><img name="emoji2_6" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji2/emoji2_6.png'"></li>
+                                    <li><img name="emoji2_7" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji2/emoji2_7.png'"></li>
+                                    <li><img name="emoji2_8" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji2/emoji2_8.png'"></li>
+                                    <li><img name="emoji2_9" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji2/emoji2_9.png'"></li>
+                                    <li><img name="emoji2_10" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji2/emoji2_10.png'"></li>
+                                    <li><img name="emoji2_11" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji2/emoji2_11.png'"></li>
+                                    <li><img name="emoji2_12" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji2/emoji2_12.png'"></li>
+                                </ul>
+                            </div>
+                            <div class="tab-pane" id="rule">
+                                <ul>
+                                    <li><img name="emoji1_1" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji1/emoji1_1.jpg'"></li>
+                                    <li><img name="emoji1_2" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji1/emoji1_2.jpg'"></li>
+                                    <li><img name="emoji1_3" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji1/emoji1_3.jpg'"></li>
+                                    <li><img name="emoji1_4" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji1/emoji1_4.jpg'"></li>
+                                    <li><img name="emoji1_5" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji1/emoji1_5.jpg'"></li>
+                                    <li><img name="emoji1_6" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji1/emoji1_6.jpg'"></li>
+                                    <li><img name="emoji1_7" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji1/emoji1_7.jpg'"></li>
+                                    <li><img name="emoji1_8" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji1/emoji1_8.jpg'"></li>
+                                </ul>
+                            </div>
+                            <div class="tab-pane" id="forum">
+                                <ul>
+                                    <li><img name="emoji3_1" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji3/emoji3_1.gif'"></li>
+                                    <li><img name="emoji3_2" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji3/emoji3_2.gif'"></li>
+                                    <li><img name="emoji3_3" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji3/emoji3_3.gif'"></li>
+                                    <li><img name="emoji3_4" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji3/emoji3_4.gif'"></li>
+                                    <li><img name="emoji3_5" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji3/emoji3_5.gif'"></li>
+                                    <li><img name="emoji3_6" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji3/emoji3_6.gif'"></li>
+                                    <li><img name="emoji3_7" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji3/emoji3_7.gif'"></li>
+                                    <li><img name="emoji3_8" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji3/emoji3_8.gif'"></li>
+                                    <li><img name="emoji3_9" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji3/emoji3_9.gif'"></li>
+                                    <li><img name="emoji3_10" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji3/emoji3_10.gif'"></li>
+                                    <li><img name="emoji3_11" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji3/emoji3_11.gif'"></li>
+                                    <li><img name="emoji3_12" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji3/emoji3_12.gif'"></li>
+                                    <li><img name="emoji3_13" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji3/emoji3_13.gif'"></li>
+                                    <li><img name="emoji3_14" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji3/emoji3_14.gif'"></li>
+                                    <li><img name="emoji3_15" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji3/emoji3_15.gif'"></li>
+                                    <li><img name="emoji3_16" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji3/emoji3_16.gif'"></li>
+                                    <li><img name="emoji3_17" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji3/emoji3_17.gif'"></li>
+                                    <li><img name="emoji3_18" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji3/emoji3_18.gif'"></li>
+                                    <li><img name="emoji3_19" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji3/emoji3_19.gif'"></li>
+                                    <li><img name="emoji3_20" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji3/emoji3_20.gif'"></li>
+                                </ul>
+                            </div>
+                            <div class="tab-pane" id="security">
+                                <ul>
+                                    <li><img name="emoji4_1" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji4/emoji4_1.gif'"></li>
+                                    <li><img name="emoji4_2" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji4/emoji4_2.gif'"></li>
+                                    <li><img name="emoji4_3" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji4/emoji4_3.gif'"></li>
+                                    <li><img name="emoji4_4" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji4/emoji4_4.gif'"></li>
+                                    <li><img name="emoji4_5" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji4/emoji4_5.gif'"></li>
+                                    <li><img name="emoji4_6" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji4/emoji4_6.gif'"></li>
+                                    <li><img name="emoji4_7" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji4/emoji4_7.gif'"></li>
+                                    <li><img name="emoji4_8" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji4/emoji4_8.gif'"></li>
+                                    <li><img name="emoji4_9" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji4/emoji4_9.gif'"></li>
+                                    <li><img name="emoji4_10" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji4/emoji4_10.gif'"></li>
+                                    <li><img name="emoji4_11" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji4/emoji4_11.gif'"></li>
+                                    <li><img name="emoji4_12" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji4/emoji4_12.gif'"></li>
+                                    <li><img name="emoji4_13" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji4/emoji4_13.gif'"></li>
+                                    <li><img name="emoji4_14" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji4/emoji4_14.gif'"></li>
+                                    <li><img name="emoji4_15" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji4/emoji4_15.gif'"></li>
+                                    <li><img name="emoji4_16" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji4/emoji4_16.gif'"></li>
+                                    <li><img name="emoji4_17" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji4/emoji4_17.gif'"></li>
+                                    <li><img name="emoji4_18" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji4/emoji4_18.gif'"></li>
+                                    <li><img name="emoji4_19" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji4/emoji4_19.gif'"></li>
+                                    <li><img name="emoji4_20" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji4/emoji4_20.gif'"></li>
+                                    <li><img name="emoji4_21" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji4/emoji4_21.gif'"></li>
+                                    <li><img name="emoji4_22" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji4/emoji4_22.gif'"></li>
+                                    <li><img name="emoji4_23" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji4/emoji4_23.gif'"></li>
+                                    <li><img name="emoji4_24" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji4/emoji4_24.gif'"></li>
+                                    <li><img name="emoji4_25" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji4/emoji4_25.gif'"></li>
+                                    <li><img name="emoji4_26" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji4/emoji4_26.gif'"></li>
+                                    <li><img name="emoji4_27" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji4/emoji4_27.gif'"></li>
+                                    <li><img name="emoji4_28" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji4/emoji4_28.gif'"></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="comment-view">
+                    <div class="main-left-head">
+                        <h2 class="title">他人评论</h2>
+                    </div>
+                    <div id="ajax-add-box" class="view-box clearfix">
+
+                    </div>
+                    <div id="media-content" class="view-box clearfix" >
+
+                    </div>
+
+                    <div>
+                        <div id="pager" class="pager clearfix"> </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-md-3 jumbotron right-box">
+
+        <div>
+            <div class="main-left-head">
+                <h2 class="title" style="margin-top: 0">最近更新</h2>
+            </div>
+            <div class="main-content">
+                <ul class="my-ul" th:each="newArticle : ${newArticle.list}">
+                    <li >
+                        <a th:href="'/article/detail?id='+${newArticle.id}" th:text="${newArticle.title}" ></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+
+        <div class="tuijian" style="margin-top: 40px;">
+            <div class="main-left-head">
+                <h2 class="title">随机推荐</h2>
+            </div>
+            <div class="tuijian-box" >
+                <section class="topnews imgscale">
+                    <a th:href="'/article/detail?id='+${radomArticle[0].id}" ><img th:attr="src=${radomArticle[0].imageurl}"><span th:text="${radomArticle[0].title}"></span></a>
+                </section>
+                <ul>
+                    <li >
+                        <a th:href="'/article/detail?id='+${radomArticle[1].id}">
+                            <i><img th:attr="src=${radomArticle[1].imageurl}" ></i>
+                            <p th:text="${radomArticle[1].title}"></p>
+                        </a>
+                    </li>
+                    <li >
+                        <a th:href="'/article/detail?id='+${radomArticle[2].id}">
+                            <i><img th:attr="src=${radomArticle[2].imageurl}" ></i>
+                            <p th:text="${radomArticle[2].title}"></p>
+                        </a>
+                    </li>
+                    <li >
+                        <a th:href="'/article/detail?id='+${radomArticle[3].id}">
+                            <i><img th:attr="src=${radomArticle[3].imageurl}" ></i>
+                            <p th:text="${radomArticle[3].title}"></p>
+                        </a>
+                    </li>
+                    <li >
+                        <a th:href="'/article/detail?id='+${radomArticle[4].id}">
+                            <i><img th:attr="src=${radomArticle[4].imageurl}" ></i>
+                            <p th:text="${radomArticle[4].title}"></p>
+                        </a>
+                    </li>
+                    <li >
+                        <a th:href="'/article/detail?id='+${radomArticle[5].id}">
+                            <i><img th:attr="src=${radomArticle[5].imageurl}" ></i>
+                            <p th:text="${radomArticle[5].title}"></p>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+
+        <div style="margin-top: 40px;margin-bottom: 40px;">
+            <div class="main-left-head">
+                <h2 class="title">标签云</h2>
+            </div>
+            <div class="main-content">
+                <ul class="right-label">
+                    <li th:each="tag : ${tagsList}" >
+                        <a th:href="'/LabelArticles?id='+${tag.id}" th:text="${tag.tagName}" ></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!--当前页-->
+<div id="currentPage" style="display: none;" th:text="${pageComment.pageNum}"></div>
+<!--数据总条数-->
+<div id="totalData" style="display: none;" th:text="${pageComment.total}"></div>
+<!--每页数据条数-->
+<div id="pageData" style="display: none;" th:text="${pageComment.pageSize}"></div>
+<!--总页数-->
+<div id="pageCount" style="display: none;" th:text="${pageComment.pages}"></div>
+
+<div th:replace="footer :: footer"></div>
+<style>
+
+</style>
+<script>
+
+
+    // 分页
+    var currentPage1 = $("#currentPage")[0].innerText;
+    var totalData1 = $("#totalData")[0].innerText;
+    var pageData1 = $("#pageData")[0].innerText;
+    var pageCount1 = $("#pageCount")[0].innerText;
+    // console.log(currentPage1);
+    // console.log(totalData1);
+    // console.log(pageData1);
+    // console.log(pageCount1);
+    $("#pager").zPager({
+        totalData: totalData1,
+        pageData: pageData1,
+        pageCount: pageCount1,
+        current: currentPage1,
+        htmlBox: $('#wraper'),
+        btnShow: true,
+        ajaxSetData: false
+    });
+
+    function currentPage(currentPage){
+        /*
+            触发页码数位置： Page/js/jquery.z-pager.js 64行
+        */
+        $("#ajax-add-box").empty();
+        console.log("当前页码数：" + currentPage);
+        var parm = {pageNum:currentPage}
+        var data = getData("/getCommentPage",parm,function (data) {
+            var box = $("#media-content");
+            box.empty();
+            $.fn.zPager.defaults.totalData= data.total;
+            $.fn.zPager.defaults.pageData=data.pageSize;
+            $.fn.zPager.defaults.pageCount= data.pages;
+            $.fn.zPager.defaults.current= data.pageNum;
+
+            for (var i = 0 ;i<data.list.length;i++){
+                var date = FormatTime(data.list[i].dateLong,'J');
+                var repaly='';
+                if(data.list[i].replay.length>0){
+                    for(var j= 0 ;j<data.list[i].replay.length;j++){
+                        repaly = repaly+ '<div class="replay">' +
+                            '<h2>博主回复：<span>'+data.list[i].replay[j].name+'</span></h2>' +
+                            '<p>'+data.list[i].replay[j].content+'</p></div>'
+                    }
+                }
+                var objHtml = $('<div class="viex-content-box"><img src="/static/img/user.jpg">' +
+                    '<h2><span class="h2">'+data.list[i].comment.name+'</span><span>&nbsp;&nbsp;</span><span>'+date+'</span></h2>' +
+                    '<p>'+data.list[i].comment.content+'</p>' +
+                    '<div><i onclick="addMessageGood('+data.list[i].comment.id+',this)" style="cursor: pointer" class="iconfont iconthumbs-up"></i><span id="messageGood" name="true" >'+data.list[i].comment.good+'</span></div>' +
+                    repaly +
+                    '<hr></div>')
+                box.append(objHtml);
+            }
+        })
+
+    }
+    // 分页
+
+
+
+
+
+    function addMessageGood(obj,This){
+
+        var oSpan = This.nextElementSibling;
+        if(oSpan.getAttribute("name") =="true"){
+            var obj={id:obj};
+            getData("/addCommentGood",obj,function (data) {
+                // console.log(data);
+                if(data==-1)
+                    alert("您已经点赞啦");
+                else{
+                    oSpan.innerText = parseInt(oSpan.innerText)+1;
+                    oSpan.setAttribute("name","false");
+                }
+            },function (data) {
+                // console.log(data);
+                if(data==-1)
+                    alert("您已经点赞啦")
+                else{
+                    oSpan.innerText = parseInt(oSpan.innerText)+1;
+                    oSpan.setAttribute("name","false");
+                }
+            })
+        }else if(oSpan.getAttribute("name") =="false"){
+            alert("您已经点过赞啦");
+        }
+    }
+
+    function submitMessage(){
+        var commentContent = $("#commentArea")[0].value;
+        var userName = $("#user-name")[0].value;
+        if(commentContent==""||commentContent==null){
+            alert("留言内容不能为空");
+        }
+        var param = {commentContent:commentContent,userName:userName};
+        getData("/saveComment",param,tellMessage,tellMessage)
+
+        function tellMessage (data) {
+            if(data.content== null||data.content==undefined) {
+                alert("留言间隔必须超过二十秒");
+            }else{
+                var date = new Date();
+                var obj = $('<div class="viex-content-box"><img src="/static/img/user.jpg">' +
+                    '<h2><span class="h2">'+data.name+'</span><span>&nbsp;&nbsp;</span><span>'+date.toLocaleString( )+'</span></h2>' +
+                    '<p>'+data.content+'</p>' +
+                    '<div><i onclick="addMessageGood('+data.id+',this)" style="cursor: pointer" class="iconfont iconthumbs-up"></i><span id="messageGood" name="true" >'+data.good+'</span></div>' +
+                    '<hr></div>');
+                $("#ajax-add-box").append(obj)
+            }
+        }
+
+    }
+
+
+    function testFun(obj) {
+        var value = $("#commentArea")[0].value;
+        $("#commentArea")[0].value=value+'[/'+obj.name+']';
+        emojiFun();
+    }
+
+    function emojiFun(){
+        if ($("#emoji-box").css("display")=='none'){
+            $("#emoji-box").css("display","block")
+        } else{
+            $("#emoji-box").css("display","none")
+        }
+    }
+
+    getData("/getAllArticleType",null,function (data) {
+        for(var i = 0;i<data.length;i++){
+            $("#tyListBox").append('<li><a href="/sort?id='+data[i].id+'">'+data[i].name+'</a></li>')
+        }
+    });
+
+
+</script>
+<!--页面背景特效-->
+<script src="/static/js/background.js" count="200" zindex="-2" opacity="0.8" color="102,145,223" type="text/javascript"></script>
+</body>
+</html>

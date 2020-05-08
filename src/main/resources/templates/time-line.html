@@ -1,0 +1,111 @@
+<!DOCTYPE html >
+<html  lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>时光轴 - kwbbin博客</title>
+<script type="text/javascript" src="/static/js/timeLine/jquery.js"></script>
+<script src="/static/js/common.js"></script>
+<link rel="stylesheet" type="text/css" href="/static/css/history.css">
+<link href="static/css/nav.css" rel="stylesheet">
+<script type="text/javascript" src="/static/js/timeLine/jquery.mousewheel.js"></script>
+<script type="text/javascript" src="/static/js/timeLine/jquery.easing.js"></script>
+<script type="text/javascript" src="/static/js/timeLine/history.js"></script>
+
+</head>
+<body>
+<div id="head">
+	<div class="logo head-box"><i>KWBBIN</i></div>
+	<div class="head-box nav-box">
+		<ul>
+			<li><a href="/">首页</a></li>
+			<li><a href="/message">留言</a></li>
+			<li><a href="/timeLine">时光轴</a></li>
+			<li class="box-li"  onclick="navClick();"><a href="javascript:;">文章</a><span class="xia"></span>
+				<ul class="wenzang" id="nav-li-box">
+<!--					<li><a href="#">生活笔记</a></li>-->
+<!--					<li><a href="#">学海无涯</a></li>-->
+<!--					<li><a href="#">时光轴</a></li>-->
+				</ul>
+			</li>
+		</ul>
+		<script>
+			getData("/getAllArticleType",null,function (data) {
+				for(var i = 0;i<data.length;i++){
+					$("#nav-li-box").append('<li><a href="/sort?id='+data[i].id+'">'+data[i].name+'</a></li>')
+				}
+			});
+			function navClick(){
+				if($("#nav-li-box").css("display")=='none'){
+					$("#nav-li-box").css("display","block");
+				}else{
+					$("#nav-li-box").css("display","none");
+				};
+			}
+		</script>
+	</div>
+	<div class="head-box search-box">
+		<input type="text" placeholder="Search" id="searchText">
+		<button onclick="searchSubmit()">搜索</button>
+	</div>
+</div>
+
+<div id="arrow">
+	<ul>
+		<li class="arrowup"></li>
+		<li class="arrowdown"></li>
+	</ul>
+</div>
+
+<div id="history">
+
+	<div class="title">
+		<h2>时光</h2>
+		<div id="circle">
+			<div class="cmsk"></div>
+			<div class="circlecontent">
+				<div thisyear="2020" class="timeblock">
+					<span class="numf"></span>
+					<span class="nums"></span>
+					<span class="numt"></span>
+					<span class="numfo"></span>
+					<div class="clear"></div>
+				</div>
+				<div class="timeyear">YEAR</div>
+			</div>
+			<a href="/" class="clock"></a>
+		</div>
+	</div>
+
+	<div id="content">
+		<ul class="list">
+			<li  th:each=" tl : ${timeLineList}">
+				<div class="liwrap">
+					<div class="lileft">
+						<div class="date">
+							<span class="year" th:text="${tl.year}"></span>
+							<span class="md"  th:text="${tl.monthDay}"></span>
+						</div>
+					</div>
+
+					<div class="point"><b></b></div>
+
+					<div class="liright">
+						<div class="histt"><a href="#" th:text="${tl.title}"></a></div>
+						<div class="hisct" th:text="${tl.content}"></div>
+					</div>
+				</div>
+			</li>
+		</ul>
+	</div>
+</div>
+<div style="text-align:center;clear:both">
+</div>
+<script>
+	getData("/getAllArticleType",null,function (data) {
+		for(var i = 0;i<data.length;i++){
+			$("#tyListBox").append('<li><a href="/sort?id='+data[i].id+'">'+data[i].name+'</a></li>')
+		}
+	});
+</script>
+</body>
+</html>

@@ -1,10 +1,7 @@
-getData("/getAllArticleType",null,function (data) {
-    for(var i = 0;i<data.length;i++){
-        $("#tyListBox").append('<li><a href="/sort?id='+data[i].id+'">'+data[i].name+'</a></li>')
-    }
-});
 
-function getData(url,obj,suFun){
+
+
+function getData(url,obj,suFun,fileFun){
     $.ajax({
         url: url,
         type: 'post',
@@ -18,8 +15,13 @@ function getData(url,obj,suFun){
             }
         },
         error: function(data) {
-            console.log("ajax请求错误");
-            console.log(data);
+            if(fileFun!=undefined&&fileFun!=null){
+                fileFun(data);
+             }else{
+                console.log("ajax请求错误");
+                console.log(data);
+            }
+
 
         }
     })
@@ -48,4 +50,34 @@ function FormatTime (data,type){
     }else{
         return `${Y}-${Mon}-${Day} ${H}:${Min}:${S}`
     }
+}
+
+function searchSubmit() {
+   var text = $("#searchText")[0].value;
+    var parm = [
+        {name:'search',value:text}
+    ]
+   createForm("/SearchArticles",parm);
+   // alert(text);
+}
+
+
+function createForm(url,array) {
+    //参数示例
+    // [
+    //     {name:sfsf,value:''},
+    //     {name:sfsf,value:''}
+    // ]
+    var form = $('<form></form>');
+    form.attr('action', url);
+    form.attr("method",'post');
+    form.attr("style",'display:none');
+    var l = array.length;
+    if(l>0){
+        for(var i = 0;i<l;i++){
+            form.append($('<input type="text" name="'+array[i].name+'" value="'+array[i].value+'" />'))
+        }
+    }
+    $("body").append(form);
+    form.submit();
 }

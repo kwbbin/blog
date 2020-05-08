@@ -17,5 +17,11 @@ public interface UArticleService {
     List<ArticleType> selectAllArticleType();
     PageInfo<ArticleVo> selectArticleByType(Integer id,Integer pageNum,Integer pageSize);
     Article getArticleById(Long id);
+    ArticleVo getArticleVoById(Long id);
     Tags getTagsById(Integer id);
+    List<Tags> getTagsListByArticleId(Long id);
+    void addArticleGood(Long id);
+    void addArticleVisit(Long id);
+    PageInfo searchArticleByCondition(String str,Integer pageNum,Integer pageSize);
+    List<Article> getAboutArticle(Long id);
 }

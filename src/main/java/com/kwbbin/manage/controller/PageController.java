@@ -1,15 +1,18 @@
 package com.kwbbin.manage.controller;
 
+import com.github.pagehelper.PageInfo;
+import com.kwbbin.bean.FriendLink;
+import com.kwbbin.bean.MyMessage;
 import com.kwbbin.bean.Tags;
-import com.kwbbin.manage.service.ArticleServiceImpl;
-import com.kwbbin.manage.service.ArticleTypeService;
-import com.kwbbin.manage.service.DraftService;
-import com.kwbbin.manage.service.TagsService;
+import com.kwbbin.bean.TimeLine;
+import com.kwbbin.manage.service.*;
 import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
@@ -28,6 +31,22 @@ public class PageController {
 
     @Autowired
     TagsService tagsService;
+
+    @Autowired
+    TimeLineService timeLineService;
+
+    @Autowired
+    MessageService messageService;
+
+    @Autowired
+    CommentService commentService;
+
+    @Autowired
+    StatisticsService statisticsService;
+
+    //本网站地址
+    @Value("${localInfoPath}")
+    String localInfoPath;
 
     @RequestMapping("/draft")
     public String articleHtml(Model model){
@@ -48,8 +67,15 @@ public class PageController {
     }
 
     @RequestMapping("/statistics")
-    public String testmain(){
-        return "/manage/statistics";
+    public ModelAndView testmain(){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("totalArticle",statisticsService.totalArticle());
+        modelAndView.addObject("totalMessage",statisticsService.totalMyMessage());
+        modelAndView.addObject("totalFriendLink",statisticsService.FriendLink());
+        modelAndView.addObject("totalComment",statisticsService.totalComment());
+        modelAndView.addObject("vists",statisticsService.totalView());
+        modelAndView.setViewName("/manage/statistics");
+        return modelAndView;
     }
 
     @RequestMapping("/sort")
@@ -81,6 +107,43 @@ public class PageController {
     public String searchArticleByConditionHtml(Model model){
         model.addAttribute("articleList",null);
         return "/manage/article-search-condition";
+    }
+
+    @RequestMapping("/timeLine")
+    public ModelAndView timeLine(Model model){
+        ModelAndView mv = new ModelAndView();
+        List<TimeLine> list = timeLineService.getAllTimeline();
+        mv.addObject("timeLine",list);
+        mv.setViewName("/manage/time-line");
+        return mv;
+    }
+
+    @RequestMapping("/articleMessage")
+    public ModelAndView ArticleMessage(Model model){
+        ModelAndView mv = new ModelAndView();
+        PageInfo pageInfo = messageService.getAllMessage(1,8);
+        mv.addObject("messageList",pageInfo);
+        mv.addObject("localInfoPath",localInfoPath);
+        mv.setViewName("/manage/article-message");
+        return mv;
+    }
+
+    @RequestMapping("/articleMessage2")
+    public ModelAndView ArticleMessageById(){
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("/manage/article-message2");
+        mv.addObject("messageList",new PageInfo<>());
+        return mv;
+    }
+
+    @RequestMapping("/comment")
+    public ModelAndView comment(Model model){
+        ModelAndView mv = new ModelAndView();
+        PageInfo pageInfo = commentService.getAllComment(1,8);
+        mv.addObject("commentList",pageInfo);
+        mv.addObject("localInfoPath",localInfoPath);
+        mv.setViewName("/manage/comment");
+        return mv;
     }
 
 

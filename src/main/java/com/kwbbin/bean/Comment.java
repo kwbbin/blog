@@ -2,20 +2,18 @@ package com.kwbbin.bean;
 
 import java.util.Date;
 
-public class Reply {
+public class Comment {
     private Long id;
 
     private Date responsetime;
 
-    private Integer userid;
-
     private Integer good;
 
-    private Long articleid;
+    private String content;
 
     private Long replyto;
 
-    private String content;
+    private String name;
 
     public Long getId() {
         return id;
@@ -33,14 +31,6 @@ public class Reply {
         this.responsetime = responsetime;
     }
 
-    public Integer getUserid() {
-        return userid;
-    }
-
-    public void setUserid(Integer userid) {
-        this.userid = userid;
-    }
-
     public Integer getGood() {
         return good;
     }
@@ -49,12 +39,12 @@ public class Reply {
         this.good = good;
     }
 
-    public Long getArticleid() {
-        return articleid;
+    public String getContent() {
+        return content;
     }
 
-    public void setArticleid(Long articleid) {
-        this.articleid = articleid;
+    public void setContent(String content) {
+        this.content = content == null ? null : content.trim();
     }
 
     public Long getReplyto() {
@@ -65,11 +55,11 @@ public class Reply {
         this.replyto = replyto;
     }
 
-    public String getContent() {
-        return content;
+    public String getName() {
+        return name;
     }
 
-    public void setContent(String content) {
-        this.content = content == null ? null : content.trim();
+    public void setName(String name) {
+        this.name = name == null ? null : name.trim();
     }
 }

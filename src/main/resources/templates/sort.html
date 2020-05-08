@@ -26,7 +26,7 @@
          </div>
         <div class="left-box left-content">
             <div class="main-left-head">
-                <h2 class="title">最近更新</h2>
+                <h2 class="title" th:text="${articleType.name}"></h2>
             </div>
 
             <div id="media-content" class="my-media clearfix" >
@@ -49,7 +49,7 @@
             <div class="main-content">
                 <ul class="my-ul" th:each="newArticle : ${newArticle.list}">
                     <li >
-                        <a href="#" th:text="${newArticle.title}" ></a>
+                        <a  th:href="'/article/detail?id='+${newArticle.id}"  th:text="${newArticle.title}" ></a>
                     </li>
                 </ul>
             </div>
@@ -62,35 +62,35 @@
             </div>
             <div class="tuijian-box" >
                 <section class="topnews imgscale">
-                    <a href="5-1.htm" ><img th:attr="src=${radomArticle[0].imageurl}"><span th:text="${radomArticle[0].title}"></span></a>
+                    <a th:href="'/article/detail?id='+${radomArticle[0].id}"><img th:attr="src=${radomArticle[0].imageurl}"><span th:text="${radomArticle[0].title}"></span></a>
                 </section>
                 <ul>
                     <li >
-                        <a href="#">
+                        <a th:href="'/article/detail?id='+${radomArticle[1].id}">
                             <i><img th:attr="src=${radomArticle[1].imageurl}" ></i>
                             <p th:text="${radomArticle[1].title}"></p>
                         </a>
                     </li>
                     <li >
-                        <a href="#">
+                        <a th:href="'/article/detail?id='+${radomArticle[2].id}">
                             <i><img th:attr="src=${radomArticle[2].imageurl}" ></i>
                             <p th:text="${radomArticle[2].title}"></p>
                         </a>
                     </li>
                     <li >
-                        <a href="#">
+                        <a th:href="'/article/detail?id='+${radomArticle[3].id}">
                             <i><img th:attr="src=${radomArticle[3].imageurl}" ></i>
                             <p th:text="${radomArticle[3].title}"></p>
                         </a>
                     </li>
                     <li >
-                        <a href="#">
+                        <a th:href="'/article/detail?id='+${radomArticle[4].id}">
                             <i><img th:attr="src=${radomArticle[4].imageurl}" ></i>
                             <p th:text="${radomArticle[4].title}"></p>
                         </a>
                     </li>
                     <li >
-                        <a href="#">
+                        <a th:href="'/article/detail?id='+${radomArticle[5].id}">
                             <i><img th:attr="src=${radomArticle[5].imageurl}" ></i>
                             <p th:text="${radomArticle[5].title}"></p>
                         </a>
@@ -107,7 +107,7 @@
             <div class="main-content">
                 <ul class="right-label">
                     <li th:each="tag : ${tagsList}" >
-                        <a href="#" th:text="${tag.tagName}" ></a>
+                        <a th:href="'/LabelArticles?id='+${tag.id}" th:text="${tag.tagName}" ></a>
                     </li>
                 </ul>
             </div>
@@ -175,9 +175,9 @@
                 var date = FormatTime(data.list[i].dateLong,'Y');
 
                 box.append($('<div class="my-media-img">' +
-                    '<a href="#"><img class="media-object" src="'+data.list[i].imageurl+'" alt="..."></a></div><div class="my-media-right "> ' +
-                    '<h4 class="my-media-head" ><span>'+data.list[i].title+'</span><span class="media-head-label"><i class="layui-icon layui-icon-note"></i><span >'+data.list[i].articleTypeStr+'</span></span></h4>' +
-                    '<div>'+data.list[i].content+'</div><p>' +
+                    '<a href="/article/detail?id='+data.list[i].id+'"><img class="media-object" src="'+data.list[i].imageurl+'" alt="..."></a></div><div class="my-media-right "> ' +
+                    '<a href="/article/detail?id='+data.list[i].id+'"><h4 class="my-media-head" ><span>'+data.list[i].title+'</span><span class="media-head-label"><i class="layui-icon layui-icon-note"></i><span >'+data.list[i].articleTypeStr+'</span></span></h4>' +
+                    '<div>'+data.list[i].content+'</div><p></a>' +
                     '<span class="footA"><i  class="font-small glyphicon glyphicon-thumbs-up"></i>&nbsp;<span class="good" >'+data.list[i].good+'</span>&nbsp;&nbsp;</span>' +
                     '<span class="footA"><i class="font-small glyphicon glyphicon-time"></i>&nbsp;<span class="good" >'+date+'</span>&nbsp;&nbsp;</span>' +
                     '<span class="footA"><i class="font-small glyphicon glyphicon-eye-open"></i>&nbsp;<span class="good">'+data.list[i].visits+'</span>&nbsp;&nbsp;</span>' +
@@ -191,7 +191,11 @@
 
 
 
-
+    getData("/getAllArticleType",null,function (data) {
+        for(var i = 0;i<data.length;i++){
+            $("#tyListBox").append('<li><a href="/sort?id='+data[i].id+'">'+data[i].name+'</a></li>')
+        }
+    });
 
 </script>
 <!--页面背景特效-->

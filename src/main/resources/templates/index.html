@@ -31,8 +31,10 @@
                 <div class="thumbnail">
                     <img th:attr="src=${art.imageurl}"  alt="..." class="ContentImg">
                     <div class="caption">
-                        <h4 class="hTitle" th:text="${art.title}"></h4>
-                        <p class="pContent"  th:text="${art.content}"></p>
+                        <a th:href="'/article/detail?id='+${art.id}">
+                            <h4 class="hTitle" th:text="${art.title}"></h4>
+                            <p class="pContent"  th:text="${art.content}"></p>
+                        </a>
                         <p>
                             <span class="footA"><i  class="font-small glyphicon glyphicon-thumbs-up"></i><span class="good" th:text="${art.good}"></span></span>
                             <span class="footA"><i class="font-small glyphicon glyphicon-time"></i><span class="good" th:text="${#dates.format(art.postedTime,'yyyy-MM-dd')}"></span></span>
@@ -56,8 +58,10 @@
                         </a>
                     </div>
                     <div class="my-media-right " >
-                        <h4 class="my-media-head" ><span th:text="${gl.title}"></span><span class="media-head-label"><i class="layui-icon layui-icon-note"></i><span th:text="${gl.articleTypeStr}"></span></span></h4>
-                        <div th:text="${gl.content}"></div>
+                        <a th:href="'/article/detail?id='+${gl.id}">
+                            <h4 class="my-media-head" ><span th:text="${gl.title}"></span><span class="media-head-label"><i class="layui-icon layui-icon-note"></i><span th:text="${gl.articleTypeStr}"></span></span></h4>
+                            <div th:text="${gl.content}"></div>
+                        </a>
                         <p>
                             <span class="footA"><i  class="font-small glyphicon glyphicon-thumbs-up"></i><span class="good" th:text="${gl.good}"></span></span>
                             <span class="footA"><i class="font-small glyphicon glyphicon-time"></i><span class="good" th:text="${#dates.format(gl.postedTime,'yyyy-MM-dd')}" ></span></span>
@@ -76,7 +80,7 @@
                 <div class="main-content">
                     <ul class="my-ul">
                         <li th:each="nart : ${newArticle.list}">
-                            <a href="#" th:text="${nart.title}" ></a>
+                            <a th:href="'/article/detail?id='+${nart.id}" th:text="${nart.title}" ></a>
                         </li>
                     </ul>
                 </div>
@@ -87,35 +91,35 @@
                 </div>
                 <div class="tuijian-box" >
                     <section class="topnews imgscale">
-                        <a href="5-1.htm" ><img th:attr="src=${radomArticle[0].imageurl}"><span th:text="${radomArticle[0].title}"></span></a>
+                        <a th:href="'/article/detail?id='+${radomArticle[0].id}" ><img th:attr="src=${radomArticle[0].imageurl}"><span th:text="${radomArticle[0].title}"></span></a>
                     </section>
                     <ul>
                         <li>
-                            <a href="#">
+                            <a th:href="'/article/detail?id='+${radomArticle[1].id}">
                                 <i><img  th:attr="src=${radomArticle[1].imageurl}"></i>
                                 <p th:text="${radomArticle[1].title}"></p>
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a th:href="'/article/detail?id='+${radomArticle[2].id}">
                                 <i><img  th:attr="src=${radomArticle[2].imageurl}"></i>
                                 <p  th:text="${radomArticle[2].title}"></p>
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a th:href="'/article/detail?id='+${radomArticle[3].id}">
                                 <i><img  th:attr="src=${radomArticle[3].imageurl}"></i>
                                 <p th:text="${radomArticle[3].title}"></p>
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a th:href="'/article/detail?id='+${radomArticle[4].id}">
                                 <i><img  th:attr="src=${radomArticle[4].imageurl}"></i>
                                 <p th:text="${radomArticle[4].title}"></p>
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a th:href="'/article/detail?id='+${radomArticle[5].id}">
                                 <i><img  th:attr="src=${radomArticle[5].imageurl}"></i>
                                 <p th:text="${radomArticle[5].title}"></p>
                             </a>
@@ -131,7 +135,7 @@
                 <div class="main-content">
                     <ul class="right-label">
                         <li th:each="tag : ${tagsList}">
-                            <a href="#" th:text="${tag.tagName}" ></a>
+                            <a th:href="'/LabelArticles?id='+${tag.id}" th:text="${tag.tagName}" ></a>
                         </li>
                     </ul>
                 </div>
@@ -143,26 +147,8 @@
                 </div>
                 <div class="main-content">
                     <ul class="frendLink">
-                        <li >
-                            <a href="#"  >师傅师傅说</a>
-                        </li>
-                        <li >
-                            <a href="#"  >师傅师傅sfsfsfsfsfsdfsdfsdf说</a>
-                        </li>
-                        <li >
-                            <a href="#"  >师傅师傅说</a>
-                        </li>
-                        <li >
-                            <a href="#"  >师傅师傅说</a>
-                        </li>
-                        <li >
-                            <a href="#"  >师傅师傅说</a>
-                        </li>
-                        <li >
-                            <a href="#"  >师傅师傅说</a>
-                        </li>
-                        <li >
-                            <a href="#"  >师傅师傅说</a>
+                        <li th:each="fl : ${flinkList}" >
+                            <a target="_blank" th:href="'http://'+${fl.path}" th:text="${fl.name}" >师傅师傅说</a>
                         </li>
                     </ul>
                 </div>
@@ -172,7 +158,11 @@
 </div>
 <div th:replace="footer :: footer"></div>
 <script>
-
+    getData("/getAllArticleType",null,function (data) {
+        for(var i = 0;i<data.length;i++){
+            $("#tyListBox").append('<li><a href="/sort?id='+data[i].id+'">'+data[i].name+'</a></li>')
+        }
+    });
 </script>
 <!--下雪-->
 <script type="text/javascript" src="static/js/snow.js"></script>

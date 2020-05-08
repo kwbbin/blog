@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="zh-CN"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>kwbbin博客管理系统</title>
+    <link rel="stylesheet" type="text/css" href="/static/js/layUI/layui.css">
+    <script src="/static/js/layUI/layui.all.js" type="text/javascript"></script>
+    <script src="/static/js/JQuery/jquery-1.11.1.js" type="text/javascript"></script>
+    <script src="/static/js/common.js" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="/static/js/bootstrap/bootstrap-3.3.7/css/bootstrap.min.css">
+    <script src="/static/js/bootstrap/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+
+
+
+</head>
+
+<body class="user-select" style="padding:10px 10px;">
+<div class="layui-card">
+    <div class="layui-card-header layui-elem-quote layui-quote-nm" >网站留言管理</div>
+    <div class="layui-card-body">
+            <table class="layui-table">
+                <colgroup>
+                    <col width="150">
+                    <col width="200">
+                    <col>
+                    <col>
+                    <col>
+                    <col>
+                    <col>
+                </colgroup>
+                <thead>
+                <tr>
+                    <th>留言ID</th>
+                    <th>留言内容</th>
+                    <th>留言点赞</th>
+                    <th>发布时间</th>
+                    <th>回复留言</th>
+                    <th>留言人昵称</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="me : ${commentList.list}">
+                    <td th:text="${me.id}"></td>
+                    <td th:utext="${me.content}"></td>
+                    <td th:text="${me.good}"></td>
+                    <td th:text="${#dates.format(me.responsetime,'yyyy-MM-dd HH:mm:ss')}"></td>
+                    <td th:text="${me.replyto}"></td>
+                    <td th:text="${me.name}"></td>
+                    <td><button class="layui-btn layui-btn-danger" th:onclick="deleteFun([[${me.id}]])">删除</button>
+                        <button th:if="${me.replyto} eq null" class="layui-btn" th:onclick="repalyFun([[${me.id}]])">回复</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <!--        分页-->
+            <div style="text-align: center">
+                <nav aria-label="Page navigation">
+                    <ul class="pagination">
+                        <li th:class="${commentList.hasPreviousPage}? '' : 'disabled notClick'">
+                            <a  th:href="'/manage/getAllCommentPage?pageNum='+${commentList.prePage}" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <li th:if="(${commentList.pageNum}- 3) ge  ${commentList.navigateFirstPage}" >
+                            <a th:href="'/manage/getAllCommentPage?pageNum='+(${commentList.pageNum} -3)" th:text="${commentList.pageNum} -3" href="#"></a>
+                        </li>
+                        <li th:if="(${commentList.pageNum}- 2) ge ${commentList.navigateFirstPage}" >
+                            <a th:href="'/manage/getAllCommentPage?pageNum='+(${commentList.pageNum} -2)" th:text="${commentList.pageNum} -2" href="#"></a>
+                        </li>
+                        <li th:if="(${commentList.pageNum}- 1) ge ${commentList.navigateFirstPage}" >
+                            <a th:href="'/manage/getAllCommentPage?pageNum='+(${commentList.pageNum} -1)" th:text="${commentList.pageNum} -1" href="#"></a>
+                        </li>
+                        <li class="active"><a href="#" th:text="${commentList.pageNum}"></a></li>
+                        <li th:if="(${commentList.pageNum}+ 1) le ${commentList.navigateLastPage}" >
+                            <a th:href="'/manage/getAllCommentPage?pageNum='+(${commentList.pageNum} +1)" th:text="${commentList.pageNum} +1" href="#"></a>
+                        </li>
+                        <li th:if="(${commentList.pageNum}+ 2) le ${commentList.navigateLastPage}" >
+                            <a th:href="'/manage/getAllCommentPage?pageNum='+(${commentList.pageNum} +2)" th:text="${commentList.pageNum} +2" href="#"></a>
+                        </li>
+                        <li th:if="(${commentList.pageNum}+ 3) le ${commentList.navigateLastPage}" >
+                            <a th:href="'/manage/getAllCommentPage?pageNum='+(${commentList.pageNum} +3)" th:text="${commentList.pageNum} +3" href="#"></a>
+                        </li>
+
+                        <li  th:class="${commentList.hasNextPage}? '' : 'disabled notClick'">
+                            <a th:href="'/manage/getAllCommentPage?pageNum='+${commentList.nextPage}" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+
+
+    </div>
+</div>
+
+
+
+<div id="inputBox" style="display: none;">
+    <div class="inputBox layui-anim  layui-anim-scaleSpring">
+        <i id="boxClose" onclick="$('#inputBox').css('display','none');" class="layui-icon layui-icon-close" style="position: absolute;right:10px;top:10px;cursor:pointer"></i>
+        <form  action="/manage/replyComment" method="post" id="myForm" class="add-article-form">
+            <div class="layui-form-item">
+                <label class="layui-form-label">回复内容</label>
+                <div class="layui-input-block">
+<!--                    <input type="text" id="content"  class="layui-input">-->
+                    <textarea id="textArea"  name="content" required  lay-verify="required" placeholder="请回复" autocomplete="off"></textarea>
+                    <input name="commentId" id="commentId" type="text" style="display: none;" />
+                </div>
+                <img style="position: relative;cursor:pointer;left: -150px;top:15px;" src="/static/img/emoji.png" onclick="emojiFun();">
+                <button style="margin-top: 30px" class="layui-btn" lay-submit lay-filter="submit">提交</button>
+                <div class="layui-tab" id="emoji-box">
+                    <ul class="layui-tab-title">
+                        <li class="layui-this"><img width="30" height="30" src="/static/img/emoji.png"></a></li>
+                        <li><img  width="25" height="25" src="/static/img/emoji1.jpg"></a></li>
+                        <li><img width="25" height="25"  src="/static/img/emoji2.gif"></a></li>
+                        <li><img width="25" height="25"  src="/static/img/emoji3.gif"></a></li>
+                    </ul>
+                    <div class="layui-tab-content">
+                        <div class="layui-tab-item layui-show one">
+                            <ul>
+                                <li><img name="emoji2_1" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji2/emoji2_1.png'"></li>
+                                <li><img name="emoji2_2" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji2/emoji2_2.png'"></li>
+                                <li><img name="emoji2_3" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji2/emoji2_3.png'"></li>
+                                <li><img name="emoji2_4" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji2/emoji2_4.png'"></li>
+                                <li><img name="emoji2_5" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji2/emoji2_5.png'"></li>
+                                <li><img name="emoji2_6" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji2/emoji2_6.png'"></li>
+                                <li><img name="emoji2_7" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji2/emoji2_7.png'"></li>
+                                <li><img name="emoji2_8" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji2/emoji2_8.png'"></li>
+                                <li><img name="emoji2_9" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji2/emoji2_9.png'"></li>
+                                <li><img name="emoji2_10" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji2/emoji2_10.png'"></li>
+                                <li><img name="emoji2_11" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji2/emoji2_11.png'"></li>
+                                <li><img name="emoji2_12" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji2/emoji2_12.png'"></li>
+                            </ul>
+                        </div>
+                        <div class="layui-tab-item">
+                            <ul>
+                                <li><img name="emoji1_1" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji1/emoji1_1.jpg'"></li>
+                                <li><img name="emoji1_2" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji1/emoji1_2.jpg'"></li>
+                                <li><img name="emoji1_3" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji1/emoji1_3.jpg'"></li>
+                                <li><img name="emoji1_4" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji1/emoji1_4.jpg'"></li>
+                                <li><img name="emoji1_5" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji1/emoji1_5.jpg'"></li>
+                                <li><img name="emoji1_6" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji1/emoji1_6.jpg'"></li>
+                                <li><img name="emoji1_7" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji1/emoji1_7.jpg'"></li>
+                                <li><img name="emoji1_8" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji1/emoji1_8.jpg'"></li>
+                            </ul>
+                        </div>
+                        <div class="layui-tab-item big">
+                            <ul>
+                                <li><img name="emoji3_1" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji3/emoji3_1.gif'"></li>
+                                <li><img name="emoji3_2" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji3/emoji3_2.gif'"></li>
+                                <li><img name="emoji3_3" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji3/emoji3_3.gif'"></li>
+                                <li><img name="emoji3_4" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji3/emoji3_4.gif'"></li>
+                                <li><img name="emoji3_5" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji3/emoji3_5.gif'"></li>
+                                <li><img name="emoji3_6" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji3/emoji3_6.gif'"></li>
+                                <li><img name="emoji3_7" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji3/emoji3_7.gif'"></li>
+                                <li><img name="emoji3_8" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji3/emoji3_8.gif'"></li>
+                                <li><img name="emoji3_9" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji3/emoji3_9.gif'"></li>
+                                <li><img name="emoji3_10" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji3/emoji3_10.gif'"></li>
+                                <li><img name="emoji3_11" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji3/emoji3_11.gif'"></li>
+                                <li><img name="emoji3_12" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji3/emoji3_12.gif'"></li>
+                                <li><img name="emoji3_13" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji3/emoji3_13.gif'"></li>
+                                <li><img name="emoji3_14" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji3/emoji3_14.gif'"></li>
+                                <li><img name="emoji3_15" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji3/emoji3_15.gif'"></li>
+                                <li><img name="emoji3_16" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji3/emoji3_16.gif'"></li>
+                                <li><img name="emoji3_17" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji3/emoji3_17.gif'"></li>
+                                <li><img name="emoji3_18" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji3/emoji3_18.gif'"></li>
+                                <li><img name="emoji3_19" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji3/emoji3_19.gif'"></li>
+                                <li><img name="emoji3_20" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji3/emoji3_20.gif'"></li>
+                            </ul>
+                        </div>
+                        <div class="layui-tab-item big">
+                            <ul>
+                                <li><img name="emoji4_1" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji4/emoji4_1.gif'"></li>
+                                <li><img name="emoji4_2" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji4/emoji4_2.gif'"></li>
+                                <li><img name="emoji4_3" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji4/emoji4_3.gif'"></li>
+                                <li><img name="emoji4_4" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji4/emoji4_4.gif'"></li>
+                                <li><img name="emoji4_5" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji4/emoji4_5.gif'"></li>
+                                <li><img name="emoji4_6" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji4/emoji4_6.gif'"></li>
+                                <li><img name="emoji4_7" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji4/emoji4_7.gif'"></li>
+                                <li><img name="emoji4_8" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji4/emoji4_8.gif'"></li>
+                                <li><img name="emoji4_9" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji4/emoji4_9.gif'"></li>
+                                <li><img name="emoji4_10" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji4/emoji4_10.gif'"></li>
+                                <li><img name="emoji4_11" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji4/emoji4_11.gif'"></li>
+                                <li><img name="emoji4_12" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji4/emoji4_12.gif'"></li>
+                                <li><img name="emoji4_13" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji4/emoji4_13.gif'"></li>
+                                <li><img name="emoji4_14" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji4/emoji4_14.gif'"></li>
+                                <li><img name="emoji4_15" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji4/emoji4_15.gif'"></li>
+                                <li><img name="emoji4_16" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji4/emoji4_16.gif'"></li>
+                                <li><img name="emoji4_17" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji4/emoji4_17.gif'"></li>
+                                <li><img name="emoji4_18" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji4/emoji4_18.gif'"></li>
+                                <li><img name="emoji4_19" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji4/emoji4_19.gif'"></li>
+                                <li><img name="emoji4_20" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji4/emoji4_20.gif'"></li>
+                                <li><img name="emoji4_21" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji4/emoji4_21.gif'"></li>
+                                <li><img name="emoji4_22" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji4/emoji4_22.gif'"></li>
+                                <li><img name="emoji4_23" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji4/emoji4_23.gif'"></li>
+                                <li><img name="emoji4_24" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji4/emoji4_24.gif'"></li>
+                                <li><img name="emoji4_25" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji4/emoji4_25.gif'"></li>
+                                <li><img name="emoji4_26" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji4/emoji4_26.gif'"></li>
+                                <li><img name="emoji4_27" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji4/emoji4_27.gif'"></li>
+                                <li><img name="emoji4_28" onclick="testFun(this)" th:attr="src=${localInfoPath}+'/blog/file/emoji/emoji4/emoji4_28.gif'"></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    function deleteFun(obj){
+        var parm = [
+            {name:'id',value:obj}
+        ]
+        createForm("/manage/deleteCommentById",parm);
+        window.parent.timeOut("删除成功！");
+    }
+
+    function repalyFun(obj){
+        $('#inputBox').css('display','block');
+        $("#commentId")[0].value = obj;
+    }
+
+
+    function testFun(obj) {
+        var value = $("#textArea")[0].value;
+        $("#textArea")[0].value=value+'[/'+obj.name+']';
+        emojiFun();
+    }
+
+    function emojiFun(){
+        if ($("#emoji-box").css("display")=='none'){
+            $("#emoji-box").css("display","block")
+        } else{
+            $("#emoji-box").css("display","none")
+        }
+    }
+
+</script>
+<style>
+    #inputBox{
+        background: rgba(255,255,255,0.7);
+        position: absolute;
+        top: -60px;
+        left: 0;
+        width:1200px;
+        height:600px;
+    }
+    #inputBox .inputBox{
+        padding: 10px 10px;
+        text-align: center;
+        line-height: 20px;
+        width:400px;
+        height: 280px;
+        background:  #999;
+        /*border: 1px solid #999999;*/
+
+        border-radius: 5px;
+        position: absolute;
+        top:100px;
+        left:200px;
+    }
+
+    #textArea{
+        width:100%;
+        height: 100px;
+        resize: none;
+        position: relative;
+        left: -20px;
+        border-radius: 4px;
+    }
+    .layui-form-item{
+        margin-top: 10px;
+    }
+
+    /*表情*/
+    .layui-tab{
+        display: none;
+        width:600px;
+        background: #fff;
+        box-shadow: 3px 3px 8px #999;
+        border-radius: 4px;
+    }
+    .layui-tab-content ul li{
+        padding:0px;
+        position: relative;
+        display: inline-block;
+        height: 50px;
+        width:50px;
+        background: #fff;
+        border:1px solid #eee;
+        margin-left: -5px;
+        padding: 10px;
+    }
+
+    .layui-tab-content ul li img{
+        cursor: pointer;
+        width: 30px;
+        height: 30px;
+        position: relative;
+        left: 0;
+        top: 0;
+    }
+
+    .layui-tab-content .big li{
+        height: 100px;
+        width:100px;
+        padding: 10px;
+    }
+
+    .layui-tab-content .big li img{
+        width: 80px;
+        height: 80px;
+    }
+
+    .layui-tab-content .one li{
+        height: 40px;
+        width:40px;
+        padding: 5px;
+    }
+
+    .layui-tab-content .one li img{
+        width: 25px;
+        height: 25px;
+    }
+
+
+</style>
+
+</body>
+</html>

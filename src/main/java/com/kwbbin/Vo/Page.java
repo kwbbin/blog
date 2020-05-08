@@ -10,4 +10,9 @@ public class Page {
     Integer pageNum;
     Integer pageSize;
     Integer TagsId;
+    String responseStr;
+    String search;
+    Long id;
+    String userName;
+    String commentContent;
 }

@@ -2,20 +2,20 @@ package com.kwbbin.bean;
 
 import java.util.Date;
 
-public class Message {
+public class MyMessage {
     private Long id;
 
-    private Integer userid;
+    private String content;
 
     private Integer good;
 
     private Date responsetime;
 
-    private Integer answertouser;
-
     private Long answertomessage;
 
-    private String content;
+    private String name;
+
+    private Long articleid;
 
     public Long getId() {
         return id;
@@ -25,12 +25,12 @@ public class Message {
         this.id = id;
     }
 
-    public Integer getUserid() {
-        return userid;
+    public String getContent() {
+        return content;
     }
 
-    public void setUserid(Integer userid) {
-        this.userid = userid;
+    public void setContent(String content) {
+        this.content = content == null ? null : content.trim();
     }
 
     public Integer getGood() {
@@ -49,14 +49,6 @@ public class Message {
         this.responsetime = responsetime;
     }
 
-    public Integer getAnswertouser() {
-        return answertouser;
-    }
-
-    public void setAnswertouser(Integer answertouser) {
-        this.answertouser = answertouser;
-    }
-
     public Long getAnswertomessage() {
         return answertomessage;
     }
@@ -65,11 +57,19 @@ public class Message {
         this.answertomessage = answertomessage;
     }
 
-    public String getContent() {
-        return content;
+    public String getName() {
+        return name;
     }
 
-    public void setContent(String content) {
-        this.content = content == null ? null : content.trim();
+    public void setName(String name) {
+        this.name = name == null ? null : name.trim();
+    }
+
+    public Long getArticleid() {
+        return articleid;
+    }
+
+    public void setArticleid(Long articleid) {
+        this.articleid = articleid;
     }
 }

@@ -17,28 +17,28 @@
         <div class="layui-row">
             <div class="layui-col-xs2">
                 <p>文章</p>
-                <p class="grey"><span>0</span>条</p>
+                <p class="grey"><span th:text="${totalArticle}">0</span>条</p>
             </div>
 
             <div class="layui-col-xs2">
                 <p>留言</p>
-                <p class="grey"><span>0</span>条</p>
+                <p class="grey"><span th:text="${totalComment}">0</span>条</p>
             </div>
 
             <div class="layui-col-xs2">
                 <p>评论</p>
-                <p class="grey"><span>0</span>条</p>
+                <p class="grey"><span th:text="${totalMessage}">0</span>条</p>
             </div>
 
             <div class="layui-col-xs2">
                 <p>友链</p>
-                <p class="grey"><span>0</span>条</p>
+                <p class="grey"><span th:text="${totalFriendLink}">0</span>条</p>
             </div>
 
 
             <div class="layui-col-xs2">
                 <p>访问量</p>
-                <p class="grey"><span>0</span>条</p>
+                <p class="grey"><span th:text="${vists}">0</span></p>
             </div>
         </div>
     </div>

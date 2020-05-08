@@ -65,15 +65,23 @@
 <!--            <generatedKey column="id" sqlStatement="JDBC" identity="true"></generatedKey>-->
 <!--        </table>-->
 <!--                <table tableName="tags" domainObjectName="Tags" />-->
-        <table tableName="article_type" domainObjectName="ArticleType" />
+<!--        <table tableName="article_type" domainObjectName="ArticleType" />-->
+<!--        <table tableName="friend_link" domainObjectName="FriendLink" />-->
+<!--        <table tableName="time_line" domainObjectName="TimeLine" />-->
 <!--        <table tableName="draft" domainObjectName="Draft"  />-->
 <!--        <table tableName="admin" domainObjectName="Admin" />-->
         <!--                <table tableName="tags_article" domainObjectName="TagsArticle" />-->
 <!--                        <table tableName="draft_tags" domainObjectName="DraftTags" />-->
 
 <!--        <table tableName="user" domainObjectName="User" />-->
-<!--        <table tableName="reply" domainObjectName="Reply"  />-->
-<!--        <table tableName="message" domainObjectName="Message"  />-->
+<!--        <table tableName="comment" domainObjectName="Comment"  />-->
+<!--                <table tableName="my_message" domainObjectName="MyMessage" >-->
+<!--                    <generatedKey column="id" sqlStatement="JDBC" identity="true"></generatedKey>-->
+<!--                </table>-->
+<!--            <table tableName="comment" domainObjectName="Comment" >-->
+<!--                <generatedKey column="id" sqlStatement="JDBC" identity="true"></generatedKey>-->
+<!--            </table>-->
+                <table tableName="blog_basic" domainObjectName="BlogBasic" />
 
     </context>
 </generatorConfiguration>

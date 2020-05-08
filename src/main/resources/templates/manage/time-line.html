@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="zh-CN"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>kwbbin博客管理系统</title>
+    <script src="/static/js/JQuery/jquery-1.11.1.js" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="/static/js/layUI/layui.css">
+    <script src="/static/js/layUI/layui.all.js" type="text/javascript"></script>
+
+</head>
+
+<body class="user-select" style="padding:10px 10px;">
+<div class="layui-card">
+    <div class="layui-card-header layui-elem-quote layui-quote-nm" >Tags:&nbsp;&nbsp;时间轴管理</div>
+    <div class="layui-card-body">
+        <div class="layui-tab">
+            <ul class="layui-tab-title">
+                <li class="layui-this">时光轴查询</li>
+                <li>时光轴添加</li>
+<!--                <li>查看标签的文章</li>-->
+<!--                <li>商品管理</li>-->
+<!--                <li>订单管理</li>-->
+            </ul>
+            <div class="layui-tab-content">
+                <div class="layui-tab-item layui-show">
+                    <table class="layui-table">
+                        <colgroup>
+                            <col>
+                            <col>
+                        </colgroup>
+                        <thead>
+                        <tr>
+                            <th>时光轴ID</th>
+                            <th>标题</th>
+                            <th>内容</th>
+                            <th>时间</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each=" tl : ${timeLine}">
+                            <td th:text="${tl.id}"></td>
+                            <td th:text="${tl.title}"></td>
+                            <td th:text="${tl.content}"></td>
+                            <td th:text="${#dates.format(tl.postTime,'yyyy-MM-dd HH:mm:ss')}"></td>
+                            <td>
+                                <button type="button" class="layui-btn" th:onclick="alertIdFun([[${tl.id}]],[[${tl.title}]],[[${tl.content}]],[[${tl.postTime}]])">编辑</button>
+                                <button type="button" class="layui-btn layui-btn-danger" th:onclick="deleteFun([[${tl.id}]])">删除</button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="layui-tab-item" style="width:900px;padding-top: 50px;">
+                    <label class="layui-form-label" style="width: 170px">请输入要添加时间轴标题</label>
+                    <div class="layui-input-block" style="display: inline-block ;width: 400px;margin-right: 30px;margin-bottom: 20px;">
+                        <input type="text" name="title" style="position: relative;left: -70px;" required  id="TimeLineTitleAdd" lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+                    </div>
+                    <label class="layui-form-label" style="width: 170px">请输入要添加时间轴内容</label>
+                    <div class="layui-input-block" style="display: inline-block ;width: 400px;margin-right: 30px;">
+                        <input type="text" name="content" style="position: relative;left: -70px;" required  id="TimeLineContentAdd" lay-verify="required" placeholder="请输入内容" autocomplete="off" class="layui-input">
+                    </div>
+                    <button type="button" class="layui-btn " th:onclick="addFun()">添加</button>
+                </div>
+<!--                <div class="layui-tab-item">内容3</div>-->
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="inputBox" style="display: none;">
+    <div class="inputBox layui-anim  layui-anim-scaleSpring">
+        <i id="boxClose" onclick="$('#inputBox').css('display','none');" class="layui-icon layui-icon-close" style="position: absolute;right:10px;top:10px;cursor:pointer"></i>
+<!--        <form  action="#" method="post" id="myForm" class="add-article-form">-->
+            <div class="layui-form-item">
+                <label class="layui-form-label">时间轴标题</label>
+                <div class="layui-input-block">
+                    <input type="text" id="timeLineTitle" name="title" required  lay-verify="required" placeholder="请输入修改后的时间轴标题" autocomplete="off" class="layui-input">
+                    <input type="text" id="timeLineId" name="id" required  lay-verify="required"  style="display: none">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">时间轴内容</label>
+                <div class="layui-input-block">
+                    <input type="text" id="timeLineContent" name="content" required  lay-verify="required" placeholder="请输入修改后的时间轴内容" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">时间轴时间</label>
+                <div class="layui-input-block">
+                    <input type="text" id="timeLineTime" name="title" required  lay-verify="required" placeholder="请输入修改后的时间轴时间" autocomplete="off" class="layui-input">
+                </div>
+                <button style="margin-top: 30px" onclick="submitAlertFun()"  class="layui-btn" >修改</button>
+            </div>
+<!--        </form>-->
+    </div>
+</div>
+
+<script>
+    //注意：选项卡 依赖 element 模块，否则无法进行功能性操作
+    layui.use('element', function(){
+        var element = layui.element;
+    });
+
+
+    layui.use('laydate', function(){
+        var laydate = layui.laydate;
+
+        //执行一个laydate实例
+        laydate.render({
+            elem: '#timeLineTime' , //指定元素
+            trigger: 'click',
+            type: 'datetime'
+        });
+    });
+
+    function addFun(){
+        var title = $("#TimeLineTitleAdd")[0].value
+        var content = $("#TimeLineContentAdd")[0].value
+        var str = [
+            {name:'title',value:title},
+            {name:'content',value:content}
+        ]
+        createForm("/manage/addTimeLine",str)
+        window.parent.timeOut("添加成功！");
+    }
+
+
+
+    function deleteFun(obj){
+        var str = [
+            {name:'id',value:obj}
+        ]
+        createForm("/manage/deleteTimeLine",str)
+        window.parent.timeOut("删除成功！");
+    }
+
+    function submitAlertFun() {
+        var content = $("#timeLineContent")[0].value;
+        var title = $("#timeLineTitle")[0].value;
+        var id = $("#timeLineId")[0].value;
+        var date = $("#timeLineTime")[0].value;
+        var str = [
+            {name:'id',value:id},
+            {name:'title',value:title},
+            {name:'content',value:content},
+            {name:'date',value:date}
+        ]
+        createForm("/manage/updateTimeLine",str)
+        window.parent.timeOut("修改成功！");
+    }
+
+    function createForm(url,array) {
+        //参数示例
+        // [
+        //     {name:sfsf,value:''},
+        //     {name:sfsf,value:''}
+        // ]
+        var form = $('<form></form>');
+        form.attr('action', url);
+        form.attr("method",'post');
+        form.attr("style",'display:none');
+        var l = array.length;
+        if(l>0){
+            for(var i = 0;i<l;i++){
+                form.append($('<input type="text" name="'+array[i].name+'" value="'+array[i].value+'" />'))
+            }
+        }
+        $("body").append(form);
+        form.submit();
+    }
+
+    function alertIdFun(id,title,content,date){
+        $("#inputBox").css("display","block");
+        $("#timeLineTitle").attr("value",title);
+        $("#timeLineId").attr("value",id);
+        $("#timeLineContent").attr("value",content);
+        $("#timeLineTime").attr("value",date);
+
+
+    }
+</script>
+
+
+<style>
+    #inputBox{
+        background: rgba(255,255,255,0.7);
+        position: absolute;
+        top: -60px;
+        left: 0;
+        width:1200px;
+        height:600px;
+    }
+    #inputBox .inputBox{
+        padding: 100px 10px;
+        text-align: center;
+        line-height: 20px;
+        width:400px;
+        height: 120px;
+        background:  #999;
+        /*border: 1px solid #999999;*/
+
+        border-radius: 5px;
+        position: absolute;
+        top:100px;
+        left:200px;
+    }
+</style>
+</body>
+</html>

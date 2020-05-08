@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="zh-CN"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>kwbbin博客管理系统</title>
+    <link rel="stylesheet" type="text/css" href="/static/js/layUI/layui.css">
+    <script src="/static/js/layUI/layui.all.js" type="text/javascript"></script>
+    <script src="/static/js/JQuery/jquery-1.11.1.js" type="text/javascript"></script>
+
+
+    <link rel="stylesheet" type="text/css" href="/static/editor-md/css/editormd.css"/>
+    <script src="/static/editor-md/editormd.js" type="text/javascript" charset="utf-8"></script>
+
+
+</head>
+
+<body class="user-select" style="padding:10px 10px;">
+<div class="layui-card">
+    <div class="layui-card-header layui-elem-quote layui-quote-nm" >Tags:&nbsp;&nbsp;友情链接管理</div>
+    <div class="layui-card-body">
+        <div class="layui-tab">
+            <ul class="layui-tab-title">
+                <li class="layui-this">友情链接查询</li>
+                <li>添加友情链接</li>
+<!--                <li>查看标签的文章</li>-->
+<!--                <li>商品管理</li>-->
+<!--                <li>订单管理</li>-->
+            </ul>
+            <div class="layui-tab-content">
+                <div class="layui-tab-item layui-show">
+                    <table class="layui-table">
+                        <colgroup>
+                            <col>
+                            <col>
+                        </colgroup>
+                        <thead>
+                        <tr>
+                            <th>友链ID</th>
+                            <th>名称</th>
+                            <th>地址</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each=" fl : ${friendLink}">
+                            <td th:text="${fl.id}"></td>
+                            <td th:text="${fl.name}"></td>
+                            <td><a th:href="'http://'+${fl.path}" target="_blank"  th:text="${fl.path}"></a></td>
+                            <td>
+                                <button type="button" class="layui-btn" th:onclick="alertIdFun([[${fl.id}]],[[${fl.name}]],[[${fl.path}]])">编辑</button>
+                                <button type="button" class="layui-btn layui-btn-danger" th:onclick="deleteFun([[${fl.id}]])">删除</button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="layui-tab-item" style="width:900px;padding-top: 50px;">
+                    <label class="layui-form-label" style="width: 170px">请输入要添加友链的名称</label>
+                    <div class="layui-input-block" style="display: inline-block ;width: 400px;margin-right: 30px;margin-bottom: 20px;">
+                        <input type="text" name="name" style="position: relative;left: -70px;" required  id="friendLinkNameAdd" lay-verify="required" placeholder="请输入名称" autocomplete="off" class="layui-input">
+                    </div>
+                    <label class="layui-form-label" style="width: 170px">请输入要添加友链的地址</label>
+                    <div class="layui-input-block" style="display: inline-block ;width: 400px;margin-right: 30px;">
+                        <input type="text" name="tagsName" style="position: relative;left: -70px;" required  id="friendLinkPathAdd" lay-verify="required" placeholder="请输入地址" autocomplete="off" class="layui-input">
+                    </div>
+                    <button type="button" class="layui-btn " th:onclick="addFun()">添加</button>
+                </div>
+<!--                <div class="layui-tab-item">内容3</div>-->
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="inputBox" style="display: none;">
+    <div class="inputBox layui-anim  layui-anim-scaleSpring">
+        <i id="boxClose" onclick="$('#inputBox').css('display','none');" class="layui-icon layui-icon-close" style="position: absolute;right:10px;top:10px;cursor:pointer"></i>
+<!--        <form  action="#" method="post" id="myForm" class="add-article-form">-->
+            <div class="layui-form-item">
+                <label class="layui-form-label">友链名称</label>
+                <div class="layui-input-block">
+                    <input type="text" id="friendLinkName" name="name" required  lay-verify="required" placeholder="请输入修改后的友链名称" autocomplete="off" class="layui-input">
+                    <input type="text" id="friendLinkId" name="id" required  lay-verify="required"  style="display: none">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">友链地址</label>
+                <div class="layui-input-block">
+                    <input type="text" id="friendLinkPath" name="path" required  lay-verify="required" placeholder="请输入修改后的友链地址" autocomplete="off" class="layui-input">
+                </div>
+                <button style="margin-top: 30px" onclick="submitAlertFun()"  class="layui-btn" >修改</button>
+            </div>
+<!--        </form>-->
+    </div>
+</div>
+
+<script>
+    //注意：选项卡 依赖 element 模块，否则无法进行功能性操作
+    layui.use('element', function(){
+        var element = layui.element;
+    });
+
+    layui.use('form', function(){
+        var form = layui.form;
+        form.render();
+
+        //监听提交
+        form.on('submit(submit)', function(data){
+            window.parent.timeOut("修改成功！");
+        });
+
+    });
+
+    function addFun(){
+        var objName = $("#friendLinkNameAdd")[0].value
+        var objPath = $("#friendLinkPathAdd")[0].value
+        var str = [
+            {name:'name',value:objName},
+            {name:'path',value:objPath}
+        ]
+        createForm("/manage/addFriendLink",str)
+        window.parent.timeOut("添加成功！");
+    }
+
+
+
+    function deleteFun(obj){
+        var str = [
+            {name:'id',value:obj}
+        ]
+        createForm("/manage/deleteFriendLink",str)
+        window.parent.timeOut("删除成功！");
+    }
+
+    function submitAlertFun() {
+        var path = $("#friendLinkPath")[0].value;
+        var name = $("#friendLinkName")[0].value;
+        var id = $("#friendLinkId")[0].value;
+        var str = [
+            {name:'id',value:id},
+            {name:'name',value:name},
+            {name:'path',value:path}
+        ]
+        createForm("/manage/updateFriendLink",str)
+        window.parent.timeOut("修改成功！");
+    }
+
+    function createForm(url,array) {
+        //参数示例
+        // [
+        //     {name:sfsf,value:''},
+        //     {name:sfsf,value:''}
+        // ]
+        var form = $('<form></form>');
+        form.attr('action', url);
+        form.attr("method",'post');
+        form.attr("style",'display:none');
+        var l = array.length;
+        if(l>0){
+            for(var i = 0;i<l;i++){
+                form.append($('<input type="text" name="'+array[i].name+'" value="'+array[i].value+'" />'))
+            }
+        }
+        $("body").append(form);
+        form.submit();
+    }
+
+    function alertIdFun(id,name,path){
+        $("#inputBox").css("display","block");
+        $("#friendLinkPath").attr("value",path);
+        $("#friendLinkName").attr("value",name);
+        $("#friendLinkId").attr("value",id);
+
+
+    }
+</script>
+
+<style>
+    #inputBox{
+        background: rgba(255,255,255,0.7);
+        position: absolute;
+        top: -60px;
+        left: 0;
+        width:1200px;
+        height:600px;
+    }
+    #inputBox .inputBox{
+        padding: 100px 10px;
+        text-align: center;
+        line-height: 20px;
+        width:400px;
+        height: 120px;
+        background:  #999;
+        /*border: 1px solid #999999;*/
+
+        border-radius: 5px;
+        position: absolute;
+        top:100px;
+        left:200px;
+    }
+</style>
+</body>
+</html>

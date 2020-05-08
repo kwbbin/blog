@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class ReplyExample {
+public class MyMessageExample {
     protected String orderByClause;
 
     protected boolean distinct;
 
     protected List<Criteria> oredCriteria;
 
-    public ReplyExample() {
+    public MyMessageExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 
@@ -165,123 +165,73 @@ public class ReplyExample {
             return (Criteria) this;
         }
 
-        public Criteria andResponsetimeIsNull() {
-            addCriterion("responseTime is null");
+        public Criteria andContentIsNull() {
+            addCriterion("content is null");
             return (Criteria) this;
         }
 
-        public Criteria andResponsetimeIsNotNull() {
-            addCriterion("responseTime is not null");
+        public Criteria andContentIsNotNull() {
+            addCriterion("content is not null");
             return (Criteria) this;
         }
 
-        public Criteria andResponsetimeEqualTo(Date value) {
-            addCriterion("responseTime =", value, "responsetime");
+        public Criteria andContentEqualTo(String value) {
+            addCriterion("content =", value, "content");
             return (Criteria) this;
         }
 
-        public Criteria andResponsetimeNotEqualTo(Date value) {
-            addCriterion("responseTime <>", value, "responsetime");
+        public Criteria andContentNotEqualTo(String value) {
+            addCriterion("content <>", value, "content");
             return (Criteria) this;
         }
 
-        public Criteria andResponsetimeGreaterThan(Date value) {
-            addCriterion("responseTime >", value, "responsetime");
+        public Criteria andContentGreaterThan(String value) {
+            addCriterion("content >", value, "content");
             return (Criteria) this;
         }
 
-        public Criteria andResponsetimeGreaterThanOrEqualTo(Date value) {
-            addCriterion("responseTime >=", value, "responsetime");
+        public Criteria andContentGreaterThanOrEqualTo(String value) {
+            addCriterion("content >=", value, "content");
             return (Criteria) this;
         }
 
-        public Criteria andResponsetimeLessThan(Date value) {
-            addCriterion("responseTime <", value, "responsetime");
+        public Criteria andContentLessThan(String value) {
+            addCriterion("content <", value, "content");
             return (Criteria) this;
         }
 
-        public Criteria andResponsetimeLessThanOrEqualTo(Date value) {
-            addCriterion("responseTime <=", value, "responsetime");
+        public Criteria andContentLessThanOrEqualTo(String value) {
+            addCriterion("content <=", value, "content");
             return (Criteria) this;
         }
 
-        public Criteria andResponsetimeIn(List<Date> values) {
-            addCriterion("responseTime in", values, "responsetime");
+        public Criteria andContentLike(String value) {
+            addCriterion("content like", value, "content");
             return (Criteria) this;
         }
 
-        public Criteria andResponsetimeNotIn(List<Date> values) {
-            addCriterion("responseTime not in", values, "responsetime");
+        public Criteria andContentNotLike(String value) {
+            addCriterion("content not like", value, "content");
             return (Criteria) this;
         }
 
-        public Criteria andResponsetimeBetween(Date value1, Date value2) {
-            addCriterion("responseTime between", value1, value2, "responsetime");
+        public Criteria andContentIn(List<String> values) {
+            addCriterion("content in", values, "content");
             return (Criteria) this;
         }
 
-        public Criteria andResponsetimeNotBetween(Date value1, Date value2) {
-            addCriterion("responseTime not between", value1, value2, "responsetime");
+        public Criteria andContentNotIn(List<String> values) {
+            addCriterion("content not in", values, "content");
             return (Criteria) this;
         }
 
-        public Criteria andUseridIsNull() {
-            addCriterion("userId is null");
+        public Criteria andContentBetween(String value1, String value2) {
+            addCriterion("content between", value1, value2, "content");
             return (Criteria) this;
         }
 
-        public Criteria andUseridIsNotNull() {
-            addCriterion("userId is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andUseridEqualTo(Integer value) {
-            addCriterion("userId =", value, "userid");
-            return (Criteria) this;
-        }
-
-        public Criteria andUseridNotEqualTo(Integer value) {
-            addCriterion("userId <>", value, "userid");
-            return (Criteria) this;
-        }
-
-        public Criteria andUseridGreaterThan(Integer value) {
-            addCriterion("userId >", value, "userid");
-            return (Criteria) this;
-        }
-
-        public Criteria andUseridGreaterThanOrEqualTo(Integer value) {
-            addCriterion("userId >=", value, "userid");
-            return (Criteria) this;
-        }
-
-        public Criteria andUseridLessThan(Integer value) {
-            addCriterion("userId <", value, "userid");
-            return (Criteria) this;
-        }
-
-        public Criteria andUseridLessThanOrEqualTo(Integer value) {
-            addCriterion("userId <=", value, "userid");
-            return (Criteria) this;
-        }
-
-        public Criteria andUseridIn(List<Integer> values) {
-            addCriterion("userId in", values, "userid");
-            return (Criteria) this;
-        }
-
-        public Criteria andUseridNotIn(List<Integer> values) {
-            addCriterion("userId not in", values, "userid");
-            return (Criteria) this;
-        }
-
-        public Criteria andUseridBetween(Integer value1, Integer value2) {
-            addCriterion("userId between", value1, value2, "userid");
-            return (Criteria) this;
-        }
-
-        public Criteria andUseridNotBetween(Integer value1, Integer value2) {
-            addCriterion("userId not between", value1, value2, "userid");
+        public Criteria andContentNotBetween(String value1, String value2) {
+            addCriterion("content not between", value1, value2, "content");
             return (Criteria) this;
         }
 
@@ -345,6 +295,196 @@ public class ReplyExample {
             return (Criteria) this;
         }
 
+        public Criteria andResponsetimeIsNull() {
+            addCriterion("responseTime is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andResponsetimeIsNotNull() {
+            addCriterion("responseTime is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andResponsetimeEqualTo(Date value) {
+            addCriterion("responseTime =", value, "responsetime");
+            return (Criteria) this;
+        }
+
+        public Criteria andResponsetimeNotEqualTo(Date value) {
+            addCriterion("responseTime <>", value, "responsetime");
+            return (Criteria) this;
+        }
+
+        public Criteria andResponsetimeGreaterThan(Date value) {
+            addCriterion("responseTime >", value, "responsetime");
+            return (Criteria) this;
+        }
+
+        public Criteria andResponsetimeGreaterThanOrEqualTo(Date value) {
+            addCriterion("responseTime >=", value, "responsetime");
+            return (Criteria) this;
+        }
+
+        public Criteria andResponsetimeLessThan(Date value) {
+            addCriterion("responseTime <", value, "responsetime");
+            return (Criteria) this;
+        }
+
+        public Criteria andResponsetimeLessThanOrEqualTo(Date value) {
+            addCriterion("responseTime <=", value, "responsetime");
+            return (Criteria) this;
+        }
+
+        public Criteria andResponsetimeIn(List<Date> values) {
+            addCriterion("responseTime in", values, "responsetime");
+            return (Criteria) this;
+        }
+
+        public Criteria andResponsetimeNotIn(List<Date> values) {
+            addCriterion("responseTime not in", values, "responsetime");
+            return (Criteria) this;
+        }
+
+        public Criteria andResponsetimeBetween(Date value1, Date value2) {
+            addCriterion("responseTime between", value1, value2, "responsetime");
+            return (Criteria) this;
+        }
+
+        public Criteria andResponsetimeNotBetween(Date value1, Date value2) {
+            addCriterion("responseTime not between", value1, value2, "responsetime");
+            return (Criteria) this;
+        }
+
+        public Criteria andAnswertomessageIsNull() {
+            addCriterion("answerToMessage is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAnswertomessageIsNotNull() {
+            addCriterion("answerToMessage is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAnswertomessageEqualTo(Long value) {
+            addCriterion("answerToMessage =", value, "answertomessage");
+            return (Criteria) this;
+        }
+
+        public Criteria andAnswertomessageNotEqualTo(Long value) {
+            addCriterion("answerToMessage <>", value, "answertomessage");
+            return (Criteria) this;
+        }
+
+        public Criteria andAnswertomessageGreaterThan(Long value) {
+            addCriterion("answerToMessage >", value, "answertomessage");
+            return (Criteria) this;
+        }
+
+        public Criteria andAnswertomessageGreaterThanOrEqualTo(Long value) {
+            addCriterion("answerToMessage >=", value, "answertomessage");
+            return (Criteria) this;
+        }
+
+        public Criteria andAnswertomessageLessThan(Long value) {
+            addCriterion("answerToMessage <", value, "answertomessage");
+            return (Criteria) this;
+        }
+
+        public Criteria andAnswertomessageLessThanOrEqualTo(Long value) {
+            addCriterion("answerToMessage <=", value, "answertomessage");
+            return (Criteria) this;
+        }
+
+        public Criteria andAnswertomessageIn(List<Long> values) {
+            addCriterion("answerToMessage in", values, "answertomessage");
+            return (Criteria) this;
+        }
+
+        public Criteria andAnswertomessageNotIn(List<Long> values) {
+            addCriterion("answerToMessage not in", values, "answertomessage");
+            return (Criteria) this;
+        }
+
+        public Criteria andAnswertomessageBetween(Long value1, Long value2) {
+            addCriterion("answerToMessage between", value1, value2, "answertomessage");
+            return (Criteria) this;
+        }
+
+        public Criteria andAnswertomessageNotBetween(Long value1, Long value2) {
+            addCriterion("answerToMessage not between", value1, value2, "answertomessage");
+            return (Criteria) this;
+        }
+
+        public Criteria andNameIsNull() {
+            addCriterion("name is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andNameIsNotNull() {
+            addCriterion("name is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andNameEqualTo(String value) {
+            addCriterion("name =", value, "name");
+            return (Criteria) this;
+        }
+
+        public Criteria andNameNotEqualTo(String value) {
+            addCriterion("name <>", value, "name");
+            return (Criteria) this;
+        }
+
+        public Criteria andNameGreaterThan(String value) {
+            addCriterion("name >", value, "name");
+            return (Criteria) this;
+        }
+
+        public Criteria andNameGreaterThanOrEqualTo(String value) {
+            addCriterion("name >=", value, "name");
+            return (Criteria) this;
+        }
+
+        public Criteria andNameLessThan(String value) {
+            addCriterion("name <", value, "name");
+            return (Criteria) this;
+        }
+
+        public Criteria andNameLessThanOrEqualTo(String value) {
+            addCriterion("name <=", value, "name");
+            return (Criteria) this;
+        }
+
+        public Criteria andNameLike(String value) {
+            addCriterion("name like", value, "name");
+            return (Criteria) this;
+        }
+
+        public Criteria andNameNotLike(String value) {
+            addCriterion("name not like", value, "name");
+            return (Criteria) this;
+        }
+
+        public Criteria andNameIn(List<String> values) {
+            addCriterion("name in", values, "name");
+            return (Criteria) this;
+        }
+
+        public Criteria andNameNotIn(List<String> values) {
+            addCriterion("name not in", values, "name");
+            return (Criteria) this;
+        }
+
+        public Criteria andNameBetween(String value1, String value2) {
+            addCriterion("name between", value1, value2, "name");
+            return (Criteria) this;
+        }
+
+        public Criteria andNameNotBetween(String value1, String value2) {
+            addCriterion("name not between", value1, value2, "name");
+            return (Criteria) this;
+        }
+
         public Criteria andArticleidIsNull() {
             addCriterion("articleId is null");
             return (Criteria) this;
@@ -402,66 +542,6 @@ public class ReplyExample {
 
         public Criteria andArticleidNotBetween(Long value1, Long value2) {
             addCriterion("articleId not between", value1, value2, "articleid");
-            return (Criteria) this;
-        }
-
-        public Criteria andReplytoIsNull() {
-            addCriterion("replyTo is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andReplytoIsNotNull() {
-            addCriterion("replyTo is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andReplytoEqualTo(Long value) {
-            addCriterion("replyTo =", value, "replyto");
-            return (Criteria) this;
-        }
-
-        public Criteria andReplytoNotEqualTo(Long value) {
-            addCriterion("replyTo <>", value, "replyto");
-            return (Criteria) this;
-        }
-
-        public Criteria andReplytoGreaterThan(Long value) {
-            addCriterion("replyTo >", value, "replyto");
-            return (Criteria) this;
-        }
-
-        public Criteria andReplytoGreaterThanOrEqualTo(Long value) {
-            addCriterion("replyTo >=", value, "replyto");
-            return (Criteria) this;
-        }
-
-        public Criteria andReplytoLessThan(Long value) {
-            addCriterion("replyTo <", value, "replyto");
-            return (Criteria) this;
-        }
-
-        public Criteria andReplytoLessThanOrEqualTo(Long value) {
-            addCriterion("replyTo <=", value, "replyto");
-            return (Criteria) this;
-        }
-
-        public Criteria andReplytoIn(List<Long> values) {
-            addCriterion("replyTo in", values, "replyto");
-            return (Criteria) this;
-        }
-
-        public Criteria andReplytoNotIn(List<Long> values) {
-            addCriterion("replyTo not in", values, "replyto");
-            return (Criteria) this;
-        }
-
-        public Criteria andReplytoBetween(Long value1, Long value2) {
-            addCriterion("replyTo between", value1, value2, "replyto");
-            return (Criteria) this;
-        }
-
-        public Criteria andReplytoNotBetween(Long value1, Long value2) {
-            addCriterion("replyTo not between", value1, value2, "replyto");
             return (Criteria) this;
         }
     }

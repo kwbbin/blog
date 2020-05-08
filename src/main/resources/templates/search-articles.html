@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>kwbbin的博客</title>
+    <script src="/static/js/JQuery/jquery-1.11.1.js"></script>
+    <script src="/static/js/common.js"></script>
+    <link href="/static/css/nav.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/static/css/sort.css">
+    <link href="/static/js/bootstrap/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <script src="/static/js/bootstrap/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/static/js/zpage/page.css">
+    <script src="/static/js/zpage/jquery.z-pager.js" type="text/javascript"></script>
+
+
+</head>
+<body >
+<div th:insert="nav :: nav"></div>
+
+
+<div class="jumbotron clearfix content-padding content-box" >
+    <div class="jumbotron col-md-9" >
+         <div class="left-box left-head" >
+             <h1 th:text="${title}"></h1>
+             <p th:text="${tagsDesc}"></p>
+         </div>
+        <div class="left-box left-content">
+            <div class="main-left-head">
+                <h2 class="title">搜索</h2>
+            </div>
+
+            <div id="media-content" class="my-media clearfix" >
+                <p style="border: none;" th:if="${size} eq 0">没有搜索到文章，换个关键词试试吧</p>
+            </div>
+
+            <div>
+                <div id="pager" class="pager clearfix"> </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="col-md-3 jumbotron section-right">
+
+
+        <div>
+            <div class="main-left-head">
+                <h2 class="title" style="margin-top: 0">最近更新</h2>
+            </div>
+            <div class="main-content">
+                <ul class="my-ul" th:each="newArticle : ${newArticle.list}">
+                    <li >
+                        <a  th:href="'/article/detail?id='+${newArticle.id}" th:text="${newArticle.title}" ></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+
+        <div class="tuijian" style="margin-top: 40px;">
+            <div class="main-left-head">
+                <h2 class="title">随机推荐</h2>
+            </div>
+            <div class="tuijian-box" >
+                <section class="topnews imgscale">
+                    <a th:href="'/article/detail?id='+${radomArticle[0].id}" ><img th:attr="src=${radomArticle[0].imageurl}"><span th:text="${radomArticle[0].title}"></span></a>
+                </section>
+                <ul>
+                    <li >
+                        <a th:href="'/article/detail?id='+${radomArticle[1].id}">
+                            <i><img th:attr="src=${radomArticle[1].imageurl}" ></i>
+                            <p th:text="${radomArticle[1].title}"></p>
+                        </a>
+                    </li>
+                    <li >
+                        <a th:href="'/article/detail?id='+${radomArticle[2].id}">
+                            <i><img th:attr="src=${radomArticle[2].imageurl}" ></i>
+                            <p th:text="${radomArticle[2].title}"></p>
+                        </a>
+                    </li>
+                    <li >
+                        <a th:href="'/article/detail?id='+${radomArticle[3].id}">
+                            <i><img th:attr="src=${radomArticle[3].imageurl}" ></i>
+                            <p th:text="${radomArticle[3].title}"></p>
+                        </a>
+                    </li>
+                    <li >
+                        <a th:href="'/article/detail?id='+${radomArticle[4].id}">
+                            <i><img th:attr="src=${radomArticle[4].imageurl}" ></i>
+                            <p th:text="${radomArticle[4].title}"></p>
+                        </a>
+                    </li>
+                    <li >
+                        <a th:href="'/article/detail?id='+${radomArticle[5].id}">
+                            <i><img th:attr="src=${radomArticle[5].imageurl}" ></i>
+                            <p th:text="${radomArticle[5].title}"></p>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+
+        <div style="margin-top: 40px;margin-bottom: 40px;">
+            <div class="main-left-head">
+                <h2 class="title">标签云</h2>
+            </div>
+            <div class="main-content">
+                <ul class="right-label">
+                    <li th:each="tag : ${tagsList}" >
+                        <a th:href="'/LabelArticles?id='+${tag.id}" th:text="${tag.tagName}" ></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+<!--&lt;!&ndash;当前页面类型&ndash;&gt;-->
+<div id="searchStr" style="display: none;" th:text="${search}"></div>
+<!--当前页-->
+<div id="currentPage" style="display: none;" th:text="${pageArticleVo.pageNum}"></div>
+<!--数据总条数-->
+<div id="totalData" style="display: none;" th:text="${pageArticleVo.total}"></div>
+<!--每页数据条数-->
+<div id="pageData" style="display: none;" th:text="${pageArticleVo.pageSize}"></div>
+<!--总页数-->
+<div id="pageCount" style="display: none;" th:text="${pageArticleVo.pages}"></div>
+<div th:replace="footer :: footer"></div>
+<style>
+    body{
+        background: #E9EAED;
+        min-height: 400px;
+    }
+
+    .jumbotron p{
+        font-size: 15px;
+    }
+</style>
+<script>
+    var searchStr = $("#searchStr")[0].innerText;
+    var currentPage1 = $("#currentPage")[0].innerText;
+    var totalData1 = $("#totalData")[0].innerText;
+    var pageData1 = $("#pageData")[0].innerText;
+    var pageCount1 = $("#pageCount")[0].innerText;
+    // console.log(currentPage1);
+    // console.log(totalData1);
+    // console.log(pageData1);
+    // console.log(pageCount1);
+    $("#pager").zPager({
+        totalData: totalData1,
+        pageData: pageData1,
+        pageCount: pageCount1,
+        current: currentPage1,
+        htmlBox: $('#wraper'),
+        btnShow: true,
+        ajaxSetData: false
+    });
+
+    function currentPage(currentPage){
+        /*
+            触发页码数位置： Page/js/jquery.z-pager.js 64行
+        */
+        console.log("当前页码数：" + currentPage);
+        var parm = {search:searchStr,pageNum:currentPage}
+        var data = getData("/getSearchArticles",parm,function (data) {
+            var box = $("#media-content");
+            box.empty();
+            $.fn.zPager.defaults.totalData= data.total;
+            $.fn.zPager.defaults.pageData=data.pageSize;
+            $.fn.zPager.defaults.pageCount= data.pages;
+            $.fn.zPager.defaults.current= data.pageNum;
+
+            for (var i = 0 ;i<data.list.length;i++){
+                var date = FormatTime(data.list[i].dateLong,'Y');
+
+                box.append($('<div class="my-media-img">' +
+                    '<a href="/article/detail?id='+data.list[i].id+'"><img class="media-object" src="'+data.list[i].imageurl+'" alt="..."></a></div><div class="my-media-right "> ' +
+                    '<a href="/article/detail?id='+data.list[i].id+'"><h4 class="my-media-head" ><span>'+data.list[i].title+'</span><span class="media-head-label"><i class="layui-icon layui-icon-note"></i><span >'+data.list[i].articleTypeStr+'</span></span></h4>' +
+                    '<div>'+data.list[i].content+'</div><p></a>' +
+                    '<span class="footA"><i  class="font-small glyphicon glyphicon-thumbs-up"></i>&nbsp;<span class="good" >'+data.list[i].good+'</span>&nbsp;&nbsp;</span>' +
+                    '<span class="footA"><i class="font-small glyphicon glyphicon-time"></i>&nbsp;<span class="good" >'+date+'</span>&nbsp;&nbsp;</span>' +
+                    '<span class="footA"><i class="font-small glyphicon glyphicon-eye-open"></i>&nbsp;<span class="good">'+data.list[i].visits+'</span>&nbsp;&nbsp;</span>' +
+                    '</p></div>'))
+            }
+        })
+
+    }
+
+
+
+
+    getData("/getAllArticleType",null,function (data) {
+        for(var i = 0;i<data.length;i++){
+            $("#tyListBox").append('<li><a href="/sort?id='+data[i].id+'">'+data[i].name+'</a></li>')
+        }
+    });
+
+
+</script>
+<!--页面背景特效-->
+<script src="/static/js/background.js" count="200" zindex="-2" opacity="0.8" color="102,145,223" type="text/javascript"></script>
+</body>
+</html>

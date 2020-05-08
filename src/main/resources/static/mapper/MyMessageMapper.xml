@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.kwbbin.dao.MessageMapper" >
-  <resultMap id="BaseResultMap" type="com.kwbbin.bean.Message" >
+<mapper namespace="com.kwbbin.dao.MyMessageMapper" >
+  <resultMap id="BaseResultMap" type="com.kwbbin.bean.MyMessage" >
     <id column="id" property="id" jdbcType="BIGINT" />
-    <result column="userId" property="userid" jdbcType="INTEGER" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
     <result column="good" property="good" jdbcType="INTEGER" />
     <result column="responseTime" property="responsetime" jdbcType="TIMESTAMP" />
-    <result column="answerToUser" property="answertouser" jdbcType="INTEGER" />
     <result column="answerToMessage" property="answertomessage" jdbcType="BIGINT" />
-  </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.kwbbin.bean.Message" extends="BaseResultMap" >
-    <result column="content" property="content" jdbcType="LONGVARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="articleId" property="articleid" jdbcType="BIGINT" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -71,20 +69,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, userId, good, responseTime, answerToUser, answerToMessage
+    id, content, good, responseTime, answerToMessage, name, articleId
   </sql>
-  <sql id="Blob_Column_List" >
-    content
-  </sql>
-  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.kwbbin.bean.MessageExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.kwbbin.bean.MyMessageExample" >
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from message
+    from my_message
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -92,54 +85,35 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.kwbbin.bean.MessageExample" >
-    select
-    <if test="distinct" >
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    from message
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null" >
-      order by ${orderByClause}
-    </if>
-  </select>
-  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from message
+    from my_message
     where id = #{id,jdbcType=BIGINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
-    delete from message
+    delete from my_message
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="com.kwbbin.bean.MessageExample" >
-    delete from message
+  <delete id="deleteByExample" parameterType="com.kwbbin.bean.MyMessageExample" >
+    delete from my_message
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.kwbbin.bean.Message" >
-    insert into message (id, userId, good, 
-      responseTime, answerToUser, answerToMessage, 
-      content)
-    values (#{id,jdbcType=BIGINT}, #{userid,jdbcType=INTEGER}, #{good,jdbcType=INTEGER}, 
-      #{responsetime,jdbcType=TIMESTAMP}, #{answertouser,jdbcType=INTEGER}, #{answertomessage,jdbcType=BIGINT}, 
-      #{content,jdbcType=LONGVARCHAR})
+  <insert id="insert" parameterType="com.kwbbin.bean.MyMessage" useGeneratedKeys="true" keyProperty="id" >
+    insert into my_message (content, good, responseTime, 
+      answerToMessage, name, articleId
+      )
+    values (#{content,jdbcType=VARCHAR}, #{good,jdbcType=INTEGER}, #{responsetime,jdbcType=TIMESTAMP}, 
+      #{answertomessage,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{articleid,jdbcType=BIGINT}
+      )
   </insert>
-  <insert id="insertSelective" parameterType="com.kwbbin.bean.Message" >
-    insert into message
+  <insert id="insertSelective" parameterType="com.kwbbin.bean.MyMessage" useGeneratedKeys="true" keyProperty="id" >
+    insert into my_message
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="userid != null" >
-        userId,
+      <if test="content != null" >
+        content,
       </if>
       <if test="good != null" >
         good,
@@ -147,22 +121,19 @@
       <if test="responsetime != null" >
         responseTime,
       </if>
-      <if test="answertouser != null" >
-        answerToUser,
-      </if>
       <if test="answertomessage != null" >
         answerToMessage,
       </if>
-      <if test="content != null" >
-        content,
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="articleid != null" >
+        articleId,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=BIGINT},
-      </if>
-      <if test="userid != null" >
-        #{userid,jdbcType=INTEGER},
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
       </if>
       <if test="good != null" >
         #{good,jdbcType=INTEGER},
@@ -170,31 +141,31 @@
       <if test="responsetime != null" >
         #{responsetime,jdbcType=TIMESTAMP},
       </if>
-      <if test="answertouser != null" >
-        #{answertouser,jdbcType=INTEGER},
-      </if>
       <if test="answertomessage != null" >
         #{answertomessage,jdbcType=BIGINT},
       </if>
-      <if test="content != null" >
-        #{content,jdbcType=LONGVARCHAR},
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="articleid != null" >
+        #{articleid,jdbcType=BIGINT},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.kwbbin.bean.MessageExample" resultType="java.lang.Integer" >
-    select count(*) from message
+  <select id="countByExample" parameterType="com.kwbbin.bean.MyMessageExample" resultType="java.lang.Integer" >
+    select count(*) from my_message
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update message
+    update my_message
     <set >
       <if test="record.id != null" >
         id = #{record.id,jdbcType=BIGINT},
       </if>
-      <if test="record.userid != null" >
-        userId = #{record.userid,jdbcType=INTEGER},
+      <if test="record.content != null" >
+        content = #{record.content,jdbcType=VARCHAR},
       </if>
       <if test="record.good != null" >
         good = #{record.good,jdbcType=INTEGER},
@@ -202,50 +173,38 @@
       <if test="record.responsetime != null" >
         responseTime = #{record.responsetime,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.answertouser != null" >
-        answerToUser = #{record.answertouser,jdbcType=INTEGER},
-      </if>
       <if test="record.answertomessage != null" >
         answerToMessage = #{record.answertomessage,jdbcType=BIGINT},
       </if>
-      <if test="record.content != null" >
-        content = #{record.content,jdbcType=LONGVARCHAR},
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.articleid != null" >
+        articleId = #{record.articleid,jdbcType=BIGINT},
       </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByExampleWithBLOBs" parameterType="map" >
-    update message
-    set id = #{record.id,jdbcType=BIGINT},
-      userId = #{record.userid,jdbcType=INTEGER},
-      good = #{record.good,jdbcType=INTEGER},
-      responseTime = #{record.responsetime,jdbcType=TIMESTAMP},
-      answerToUser = #{record.answertouser,jdbcType=INTEGER},
-      answerToMessage = #{record.answertomessage,jdbcType=BIGINT},
-      content = #{record.content,jdbcType=LONGVARCHAR}
-    <if test="_parameter != null" >
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
   <update id="updateByExample" parameterType="map" >
-    update message
+    update my_message
     set id = #{record.id,jdbcType=BIGINT},
-      userId = #{record.userid,jdbcType=INTEGER},
+      content = #{record.content,jdbcType=VARCHAR},
       good = #{record.good,jdbcType=INTEGER},
       responseTime = #{record.responsetime,jdbcType=TIMESTAMP},
-      answerToUser = #{record.answertouser,jdbcType=INTEGER},
-      answerToMessage = #{record.answertomessage,jdbcType=BIGINT}
+      answerToMessage = #{record.answertomessage,jdbcType=BIGINT},
+      name = #{record.name,jdbcType=VARCHAR},
+      articleId = #{record.articleid,jdbcType=BIGINT}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.kwbbin.bean.Message" >
-    update message
+  <update id="updateByPrimaryKeySelective" parameterType="com.kwbbin.bean.MyMessage" >
+    update my_message
     <set >
-      <if test="userid != null" >
-        userId = #{userid,jdbcType=INTEGER},
+      <if test="content != null" >
+        content = #{content,jdbcType=VARCHAR},
       </if>
       <if test="good != null" >
         good = #{good,jdbcType=INTEGER},
@@ -253,35 +212,26 @@
       <if test="responsetime != null" >
         responseTime = #{responsetime,jdbcType=TIMESTAMP},
       </if>
-      <if test="answertouser != null" >
-        answerToUser = #{answertouser,jdbcType=INTEGER},
-      </if>
       <if test="answertomessage != null" >
         answerToMessage = #{answertomessage,jdbcType=BIGINT},
       </if>
-      <if test="content != null" >
-        content = #{content,jdbcType=LONGVARCHAR},
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="articleid != null" >
+        articleId = #{articleid,jdbcType=BIGINT},
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.kwbbin.bean.Message" >
-    update message
-    set userId = #{userid,jdbcType=INTEGER},
+  <update id="updateByPrimaryKey" parameterType="com.kwbbin.bean.MyMessage" >
+    update my_message
+    set content = #{content,jdbcType=VARCHAR},
       good = #{good,jdbcType=INTEGER},
       responseTime = #{responsetime,jdbcType=TIMESTAMP},
-      answerToUser = #{answertouser,jdbcType=INTEGER},
       answerToMessage = #{answertomessage,jdbcType=BIGINT},
-      content = #{content,jdbcType=LONGVARCHAR}
-    where id = #{id,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.kwbbin.bean.Message" >
-    update message
-    set userId = #{userid,jdbcType=INTEGER},
-      good = #{good,jdbcType=INTEGER},
-      responseTime = #{responsetime,jdbcType=TIMESTAMP},
-      answerToUser = #{answertouser,jdbcType=INTEGER},
-      answerToMessage = #{answertomessage,jdbcType=BIGINT}
+      name = #{name,jdbcType=VARCHAR},
+      articleId = #{articleid,jdbcType=BIGINT}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>
