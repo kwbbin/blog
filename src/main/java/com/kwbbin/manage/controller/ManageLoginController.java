@@ -5,6 +5,7 @@ import com.kwbbin.manage.service.AdminLoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -17,16 +18,22 @@ public class ManageLoginController {
     AdminLoginService service;
 
     @RequestMapping(value = {"/",""})
-    public String defaultView(HttpServletRequest request){
+    public ModelAndView defaultView(HttpServletRequest request){
+        ModelAndView modelAndView = new ModelAndView();
         Admin admin=(Admin)request.getSession().getAttribute("admin");
         if(admin!=null){
-            return "/manage/main_box";
+            modelAndView.addObject("admin",admin);
+            modelAndView.setViewName("/manage/main_box");
+        }else{
+            modelAndView.setViewName("/manage/index");
         }
-        return "/manage/index";
+
+        return modelAndView;
     }
 
     @RequestMapping("/login")
-    public String manageLogin(String userName, String userPwd, HttpServletResponse response, HttpServletRequest request){
+    public ModelAndView manageLogin(String userName, String userPwd, HttpServletResponse response, HttpServletRequest request){
+        ModelAndView modelAndView = new ModelAndView();
         Admin admin=(Admin)request.getSession().getAttribute("admin");
         if(admin==null){
             Admin ad = new Admin();
@@ -60,10 +67,13 @@ public class ManageLoginController {
                 response.addCookie(cookie2);
             }
 
-            return "/manage/main_box";
+            modelAndView.addObject("admin",admin);
+            modelAndView.setViewName("/manage/main_box");
+        }else{
+            modelAndView.setViewName("/manage/index");
         }
 
-        return "/manage/index";
+        return modelAndView;
     }
 
     @RequestMapping("/LoginOut")

@@ -120,6 +120,10 @@
     function addFun(){
         var title = $("#TimeLineTitleAdd")[0].value
         var content = $("#TimeLineContentAdd")[0].value
+        if(title==null||title==''||content==null||content==""){
+            alert("请完整填写数据");
+            return;
+        }
         var str = [
             {name:'title',value:title},
             {name:'content',value:content}
@@ -143,6 +147,11 @@
         var title = $("#timeLineTitle")[0].value;
         var id = $("#timeLineId")[0].value;
         var date = $("#timeLineTime")[0].value;
+
+        if(date==null||date==''||content==null||content==""||title==null||title==""){
+            alert("请完整填写数据");
+            return;
+        }
         var str = [
             {name:'id',value:id},
             {name:'title',value:title},

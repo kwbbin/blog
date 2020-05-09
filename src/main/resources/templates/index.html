@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="/static/css/index.css">
     <link rel="stylesheet" type="text/css" href="/static/js/layUI/layui.css">
     <link href="static/css/nav.css" rel="stylesheet">
+    <link href="/static/css/index-font-animate.css" rel="stylesheet">
+    <script src="/static/js/index.js" type="text/javascript"></script>
     <script src="/static/js/layUI/layui.all.js" type="text/javascript"></script>
     <script src="static/js/bootstrap/bootstrap-3.3.7/js/bootstrap.min.js"></script>
     <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
@@ -17,8 +19,8 @@
 <body>
 <div th:replace="nav :: nav"  ></div>
 
-<div class="show" style="background: url('/static/img/sky.jpg');">
-<p>以梦为马，勇往直前</p>
+<div id="index-show" class="show">
+<!--    <div class="animate one"></div>-->
 </div>
 
 <div class="jumbotron clearfix content-padding content-box" >
@@ -134,6 +136,9 @@
                 </div>
                 <div class="main-content">
                     <ul class="right-label">
+                        <li th:if="${tagsList.size()} eq 0">
+                            <a>暂无标签</a>
+                        </li>
                         <li th:each="tag : ${tagsList}">
                             <a th:href="'/LabelArticles?id='+${tag.id}" th:text="${tag.tagName}" ></a>
                         </li>
@@ -147,6 +152,9 @@
                 </div>
                 <div class="main-content">
                     <ul class="frendLink">
+                        <li th:if="${flinkList.size()} eq 0">
+                            <a>暂无友情链接</a>
+                        </li>
                         <li th:each="fl : ${flinkList}" >
                             <a target="_blank" th:href="'http://'+${fl.path}" th:text="${fl.name}" >师傅师傅说</a>
                         </li>
@@ -158,11 +166,8 @@
 </div>
 <div th:replace="footer :: footer"></div>
 <script>
-    getData("/getAllArticleType",null,function (data) {
-        for(var i = 0;i<data.length;i++){
-            $("#tyListBox").append('<li><a href="/sort?id='+data[i].id+'">'+data[i].name+'</a></li>')
-        }
-    });
+
+    initjs();
 </script>
 <!--下雪-->
 <script type="text/javascript" src="static/js/snow.js"></script>

@@ -157,13 +157,34 @@ body{
     position: absolute;
     top:0px;
     z-index: -9999;
-    /*background: url("static/img/sky.jpg");*/
+    margin-top: 100px;
     background:rgba(255,255,255,0) !important;
 }
 .show p{
-    text-align: center;
-    line-height: 350px;
-    font-size: 20px;
+    position: relative;
+    left: 20px;
+    color: #fff;
+    text-align: left;
+    margin-top: 20px;
+    font-size: 14px;
+    transform: translate(60px);
+    animation: animations 3s ease-out 1s backwards;
+
+}
+
+@keyframes move{
+    0% {
+        -webkit-transform: translate(0);
+        opacity: 0;
+    }
+    50% {
+        -webkit-transform: translate(30px);
+        opacity: .5;
+    }
+    100% {
+        -webkit-transform: translate(60px);
+        opacity: 1;
+    }
 }
 
 .row .thumbnail{

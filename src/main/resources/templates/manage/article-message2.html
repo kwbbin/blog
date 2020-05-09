@@ -65,6 +65,7 @@
                 </tr>
                 </tbody>
             </table>
+        <p th:if="${messageList.total} eq 0">没有数据？可能是该ID不存在呀，换个id试试吧</p>
             <!--        分页-->
             <div style="text-align: center">
                 <nav aria-label="Page navigation">
@@ -110,6 +111,10 @@
 <script>
 function selectMessage() {
     var id = $("#messageId")[0].value;
+    if(id==""||id==null){
+        alert("请填写ID");
+        return;
+    }
     var parm = [
         {name:'id',value:id},
         {name:'pageNum',value:1}

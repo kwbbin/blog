@@ -35,6 +35,7 @@ public class UArticleServiceImpl implements UArticleService {
     public PageInfo getArticleList() {
         ArticleExample articleExample = new ArticleExample();
         articleExample.setOrderByClause("good Desc");
+        articleExample.createCriteria().andArticleWayNotEqualTo(1);
         PageHelper.startPage(1, 6);
         List<Article> articleList = articleMapper.selectByExampleWithBLOBs(articleExample);
         List<Article> articleList1 = new ArrayList<>();
@@ -43,6 +44,7 @@ public class UArticleServiceImpl implements UArticleService {
             articleList1.add(article);
         }
         PageInfo pageInfo = new PageInfo(articleList1);
+
         return pageInfo;
     }
 
@@ -50,6 +52,7 @@ public class UArticleServiceImpl implements UArticleService {
     public PageInfo getNewArticleList() {
         ArticleExample articleExample = new ArticleExample();
         articleExample.setOrderByClause("posted_time Desc");
+        articleExample.createCriteria().andArticleWayNotEqualTo(1);
         PageHelper.startPage(1, 6);
         List<Article> articleList = articleMapper.selectByExampleWithBLOBs(articleExample);
         List<Article> articleList1 = new ArrayList<>();
@@ -68,9 +71,11 @@ public class UArticleServiceImpl implements UArticleService {
 
     @Override
     public List<ArticleVo> randomArticles() {
-
-        List<Article> articleList = articleMapper.selectByExampleWithBLOBs(new ArticleExample());
+        ArticleExample articleExample = new ArticleExample();
+        articleExample.createCriteria().andArticleWayNotEqualTo(1);
+        List<Article> articleList = articleMapper.selectByExampleWithBLOBs(articleExample);
         List<ArticleVo> list = new ArrayList<>();
+
         Set<Article> set = new HashSet();
         for (Article article : articleList){
             set.add(article);
@@ -84,6 +89,9 @@ public class UArticleServiceImpl implements UArticleService {
                 i++;
             }
         }
+        while(list.size()<6){
+            list.add(new ArticleVo());
+        }
         return list;
     }
 
@@ -95,7 +103,7 @@ public class UArticleServiceImpl implements UArticleService {
     @Override
     public PageInfo<ArticleVo> selectArticleByType(Integer id,Integer pageNum,Integer pageSize) {
         ArticleExample articleExample = new ArticleExample();
-        articleExample.createCriteria().andArticleTypeEqualTo(id);
+        articleExample.createCriteria().andArticleTypeEqualTo(id).andArticleWayNotEqualTo(1);
         PageHelper.startPage(pageNum,pageSize);
         List<Article> list = articleMapper.selectByExampleWithBLOBs(articleExample);
         PageInfo<Article> pageInfo = new PageInfo(list);
@@ -169,18 +177,25 @@ public class UArticleServiceImpl implements UArticleService {
         List<TagsArticle> tags = tagsArticleMapper.selectByExample(tagsArticleExample);
         PageInfo pageInfo = new PageInfo(tags);
         List<ArticleVo> articleVoList = new ArrayList<>();
-        for( TagsArticle ta : tags){
-            Article article = getArticleById(ta.getArticleId());
-            if(article.getContent().length()>61){
-                article.setContent(article.getContent().substring(0,60).replace("#",""));
+        try {
+            for( TagsArticle ta : tags){
+                Article article = getArticleById(ta.getArticleId());
+                if(article.getContent().length()>61){
+                    article.setContent(article.getContent().substring(0,60).replace("#",""));
+                }
+                ArticleVo articleVo = ArticleUtil.alterArticle(article,articleTypeMapper);
+                if(article.getArticleWay()!=1)
+                articleVoList.add(articleVo);
             }
-            ArticleVo articleVo = ArticleUtil.alterArticle(article,articleTypeMapper);
-            articleVoList.add(articleVo);
+            PageInfo<ArticleVo> pageInfo1 = new PageInfo<>();
+            pageInfo1.setList(articleVoList);
+            ArticleUtil.PageInfoTranslate(pageInfo,pageInfo1);
+            return pageInfo1;
+        }catch (Exception e){
+            System.out.println("可能没有对应文章");
+            return new PageInfo();
         }
-        PageInfo<ArticleVo> pageInfo1 = new PageInfo<>();
-        pageInfo1.setList(articleVoList);
-        ArticleUtil.PageInfoTranslate(pageInfo,pageInfo1);
-        return pageInfo1;
+
     }
 
 
@@ -190,7 +205,7 @@ public class UArticleServiceImpl implements UArticleService {
         ArticleExample articleExample = new ArticleExample();
         List<Article> list = null;
         //内容和标题都查
-        articleExample.createCriteria().andTitleLike("%" + str + "%");
+        articleExample.createCriteria().andTitleLike("%" + str + "%").andArticleWayNotEqualTo(1);
         PageHelper.startPage(pageNum, pageSize);
         list = articleMapper.selectByExampleWithBLOBs(articleExample);
         PageInfo<Article> pageInfo = new PageInfo(list);
@@ -228,7 +243,7 @@ public class UArticleServiceImpl implements UArticleService {
 
         Article article = articleMapper.selectByPrimaryKey(id);
         ArticleExample articleExample = new ArticleExample();
-        articleExample.createCriteria().andArticleTypeEqualTo(article.getArticleType());
+        articleExample.createCriteria().andArticleTypeEqualTo(article.getArticleType()).andArticleWayNotEqualTo(1);
         //保存该文章一样类型的文章
         List<Article> list2 = articleMapper.selectByExample(articleExample);
 

@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="zh-CN"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>kwbbin博客管理系统</title>
+    <link rel="stylesheet" type="text/css" href="/static/js/layUI/layui.css">
+    <script src="/static/js/layUI/layui.all.js" type="text/javascript"></script>
+    <script src="/static/js/JQuery/jquery-1.11.1.js" type="text/javascript"></script>
+
+
+
+</head>
+
+<body class="user-select" style="padding:10px 10px;">
+<div class="layui-card">
+    <div class="layui-card-header layui-elem-quote layui-quote-nm" >首页格言展示</div>
+    <div class="layui-card-body">
+        <table class="layui-table">
+            <colgroup>
+                <col width="150">
+            </colgroup>
+            <thead>
+            <tr>
+                <th>句子</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each=" atr : ${mottos}">
+                <td th:text="${atr}">贤心</td>
+            </tr>
+            </tbody>
+        </table>
+        <hr>
+        <form class="layui-form" action="/manage/updateMotto">
+        <div class="layui-form-item" style="margin-top: 30px;">
+            <label class="layui-form-label">输入句子</label>
+            <div class="layui-input-block">
+                <input id="motto" type="text" name="motto" required  lay-verify="required"  lay-submit lay-filter="submit" placeholder="请输入句子，用'@@'分隔" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <button class="layui-btn">修改</button>
+        </form>
+        <p style="text-align: center;color:#999;">注：数据库只有一条句子，请用‘@@’分隔多条句子</p>
+        <p style="text-align: center;color:#999;">例：我是句子1。@@我是句子2；</p>
+
+    </div>
+</div>
+
+<script>
+    layui.use('form', function(){
+        var form = layui.form;
+        form.render();
+
+        //监听提交
+        form.on('submit(submit)', function(data){
+            window.parent.timeOut("修改成功！");
+        });
+
+    });
+</script>
+
+</body>
+</html>

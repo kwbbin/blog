@@ -4,6 +4,7 @@
   <resultMap id="BaseResultMap" type="com.kwbbin.bean.BlogBasic" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="visits" property="visits" jdbcType="INTEGER" />
+    <result column="index_motto" property="indexMotto" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -64,7 +65,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, visits
+    id, visits, index_motto
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.kwbbin.bean.BlogBasicExample" >
     select
@@ -97,8 +98,10 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.kwbbin.bean.BlogBasic" >
-    insert into blog_basic (id, visits)
-    values (#{id,jdbcType=INTEGER}, #{visits,jdbcType=INTEGER})
+    insert into blog_basic (id, visits, index_motto
+      )
+    values (#{id,jdbcType=INTEGER}, #{visits,jdbcType=INTEGER}, #{indexMotto,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.kwbbin.bean.BlogBasic" >
     insert into blog_basic
@@ -109,6 +112,9 @@
       <if test="visits != null" >
         visits,
       </if>
+      <if test="indexMotto != null" >
+        index_motto,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -116,6 +122,9 @@
       </if>
       <if test="visits != null" >
         #{visits,jdbcType=INTEGER},
+      </if>
+      <if test="indexMotto != null" >
+        #{indexMotto,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -134,6 +143,9 @@
       <if test="record.visits != null" >
         visits = #{record.visits,jdbcType=INTEGER},
       </if>
+      <if test="record.indexMotto != null" >
+        index_motto = #{record.indexMotto,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -142,7 +154,8 @@
   <update id="updateByExample" parameterType="map" >
     update blog_basic
     set id = #{record.id,jdbcType=INTEGER},
-      visits = #{record.visits,jdbcType=INTEGER}
+      visits = #{record.visits,jdbcType=INTEGER},
+      index_motto = #{record.indexMotto,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -153,12 +166,16 @@
       <if test="visits != null" >
         visits = #{visits,jdbcType=INTEGER},
       </if>
+      <if test="indexMotto != null" >
+        index_motto = #{indexMotto,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.kwbbin.bean.BlogBasic" >
     update blog_basic
-    set visits = #{visits,jdbcType=INTEGER}
+    set visits = #{visits,jdbcType=INTEGER},
+      index_motto = #{indexMotto,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

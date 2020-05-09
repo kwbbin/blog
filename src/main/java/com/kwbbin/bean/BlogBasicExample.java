@@ -223,6 +223,76 @@ public class BlogBasicExample {
             addCriterion("visits not between", value1, value2, "visits");
             return (Criteria) this;
         }
+
+        public Criteria andIndexMottoIsNull() {
+            addCriterion("index_motto is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIndexMottoIsNotNull() {
+            addCriterion("index_motto is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIndexMottoEqualTo(String value) {
+            addCriterion("index_motto =", value, "indexMotto");
+            return (Criteria) this;
+        }
+
+        public Criteria andIndexMottoNotEqualTo(String value) {
+            addCriterion("index_motto <>", value, "indexMotto");
+            return (Criteria) this;
+        }
+
+        public Criteria andIndexMottoGreaterThan(String value) {
+            addCriterion("index_motto >", value, "indexMotto");
+            return (Criteria) this;
+        }
+
+        public Criteria andIndexMottoGreaterThanOrEqualTo(String value) {
+            addCriterion("index_motto >=", value, "indexMotto");
+            return (Criteria) this;
+        }
+
+        public Criteria andIndexMottoLessThan(String value) {
+            addCriterion("index_motto <", value, "indexMotto");
+            return (Criteria) this;
+        }
+
+        public Criteria andIndexMottoLessThanOrEqualTo(String value) {
+            addCriterion("index_motto <=", value, "indexMotto");
+            return (Criteria) this;
+        }
+
+        public Criteria andIndexMottoLike(String value) {
+            addCriterion("index_motto like", value, "indexMotto");
+            return (Criteria) this;
+        }
+
+        public Criteria andIndexMottoNotLike(String value) {
+            addCriterion("index_motto not like", value, "indexMotto");
+            return (Criteria) this;
+        }
+
+        public Criteria andIndexMottoIn(List<String> values) {
+            addCriterion("index_motto in", values, "indexMotto");
+            return (Criteria) this;
+        }
+
+        public Criteria andIndexMottoNotIn(List<String> values) {
+            addCriterion("index_motto not in", values, "indexMotto");
+            return (Criteria) this;
+        }
+
+        public Criteria andIndexMottoBetween(String value1, String value2) {
+            addCriterion("index_motto between", value1, value2, "indexMotto");
+            return (Criteria) this;
+        }
+
+        public Criteria andIndexMottoNotBetween(String value1, String value2) {
+            addCriterion("index_motto not between", value1, value2, "indexMotto");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

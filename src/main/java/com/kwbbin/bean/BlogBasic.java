@@ -5,6 +5,8 @@ public class BlogBasic {
 
     private Integer visits;
 
+    private String indexMotto;
+
     public Integer getId() {
         return id;
     }
@@ -19,5 +21,13 @@ public class BlogBasic {
 
     public void setVisits(Integer visits) {
         this.visits = visits;
+    }
+
+    public String getIndexMotto() {
+        return indexMotto;
+    }
+
+    public void setIndexMotto(String indexMotto) {
+        this.indexMotto = indexMotto == null ? null : indexMotto.trim();
     }
 }

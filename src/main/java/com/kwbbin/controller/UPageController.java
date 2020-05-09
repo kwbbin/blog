@@ -6,12 +6,10 @@ import com.kwbbin.Vo.MessageVo;
 import com.kwbbin.Vo.Page;
 import com.kwbbin.bean.*;
 import com.kwbbin.dao.ArticleTypeMapper;
+import com.kwbbin.dao.BlogBasicMapper;
 import com.kwbbin.dao.TimeLineMapper;
 import com.kwbbin.manage.service.*;
-import com.kwbbin.service.UArticleService;
-import com.kwbbin.service.UArticleTypeService;
-import com.kwbbin.service.UCommentService;
-import com.kwbbin.service.UMessageService;
+import com.kwbbin.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -57,6 +55,9 @@ public class UPageController {
     @Autowired
     StatisticsService statisticsService;
 
+    @Autowired
+    BlogBasicService blogBasicService;
+
 
     @RequestMapping(value = {"","/"})
     public ModelAndView DefultView(HttpServletRequest request){
@@ -69,6 +70,7 @@ public class UPageController {
         List<ArticleVo> radomArticle = uArticleService.randomArticles();
         List<ArticleType> articleTypes = uArticleService.selectAllArticleType();
         List<FriendLink> flinkList = friendLinkService.getAllFriendLink();
+
         mv.addObject("hotArticle",pageInfo);
         mv.addObject("newArticle",newArticle);
         mv.addObject("guessLike",list);

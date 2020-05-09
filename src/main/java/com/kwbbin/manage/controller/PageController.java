@@ -5,7 +5,9 @@ import com.kwbbin.bean.FriendLink;
 import com.kwbbin.bean.MyMessage;
 import com.kwbbin.bean.Tags;
 import com.kwbbin.bean.TimeLine;
+import com.kwbbin.dao.BlogBasicMapper;
 import com.kwbbin.manage.service.*;
+import com.kwbbin.service.BlogBasicService;
 import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -43,6 +45,9 @@ public class PageController {
 
     @Autowired
     StatisticsService statisticsService;
+
+    @Autowired
+    BlogBasicService blogBasicService;
 
     //本网站地址
     @Value("${localInfoPath}")
@@ -137,7 +142,7 @@ public class PageController {
     }
 
     @RequestMapping("/comment")
-    public ModelAndView comment(Model model){
+    public ModelAndView comment(){
         ModelAndView mv = new ModelAndView();
         PageInfo pageInfo = commentService.getAllComment(1,8);
         mv.addObject("commentList",pageInfo);
@@ -146,5 +151,13 @@ public class PageController {
         return mv;
     }
 
+    @RequestMapping("/motto")
+    public ModelAndView motto(){
+        ModelAndView mv = new ModelAndView();
+        String [] motto = blogBasicService.selectIndexMotto();
+        mv.addObject("mottos",motto);
+        mv.setViewName("/manage/index-motto");
+        return mv;
+    }
 
 }
