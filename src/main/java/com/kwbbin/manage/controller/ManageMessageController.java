@@ -35,7 +35,7 @@ public class ManageMessageController {
         ModelAndView mv = new ModelAndView();
         PageInfo pageInfo = messageService.getMessageByArticleId(id,pageNum,8);
         mv.addObject("messageList",pageInfo);
-        mv.setViewName("/manage/article-message2");
+        mv.setViewName("manage/article-message2");
         mv.addObject("hrefStr","/manage/getArticleMessageById?id="+id);
         return mv;
     }
@@ -48,7 +48,7 @@ public class ManageMessageController {
         PageInfo pageInfo = messageService.getAllMessage(pageNum,8);
         mv.addObject("messageList",pageInfo);
         mv.addObject("localInfoPath",localInfoPath);
-        mv.setViewName("/manage/article-message");
+        mv.setViewName("manage/article-message");
         return mv;
     }
 

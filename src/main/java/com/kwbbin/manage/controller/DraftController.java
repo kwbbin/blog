@@ -49,7 +49,7 @@ public class DraftController {
             }
             listATVo.add(atVo);
         }
-        modelAndView.setViewName("/manage/draft-detail");
+        modelAndView.setViewName("manage/draft-detail");
         modelAndView.addObject("draft",draft);
         modelAndView.addObject("articleTypeVo",listATVo);
         modelAndView.addObject("draftId",id);

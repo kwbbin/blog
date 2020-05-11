@@ -28,7 +28,7 @@ public class CommentController {
         PageInfo pageInfo = commentService.getAllComment(pageNum,8);
         mv.addObject("commentList",pageInfo);
         mv.addObject("localInfoPath",localInfoPath);
-        mv.setViewName("/manage/comment");
+        mv.setViewName("manage/comment");
         return mv;
     }
 

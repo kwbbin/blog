@@ -40,7 +40,7 @@ public class ArticleController {
     @GetMapping("/getAllArticleVoPage")
     public ModelAndView selectAllArticlePage(Integer pageNum){
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("/manage/search-article");
+        modelAndView.setViewName("manage/search-article");
         modelAndView.addObject("articleList",articleService.selectAllArticle(pageNum,pageSize));
         return modelAndView;
     }
@@ -71,7 +71,7 @@ public class ArticleController {
     public ModelAndView searchArticleByCondition(String str,Integer range){
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("articleList",articleService.searchArticleByCondition(str,range));
-        modelAndView.setViewName("/manage/article-search-condition");
+        modelAndView.setViewName("manage/article-search-condition");
         return modelAndView;
     }
 
@@ -82,7 +82,7 @@ public class ArticleController {
         Integer i = articleService.addArticleToGuessLike(id);
         if(i==-1){
             modelAndView.addObject("msg","填写格式错误或者该ID不存在");
-            modelAndView.setViewName("/manage/error");
+            modelAndView.setViewName("manage/error");
         }else{
             modelAndView.setViewName("redirect:/manage/guessLike");
         }

@@ -21,7 +21,7 @@ public class FriendLinkController {
         ModelAndView mv = new ModelAndView();
         List<FriendLink> list = friendLinkService.getAllFriendLink();
         mv.addObject("friendLink",list);
-        mv.setViewName("/manage/friend-link");
+        mv.setViewName("manage/friend-link");
         return mv;
     }
 

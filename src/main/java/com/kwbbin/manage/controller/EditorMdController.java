@@ -28,7 +28,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/manage")
-@PropertySource("classpath:localInfo.yml")
+//@PropertySource("classpath:localInfo.yml")
 public class EditorMdController {
 
     //本网站地址

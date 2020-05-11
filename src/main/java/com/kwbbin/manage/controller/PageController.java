@@ -56,19 +56,19 @@ public class PageController {
     @RequestMapping("/draft")
     public String articleHtml(Model model){
         model.addAttribute("draftList",draftService.selectAllDraft());
-        return "/manage/draft";
+        return "manage/draft";
     }
 
     @RequestMapping("/searchAllArticle")
     public String selectAllArticleHtml(Model model){
         model.addAttribute("articleList",service.selectAllArticle(1,6));
-        return "/manage/search-article";
+        return "manage/search-article";
     }
 
     @RequestMapping("/guessLike")
     public String guessLikeHtml(Model model){
         model.addAttribute("articleList",service.getAllGuessLike());
-        return "/manage/guess-like";
+        return "manage/guess-like";
     }
 
     @RequestMapping("/statistics")
@@ -79,39 +79,39 @@ public class PageController {
         modelAndView.addObject("totalFriendLink",statisticsService.FriendLink());
         modelAndView.addObject("totalComment",statisticsService.totalComment());
         modelAndView.addObject("vists",statisticsService.totalView());
-        modelAndView.setViewName("/manage/statistics");
+        modelAndView.setViewName("manage/statistics");
         return modelAndView;
     }
 
     @RequestMapping("/sort")
     public String sortHtml(Model model){
         model.addAttribute("articleTypeList",articleTypeService.getArticleTypeList());
-        return "/manage/sort";
+        return "manage/sort";
     }
 
     @RequestMapping("/tags")
     public String tagsHtml(Model model){
         List<Tags> tags = tagsService.getAllTags();
         model.addAttribute("tags",tags);
-        return "/manage/tags";
+        return "manage/tags";
     }
 
     @RequestMapping("/addSort")
     public String insertSortHtml(Model model){
-        return "/manage/sort-add";
+        return "manage/sort-add";
     }
 
     @RequestMapping("/AddArticle")
     public String articleAddHtml(Model model){
         model.addAttribute("articleType",service.selectAll());
         model.addAttribute("tags",tagsService.getAllTags());
-        return "/manage/add-article";
+        return "manage/add-article";
     }
 
     @RequestMapping("/searchArticleByCondition")
     public String searchArticleByConditionHtml(Model model){
         model.addAttribute("articleList",null);
-        return "/manage/article-search-condition";
+        return "manage/article-search-condition";
     }
 
     @RequestMapping("/timeLine")
@@ -119,7 +119,7 @@ public class PageController {
         ModelAndView mv = new ModelAndView();
         List<TimeLine> list = timeLineService.getAllTimeline();
         mv.addObject("timeLine",list);
-        mv.setViewName("/manage/time-line");
+        mv.setViewName("manage/time-line");
         return mv;
     }
 
@@ -129,14 +129,14 @@ public class PageController {
         PageInfo pageInfo = messageService.getAllMessage(1,8);
         mv.addObject("messageList",pageInfo);
         mv.addObject("localInfoPath",localInfoPath);
-        mv.setViewName("/manage/article-message");
+        mv.setViewName("manage/article-message");
         return mv;
     }
 
     @RequestMapping("/articleMessage2")
     public ModelAndView ArticleMessageById(){
         ModelAndView mv = new ModelAndView();
-        mv.setViewName("/manage/article-message2");
+        mv.setViewName("manage/article-message2");
         mv.addObject("messageList",new PageInfo<>());
         return mv;
     }
@@ -147,7 +147,7 @@ public class PageController {
         PageInfo pageInfo = commentService.getAllComment(1,8);
         mv.addObject("commentList",pageInfo);
         mv.addObject("localInfoPath",localInfoPath);
-        mv.setViewName("/manage/comment");
+        mv.setViewName("manage/comment");
         return mv;
     }
 
@@ -156,7 +156,7 @@ public class PageController {
         ModelAndView mv = new ModelAndView();
         String [] motto = blogBasicService.selectIndexMotto();
         mv.addObject("mottos",motto);
-        mv.setViewName("/manage/index-motto");
+        mv.setViewName("manage/index-motto");
         return mv;
     }
 

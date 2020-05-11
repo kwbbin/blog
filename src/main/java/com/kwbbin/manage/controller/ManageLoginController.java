@@ -23,9 +23,9 @@ public class ManageLoginController {
         Admin admin=(Admin)request.getSession().getAttribute("admin");
         if(admin!=null){
             modelAndView.addObject("admin",admin);
-            modelAndView.setViewName("/manage/main_box");
+            modelAndView.setViewName("manage/main_box");
         }else{
-            modelAndView.setViewName("/manage/index");
+            modelAndView.setViewName("manage/index");
         }
 
         return modelAndView;
@@ -68,9 +68,9 @@ public class ManageLoginController {
             }
 
             modelAndView.addObject("admin",admin);
-            modelAndView.setViewName("/manage/main_box");
+            modelAndView.setViewName("manage/main_box");
         }else{
-            modelAndView.setViewName("/manage/index");
+            modelAndView.setViewName("manage/index");
         }
 
         return modelAndView;
@@ -91,7 +91,7 @@ public class ManageLoginController {
         response.addCookie(newCookie1); //重新写入，将覆盖之前的
         response.addCookie(newCookie2); //重新写入，将覆盖之前的
 
-        return "/manage/index";
+        return "manage/index";
     }
 
 }

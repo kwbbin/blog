@@ -1,0 +1,46 @@
+
+spring:
+
+  mvc:
+    view:
+      prefix: /templates/
+      suffix: .html
+    favicon:
+      enabled: false
+  resources:
+    static-locations: classpath:/
+
+  thymeleaf:
+    cache: false
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/blog?useUnicode=true&characterEncoding=utf8
+#
+    username: root
+    password: 19971207
+    driver-class-name: com.mysql.jdbc.Driver
+
+mybatis:
+  ##xml文件的路径配置
+  mapper-locations: classpath:static/mapper/**/*.xml
+  type-aliases-package: com.kwbbin.bean
+
+
+
+pagehelper:
+
+  helperDialect: mysql
+
+  reasonable: true
+
+  supportMethodsArguments: true
+
+  pageSizeZero: true
+
+  params: count=countSql
+
+
+
+localInfoPath: http://www.kwbbin.com
+
+imageUrl: C:/blog/images

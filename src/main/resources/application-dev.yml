@@ -1,0 +1,44 @@
+
+
+spring:
+
+  mvc:
+    view:
+      prefix: /templates/
+      suffix: .html
+  resources:
+    static-locations: classpath:/
+
+  thymeleaf:
+    cache: false
+
+  datasource:
+    url: jdbc:mariadb://localhost:3307/blog
+    username: root
+    password: 19971207
+    driver-class-name: org.mariadb.jdbc.Driver
+
+mybatis:
+  ##xml文件的路径配置
+  mapper-locations: classpath:static/mapper/**/*.xml
+  type-aliases-package: com.kwbbin.bean
+
+
+
+pagehelper:
+
+  helperDialect: mariadb
+
+  reasonable: true
+
+  supportMethodsArguments: true
+
+  pageSizeZero: true
+
+  params: count=countSql
+
+
+localInfoPath: http://localhost:8083
+
+imageUrl: C:/blog/images
+

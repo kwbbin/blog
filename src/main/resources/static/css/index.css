@@ -145,7 +145,10 @@ p.pContent{
 
 body{
     background: url("/static/img/sky.jpg") fixed;
+    background-size: 100%;
 }
+
+
 .jumbotron{
     background: #fff;
 }

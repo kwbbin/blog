@@ -36,8 +36,9 @@
     box-shadow:2px 2px 5px #ABABAB;
 }
 
-
-
+#footer{
+    margin-bottom: 0;
+}
 #footer p{
     text-align: center;
     padding: 20px 0;
