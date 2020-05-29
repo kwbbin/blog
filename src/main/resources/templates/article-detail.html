@@ -46,7 +46,7 @@
                 <div style="display: none;" id="articleId" th:text="${article.id}"></div>
                 <p class="bloginfo">
                     <i class="avatar">
-                        <img src="https://www.huangxin.work/resource/images/photo.jpeg">
+                        <img src="/static/img/my.jpg">
                     </i>
                     <span th:text="${#dates.format(article.postedTime,'yyyy-MM-dd')}"></span>
                     <span th:text="'【'+${article.articleTypeStr}+'】'"></span>
@@ -61,6 +61,7 @@
                 <textarea th:text="${article.content}"></textarea>
             </div>
             <div style="padding-left: 20px;">
+                <hr>
                 <p><span>Tags:&nbsp;&nbsp;</span><span th:each=" t : ${articleTagsList}"><a href="#" th:text="${t.tagName}+'&nbsp;&nbsp;&nbsp;&nbsp;'"></a></span></p>
             </div>
             <div style="margin-top: 20px;text-align: center;">

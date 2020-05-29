@@ -73,7 +73,7 @@ public class EditorMdController {
 
     // 前端提交按钮把 editor.md 里的内容提交过来
     @RequestMapping("/save")
-    public String save(@RequestParam(value = "my-editormd-markdown-doc") String data,@RequestParam("file")MultipartFile file,String state,Long articleId, String category, Long draftId , String original, String title, String visibility,
+    public String save(@RequestParam(value = "my-editormd-markdown-doc") String data,@RequestParam("file")MultipartFile file,String localImage,String state,Long articleId, String category, Long draftId , String original, String title, String visibility,
                        HttpServletRequest request) {
         Enumeration<String> parm = request.getParameterNames();
         List<Integer> listTags = new ArrayList<>();
@@ -104,6 +104,9 @@ public class EditorMdController {
             article.setArticleOrigin(Integer.parseInt(original));
             article.setArticleType(Integer.parseInt(category));
             article.setArticleWay(Integer.parseInt(visibility));
+            if(!"".equals(localImage)&&localImage!=null){
+                article.setImageurl(localImage);
+            }
             article.setTitle(title);
             if(!"".equals(sb.toString())){
                 article.setImageurl(str.toString());
@@ -147,6 +150,9 @@ public class EditorMdController {
             article.setPostedTime(time);
             BeanUtils.copyProperties(article,draft);
             draft.setId(draftId);
+            if((!"".equals(localImage))&&localImage!=null){
+                draft.setImageurl(localImage);
+            }
             DraftExample draftExample = new DraftExample();
             draftExample.createCriteria().andIdEqualTo(draftId);
             draftMapper.updateByPrimaryKeySelective(draft);
@@ -173,6 +179,10 @@ public class EditorMdController {
 //           二次编辑文章
             article.setState(Byte.parseByte(0+""));
             article.setId(articleId);
+            String url = articleMapper.selectByPrimaryKey(articleId).getImageurl();
+            if ("".equals(localImage)&&"".equals(sb.toString())&&("".equals(url)||url==null)){
+                article.setImageurl(localInfoPath+"/blog/file/default/default.png");
+            }
             articleMapper.updateByPrimaryKeySelective(article);
 
             if(listTags.size()>0) {
@@ -198,6 +208,9 @@ public class EditorMdController {
                     String url = draftMapper.selectByPrimaryKey(draftId).getImageurl();
                     article.setImageurl(url);
                 }
+                if((!"".equals(localImage))&&localImage!=null){
+                    article.setImageurl(localImage);
+                }
                 draftMapper.deleteByPrimaryKey(draftId);
             }
 
@@ -205,6 +218,9 @@ public class EditorMdController {
             article.setState(Byte.parseByte(state));
             article.setVisits(0);
             article.setGuessYouLike(1);
+            if ("".equals(article.getImageurl())||article.getImageurl()==null){
+                article.setImageurl(localInfoPath+"/blog/file/default/default.png");
+            }
             articleMapper.insert(article);
 
 

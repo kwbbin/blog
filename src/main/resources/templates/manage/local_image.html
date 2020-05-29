@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="zh-CN"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>kwbbin博客管理系统</title>
+    <link rel="stylesheet" type="text/css" href="/static/js/layUI/layui.css">
+    <script type="text/javascript" src="/static/js/common.js"></script>
+    <script src="/static/js/layUI/layui.all.js" type="text/javascript"></script>
+    <script src="/static/js/JQuery/jquery-1.11.1.js" type="text/javascript"></script>
+
+
+
+</head>
+
+<body class="user-select" style="padding:10px 10px;">
+<div class="layui-card">
+    <div class="layui-card-header layui-elem-quote layui-quote-nm" >写文章</div>
+    <div class="layui-card-body">
+        <div>
+<!--            <hr>-->
+            <h3 style="color: #999;font-size: 14px;">本地图片</h3>
+            <div id="localImage"  th:each="image: ${localImages}">
+                <img name="flase" th:onclick="checkImgFun([[${image.id}]],this)" th:attr="src=${localInfoPath}+${image.path}+'/'+${image.fileName}">
+            </div>
+            <div style="margin-top: 20px;"><button class="layui-btn" onclick="deleteFun()" >删除选中</button></div>
+        </div>
+        <div>
+            <hr>
+            <h2 style="margin-bottom: 20px;">添加图片</h2>
+
+            <form  class="layui-form" action="/manage/uploadLocalImage"   method="post" enctype="multipart/form-data">
+                <div  class="layui-form-item">
+                    <input lay-verify="required"  autocomplete="off" class="layui-input" type="file" id="pop_file" name="file" >
+                </div>
+                <div style="margin-top: 20px;" >
+                    <img style="width:120px;height:80px;border: 1px solid #999" id="preview" src=""/>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">保存的文件名字：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="name" required  lay-verify="required" placeholder="请输入文件名称" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <button class="layui-btn layui-btn-primary" lay-submit lay-filter="submit">点击添加</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    layui.use('form', function() {
+        var form = layui.form;
+        form.render();
+
+        //监听提交
+        form.on('submit(submit)', function (data) {
+            // console.log(JSON.stringify(data.field))
+            // return false;
+        });
+
+    });
+
+    var ids;
+    function checkImgFun(id,This) {
+        // $("#localImage img").removeClass("active");
+        // console.log($(This).attr('src'));
+        if ($(This).attr("name") == 'true') {
+            $(This).removeClass("active")
+            $(This).attr("name", 'flase');
+        } else {
+            $(This).addClass("active");
+            $(This).attr("name", 'true');
+            $(This).attr("idStr", id);
+        }
+
+        ids=[];
+        for(var i = 0;i<$("#localImage img").length;i++){
+            if($("#localImage img").eq(i).attr("name")=='true'){
+                ids.push($("#localImage img").eq(i).attr("idStr"))
+            }
+        }
+
+
+    }
+
+    function deleteFun(){
+        var str='';
+        for(var i=0;i<ids.length;i++){
+            str=str+ids[i]+',';
+        }
+        var obj = [
+            {name:'ids',value: str}
+        ]
+        createForm("/manage/deleteLocalImage",obj);
+        window.parent.timeOut("删除成功！");
+    }
+
+    $(function () {
+        $("#pop_file").on('change', function () {
+            //获取文件对象，files是文件选取控件的属性，存储的是文件选取控件选取的文件对象，类型是一个数组
+            // console.log(this.files[0])
+            // console.log(file.files[0])
+            const windowURL = window.URL || window.webkitURL;
+            //这个函数（window的方法）创建出路径，浏览器能通过原生接口访问本地文件的路径，其中window可以省略，参数为需要创建路径的dom元素。
+            var imgUrl = windowURL.createObjectURL(this.files[0]);
+            // console.log(imgUrl)
+            // document.querySelector('#img').src = imgUrl ;
+            $("#preview").attr('src', imgUrl).css('display', 'block')
+        })
+    })
+</script>
+<style>
+    #localImage{
+        width:150px;
+        height: 100px;
+        display: inline-block;
+        margin-right: 5px;
+    }
+
+    #localImage .active{
+        /*box-shadow: 3px 3px 3px red;*/
+        border: 3px solid red;
+    }
+    #localImage img{
+        border: 1px solid #999;
+        width: 100%;
+        height: 100%;
+        cursor: pointer;
+    }
+</style>
+
+</body>
+</html>

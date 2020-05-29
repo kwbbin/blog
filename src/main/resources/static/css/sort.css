@@ -86,6 +86,7 @@
     border-radius: 4px;
     background: #fff;
     margin-bottom: 20px;
+    padding: 10px 5px;
 }
 .my-media a{
     color:#333;
@@ -147,6 +148,7 @@
     position: absolute;
     color: #666;
     bottom: 0px;
+    top: 134px;
 }
 
 
@@ -291,6 +293,7 @@
     padding: 7px 10px;
     background: rgba(0,79,135,0.7);
     border-radius: 4px;
+    margin-bottom: 10px;
     transition: All 1s ease-in-out;
     -webkit-transition: All 1s ease-in-out;
     -moz-transition: All 1s ease-in-out;

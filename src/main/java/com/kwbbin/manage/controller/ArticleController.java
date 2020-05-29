@@ -1,19 +1,24 @@
 package com.kwbbin.manage.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageInfo;
 import com.kwbbin.Vo.ArticleVo;
 import com.kwbbin.bean.Article;
 import com.kwbbin.bean.ArticleTypeExample;
+import com.kwbbin.bean.LocalImage;
 import com.kwbbin.dao.ArticleTypeMapper;
 import com.kwbbin.manage.service.ArticleService;
 import com.kwbbin.manage.service.TagsService;
+import com.kwbbin.util.FileUpload;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @Controller
@@ -30,6 +35,11 @@ public class ArticleController {
     TagsService tagsService;
 
     Integer pageSize = 6;
+
+    //本网站地址
+    @Value("${localInfoPath}")
+    String localInfoPath;
+
 
     @RequestMapping("/getAllArticleVo")
     @ResponseBody
@@ -55,6 +65,8 @@ public class ArticleController {
             Article article = articleService.getArticleById(id);
             modelAndView.setViewName("manage/article-detail");
             modelAndView.addObject("article",article);
+            modelAndView.addObject("localImages",articleService.getAllLocalImage());
+            modelAndView.addObject("localInfoPath",localInfoPath);
             modelAndView.addObject("articleType",articleTypeMapper.selectByExample(new ArticleTypeExample()));
             modelAndView.addObject("tags",tagsService.getAllTagsVo(id));
             return modelAndView;
@@ -97,6 +109,22 @@ public class ArticleController {
         articleService.cancelArticleToGuessLike(id);
         mv.setViewName("redirect:/manage/guessLike");
         return mv;
+    }
+
+    @RequestMapping("/deleteLocalImage")
+    public ModelAndView deleteLocalImage(String ids){
+        ModelAndView mv = new ModelAndView();
+        articleService.deleteLocalImageById(ids);
+        mv.setViewName("redirect:/manage/localImage");
+        return mv;
+    }
+
+
+
+    @RequestMapping("/uploadLocalImage")
+    public String uploadLocalImage(@RequestParam(value = "file", required = true) MultipartFile file,String name, HttpServletRequest request, HttpServletResponse response){
+       articleService.saveLocalImage(file, name);
+        return "redirect:/manage/localImage";
     }
 
 }

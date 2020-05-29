@@ -1,0 +1,26 @@
+.my-media-head .media-head-label{
+    display: none;
+}
+.my-media-head{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.my-media-img{
+     width:100%;
+     padding-bottom: 10px;
+ }
+
+.my-media-img img{
+    width:calc(100% - 10px);
+}
+.my-media-right {
+    width:calc(100% - 10px);
+    padding-left: 5px;
+    overflow: hidden;
+    height: 190px;
+}
+
+.my-media-right p{
+    padding-top: 30px;
+}

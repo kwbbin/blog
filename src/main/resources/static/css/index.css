@@ -1,5 +1,8 @@
 .clearfix:after{visibility:hidden;display:block;font-size:0;content: " ";clear:both;height:0;}
 
+body{
+    font: 15px "Microsoft YaHei", Arial, Helvetica, sans-serif;
+}
 img.ContentImg{
     width:100%;
     height: 200px;
@@ -89,6 +92,7 @@ p.pContent{
     padding: 7px 10px;
     background: rgba(0,79,135,0.7);
     border-radius: 4px;
+    margin-bottom: 10px;
     transition: All 1s ease-in-out;
     -webkit-transition: All 1s ease-in-out;
     -moz-transition: All 1s ease-in-out;
@@ -281,6 +285,9 @@ div.right-title{
     line-height: 60px;
     font-size: 16px;
     font-weight: bold;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .my-media-head .media-head-label{

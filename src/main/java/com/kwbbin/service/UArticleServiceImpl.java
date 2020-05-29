@@ -102,6 +102,10 @@ public class UArticleServiceImpl implements UArticleService {
 
     @Override
     public PageInfo<ArticleVo> selectArticleByType(Integer id,Integer pageNum,Integer pageSize) {
+        ArticleType articleType = articleTypeMapper.selectByPrimaryKey(id);
+        if(articleType==null){
+            throw new RuntimeException();
+        }
         ArticleExample articleExample = new ArticleExample();
         articleExample.createCriteria().andArticleTypeEqualTo(id).andArticleWayNotEqualTo(1);
         PageHelper.startPage(pageNum,pageSize);
@@ -171,6 +175,10 @@ public class UArticleServiceImpl implements UArticleService {
 
     @Override
     public PageInfo getArticleListByLabelId(Integer id,Integer pageNum,Integer pageSize) {
+        Tags tagss = tagsMapper.selectByPrimaryKey(id);
+        if (tagss==null){
+            throw new RuntimeException("没有该标签哦！");
+        }
         TagsArticleExample tagsArticleExample = new TagsArticleExample();
         tagsArticleExample.createCriteria().andTagsIdEqualTo(id);
         PageHelper.startPage(pageNum,pageSize);

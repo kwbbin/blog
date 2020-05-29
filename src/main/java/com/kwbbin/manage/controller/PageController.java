@@ -105,7 +105,16 @@ public class PageController {
     public String articleAddHtml(Model model){
         model.addAttribute("articleType",service.selectAll());
         model.addAttribute("tags",tagsService.getAllTags());
+        model.addAttribute("localImages",service.getAllLocalImage());
+        model.addAttribute("localInfoPath",localInfoPath);
         return "manage/add-article";
+    }
+
+    @RequestMapping("/localImage")
+    public String localImage(Model model){
+        model.addAttribute("localImages",service.getAllLocalImage());
+        model.addAttribute("localInfoPath",localInfoPath);
+        return "manage/local_image";
     }
 
     @RequestMapping("/searchArticleByCondition")

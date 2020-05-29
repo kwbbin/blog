@@ -3,17 +3,18 @@ package com.kwbbin.manage.service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.kwbbin.Vo.ArticleVo;
-import com.kwbbin.bean.Article;
-import com.kwbbin.bean.ArticleExample;
-import com.kwbbin.bean.ArticleType;
-import com.kwbbin.bean.ArticleTypeExample;
+import com.kwbbin.bean.*;
 import com.kwbbin.dao.ArticleMapper;
 import com.kwbbin.dao.ArticleTypeMapper;
+import com.kwbbin.dao.LocalImageMapper;
 import com.kwbbin.dao.TagsArticleMapper;
 import com.kwbbin.util.ArticleUtil;
+import com.kwbbin.util.FileUpload;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import sun.security.x509.AVA;
 
 import java.util.ArrayList;
@@ -29,6 +30,17 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Autowired
     TagsArticleMapper tagsArticleMapper;
+
+    @Autowired
+    LocalImageMapper localImageMapper;
+
+    @Value("${imageUrl}")
+    String imageUrl;
+
+    //本网站地址
+    @Value("${localInfoPath}")
+    String localInfoPath;
+
 
     public List<ArticleType> selectAll(){
         return articleTypeMapper.selectByExample(new ArticleTypeExample());
@@ -188,4 +200,29 @@ public class ArticleServiceImpl implements ArticleService {
         articleMapper.updateByPrimaryKeySelective(article);
     }
 
+    @Override
+    public List<LocalImage> getAllLocalImage() {
+        List<LocalImage> localImages = localImageMapper.selectByExample(new LocalImageExample());
+        return localImages;
+    }
+
+    public void deleteLocalImageById(String ids){
+        String [] str = ids.split(",");
+        for(Integer i = 0; i<str.length;i++){
+            localImageMapper.deleteByPrimaryKey(Integer.parseInt(str[i]));
+        }
+    }
+
+    @Override
+    public void saveLocalImage(MultipartFile file, String name) {
+        StringBuffer str = FileUpload.LocalImageUpload(file,imageUrl+"/local_image",name);
+        // 设置图片位置
+        StringBuffer sb = new StringBuffer();
+        sb.append(localInfoPath).append(str);
+        String suffix = sb.substring(sb.lastIndexOf("."));
+        LocalImage localImage = new LocalImage();
+        localImage.setFileName(name+suffix);
+        localImage.setPath("/blog/file/local_image");
+        localImageMapper.insert(localImage);
+    }
 }

@@ -97,8 +97,15 @@ public class UPageController {
         if(id==null){
             mv.setViewName("redirect:/");
         }else if((id!=null)&&pageNum==null){
-            pageArticleVo = uArticleService.selectArticleByType(id,1,8);
-            mv.addObject("currentPage",1);
+            try {
+                pageArticleVo = uArticleService.selectArticleByType(id,1,8);
+                mv.addObject("currentPage",1);
+            }catch (Exception e){
+                mv.setViewName("/manage/error");
+                mv.addObject("msg","该分类不存在哦，请换个地址试试吧");
+                return mv;
+            }
+
         }else{
             try {
                 pageArticleVo = uArticleService.selectArticleByType(id,pageNum,8);
@@ -130,8 +137,15 @@ public class UPageController {
         if(id==null){
             mv.setViewName("redirect:/");
         }else if((id!=null)&&pageNum==null){
-            pageArticleVo = uArticleService.getArticleListByLabelId(id,1,8);
-            mv.addObject("currentPage",1);
+            try {
+                pageArticleVo = uArticleService.getArticleListByLabelId(id,1,8);
+                mv.addObject("currentPage",1);
+            }catch (Exception e){
+                mv.setViewName("/manage/error");
+                mv.addObject("msg","没有该标签哦！");
+                return mv;
+            }
+
         }else{
             try {
                 pageArticleVo = uArticleService.getArticleListByLabelId(id,pageNum,8);
@@ -211,7 +225,9 @@ public class UPageController {
                     return mv;
                 }
             }catch (Exception e){
-                System.out.println(e);
+                mv.addObject("msg","没有该文章哦");
+                mv.setViewName("/manage/error");
+                return mv;
             }
         }
 

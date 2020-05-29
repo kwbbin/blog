@@ -81,7 +81,8 @@
 <!--            <table tableName="comment" domainObjectName="Comment" >-->
 <!--                <generatedKey column="id" sqlStatement="JDBC" identity="true"></generatedKey>-->
 <!--            </table>-->
-                <table tableName="blog_basic" domainObjectName="BlogBasic" />
+<!--                <table tableName="blog_basic" domainObjectName="BlogBasic" />-->
+        <table tableName="local_image" domainObjectName="LocalImage" />
 
     </context>
 </generatorConfiguration>

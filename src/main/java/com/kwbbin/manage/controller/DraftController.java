@@ -9,6 +9,7 @@ import com.kwbbin.manage.service.DraftService;
 import com.kwbbin.manage.service.TagsService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -29,6 +30,9 @@ public class DraftController {
 
     @Autowired
     TagsService tagsService;
+    //本网站地址
+    @Value("${localInfoPath}")
+    String localInfoPath;
 
     @RequestMapping("/getAllDraft")
     @ResponseBody
@@ -53,6 +57,8 @@ public class DraftController {
         modelAndView.addObject("draft",draft);
         modelAndView.addObject("articleTypeVo",listATVo);
         modelAndView.addObject("draftId",id);
+        modelAndView.addObject("localImages",articleServiceImpl.getAllLocalImage());
+        modelAndView.addObject("localInfoPath",localInfoPath);
         modelAndView.addObject("tags",tagsService.getAllDraftTagsVo(id));
 
         return  modelAndView;
